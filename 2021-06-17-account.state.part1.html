@@ -1,0 +1,184 @@
+<meta charset="utf-8" emacsmode="-*- markdown -*-"><link rel="stylesheet" href="./slate.css">
+
+**Verifying Symbol account state proofs for fun and profit (part 1)**
+But mostly for fun
+
+Public network has magic feature called state proofs. I don't think this has been described with enough details or I don't think most users realize what this feature gives.
+
+State proofs allow to PROVE to some third party, that at height X, your account state (or mosaic state, or namespace state, or any other state) was equal to Y.
+
+There is one small catch here: right now there is no easy way to retrieve via APIs the state at **given** height, so assumption is the state was saved at proper height. Best part is, that such state can be validated by verifier in a trustless manner.
+
+!!!
+    images will be zoomed in when clicked (opens in new tab/window)
+
+# Serializing state
+
+What is inside the state? Short answer is: "probably too much". But let's dive in.
+
+Let's take a look at following Symbol testnet account: `TAKUOCDJH4KUDYP7ZH5HMW43QXYXTLFEDQUR4MI`
+
+![`TAKUOCDJH4KUDYP7ZH5HMW43QXYXTLFEDQUR4MI` account details as seen in testnet block explorer](2021-06-17-account.state.part1/01-explorer.png width=600)
+
+Account details can be retrieved by querying REST API endpoint `/accounts/<account-id>`, at the time of writing this, the data returned looks like this:
+
+```json
+{
+  "account": {
+    "version": 1,
+    "address": "98154708693F1541E1FFC9FA765B9B85F179ACA41C291E31",
+    "addressHeight": "119481",
+    "publicKey": "13182CF21C0C13BA3FB5401EEED94D274C4305A54017ABCA7CDDEB85A173F765",
+    "publicKeyHeight": "119490",
+    "accountType": 0,
+    "supplementalPublicKeys": {},
+    "activityBuckets": [],
+    "mosaics": [
+      {
+        "id": "091F837E059AE13C",
+        "amount": "8539426394"
+      }
+    ],
+    "importance": "0",
+    "importanceHeight": "0"
+  },
+  "id": "<node-based, not important>"
+}
+```
+
+Currently symbol python core-sdk, does not allow to serialize account state, but account state has it’s definition inside [catbuffer-schemas](https://github.com/nemtech/catbuffer-schemas). So let’s do pretty ugly, manual serialization of the data above.
+
+The account above has importance = 0, which means this is not a high-value accounts, which makes things much easier.
+
+![serializing account state like there’s no tomorrow](2021-06-17-account.state.part1/02-serialize.png width=600)
+
+Last thing needed before verifying account state, is to calculate sha3 hash of the serialized data
+
+```
+010098154708693f1541e1ffc9fa765b9b85f179aca41c291e31b9d201000000
+000013182cf21c0c13ba3fb5401eeed94d274c4305a54017abca7cddeb85a173
+f765c2d20100000000000000000001003ce19a057e831f095a4efdfc01000000
+```
+
+Resulting account state sha3 hash is: `9532475d9217848ca629e690c89470f18c95497d8913233e74fa32b802b3c5d5`
+
+It will be verified later.
+
+# Verifying state tree
+
+There’s a pretty detailed description of merkle trees in [chapter 4 in catapult-whitepaper](https://docs.symbolplatform.com/symbol-technicalref/main.pdf), so I’m not gonna repeat that here.
+
+Let’s query current merkle tree path of that account. The REST API endpoint for this is `/accounts/<account-id>/merkle`, returned data looks like following:
+
+![merkle path of account in question](2021-06-17-account.state.part1/03-merkle1.png width=600)
+
+REST API returns the tree both in “raw” format — which needs parsing and in “parsed” format which is easier to process.
+
+Returned merkle tree path is from the top of the tree to the bottom (leaf). The verification can be in either direction — either from bottom to the top, or from top to the bottom.
+
+When visualized, the tree will look like so (I deliberately shortened the links==hashes . This is full tree, so missing links are exchanged with 00-hashes)
+
+![Full merkle tree path visualized](2021-06-17-account.state.part1/04-merkle2.png width=600)
+
+Let’s start with a path. Path is simply hash of a key. In case of account state cache, key is simply account address. So in case of account `TAKUOCDJH4KUDYP7ZH5HMW43QXYXTLFEDQUR4MI` the path is:
+
+```python
+>>> sha3_256(unhexlify('98154708693F1541E1FFC9FA765B9B85F179ACA41C291E31')).hexdigest()
+```none output
+E220E4E4BCF533F0E0082F28E65B8EA5A278D255DB22D61D097A2F9008676F3A
+```
+
+Every branch in a tree might contain non-empty `path`, but in example above it’s always empty, so going from the top to the bottom, proper nibbles[^nibble] from account path must be taken.
+In order: `E`, `2`, `2`, `0`, so “leftover” path is `E4E4BCF533F0E0082F28E65B8EA5A278D255DB22D61D097A2F9008676F3A`
+
+!!!
+    Note: if it’s not possible to traverse the tree from the top to the bottom using proper branches, it means tree has been manipulated.
+
+Now, it’s easy to notice that the leaf (`"type": 255`) value is equal to sha3 hash calculated previously, yay! one check done.
+
+```json
+{
+  "type": 255,
+  "path": "E4E4BCF533F0E0082F28E65B8EA5A278D255DB22D61D097A2F9008676F3A",
+  "encodedPath": "20E4E4BCF533F0E0082F28E65B8EA5A278D255DB22D61D097A2F9008676F3A",
+  "nibbleCount": 60,
+  "value": "9532475D9217848CA629E690C89470F18C95497D8913233E74FA32B802B3C5D5",
+  "leafHash": "39D61E874BE3A301D1FEE4DDA1D2F6D53030004A51E6399BFB6F58EE35218EC4"
+}
+```
+
+Now, what verifier needs to do is to check all the hashes on the way. Let’s start from the bottom as it will be easier.
+
+`leafHash` is a hash of concatenated encodedPath[^encodedPath] and value, so:
+
+```python
+>>> sha3_256(unhexlify('20E4E4BCF533F0E0082F28E65B8EA5A278D255DB22D61D097A2F9008676F3A') + unhexlify('9532475D9217848CA629E690C89470F18C95497D8913233E74FA32B802B3C5D5')).hexdigest()
+```none output
+39D61E874BE3A301D1FEE4DDA1D2F6D53030004A51E6399BFB6F58EE35218EC4
+```
+
+Yay! It matches.
+
+Path nibble that took us to this leaf had value 0. That means that “link” at 0th element at level 4 must equal to that hash and indeed it does.
+
+In a similar fashion, `branchHash` — is hash of concatened `encodedPath` and all the links at given level. As noted earlier missing elements must be filled with `00`-hash. So for level 4, `encodedPath` is equal to ‘00’ and that gives us:
+
+```python
+>>> zero = unhexlify('00000000000000000000000000000000000000000000000000000000000000')
+>>> sha3_256(unhexlify('00') + u('39D61E874BE3A301D1FEE4DDA1D2F6D53030004A51E6399BFB6F58EE35218EC4') + zero * 3 + unhexlify('6A69ADA0538FC9582D813619288B400038286522206FEA14D231F0D9775900E3') + zero * 11).hexdigest()
+```none output
+B1508023DFF34155479B81C93EE43926F590E59E0CEA66F4633D5929B809AC34
+```
+
+This can also be verified [here](https://bob.nem.ninja/sha3/#00%0A39D61E874BE3A301D1FEE4DDA1D2F6D53030004A51E6399BFB6F58EE35218EC4%0A0000000000000000000000000000000000000000000000000000000000000000%0A0000000000000000000000000000000000000000000000000000000000000000%0A0000000000000000000000000000000000000000000000000000000000000000%0A6A69ADA0538FC9582D813619288B400038286522206FEA14D231F0D9775900E3%0A0000000000000000000000000000000000000000000000000000000000000000%0A0000000000000000000000000000000000000000000000000000000000000000%0A0000000000000000000000000000000000000000000000000000000000000000%0A0000000000000000000000000000000000000000000000000000000000000000%0A0000000000000000000000000000000000000000000000000000000000000000%0A0000000000000000000000000000000000000000000000000000000000000000%0A0000000000000000000000000000000000000000000000000000000000000000%0A0000000000000000000000000000000000000000000000000000000000000000%0A0000000000000000000000000000000000000000000000000000000000000000%0A0000000000000000000000000000000000000000000000000000000000000000%0A0000000000000000000000000000000000000000000000000000000000000000).
+And you can check that this matches `branchHash` at level 4.
+
+Path nibble that leaded here was `2` and link at level 3 at position 2, matches calculated hash.
+
+Now we need to tediously repeat the process, I’ll just paste links that calculate proper branchHashes:
+
+* [level 3](https://bob.nem.ninja/sha3/#00%0ACD2BE13E0F7EF766360004AB58452CBFBF7CED45D3527D6F7CD5F6A0C630016B%0A0000000000000000000000000000000000000000000000000000000000000000%0AB1508023DFF34155479B81C93EE43926F590E59E0CEA66F4633D5929B809AC34%0ACD8B2E4A4E398D25A967D90F3A32E8C61E5CACD437C23A6F9BCA751A5B7130B7%0A7F73567DD856D794E44579A4101EC0E2C9561B9379DD2A1426E0844552412888%0A17444E42BA6A1173169321417F42E376FDFC6A80AE1006CB4FA8E4E4430F8199%0AB741898A45F4030E8E5DB8CE7948009568F6EB96F055A0D9F373FD0607603E3D%0A119B061861D1FD84EAC88B775D4166D64B2DAE782B2D211A74140556D44D4362%0AF34867572A9EA07C56CF85F4CDD842E81A2F369A2680CC58EF6D3604F1E6E86C%0A96D981DEA0194C2FC3CA5E619378E856311CEE1734AFBAD8D592A66D8502BAF2%0A1905D65E59E573AD1E8F2CF1C23F6412CFE28EB4C50D7BDBADBD842A0652E751%0A1B7703785D5DCCFAA93AB4CF618F47F237D6E3F3BB11299AAE51D89F07ABDBC8%0AD1D2C6EFED54EF0B2329AC4C42F0A1DD0B10CE7EC92C830FAB1918EBCDCAD1DF%0AED75C64EAE9AA3BEAEB37AEB3256C15C302D3D83D557518D7270BB9D9FDA4E31%0A18D96A739A4A1F28EBA6AA219C929759FBFC7FE14B1E41F5882AB5AE3A019CF5%0A69A9539DADCAE97ABE4B69401482B4E53BBF6C2522AFDD27CBDE5D01A309FFA4)
+* [level 2](https://bob.nem.ninja/sha3/#00%0AC13C8F996B2C4EEE07D59C56600B96F2BD7ED529E8D7776A5A621D7C9BFF233B%0AD7EED5287CFAD28CD00BF7900F1254C7BB7DEFD2DEAF1CA9B26734BA68486255%0AF1106FBDAFB76579696055E42B70130080CCEB682E6C9BB7365F820275416CB7%0A70F8328E4E26916D36531472D85992D547FCB3A1DB2451CEDB0F895D9DD0565A%0A5E759D72D32EB7BA01FFEB961EC867547B2600B8D614CCA435BA07A21E491237%0A94D17B655C022DF540226BA75CD233421E4FD266A34B38C661B7BFD0EA90D24E%0A18BCA3BF8FDF002A34AF7B03FF257B23A8D9E8924529B99F179755DFC64BC88A%0A7B85128D49393DDD79235BCD2891322ADED89385FB2C0289ED4DAB5933B3291F%0A842A3DF0E67867464866DF9E96961BFBAE2A359706400C9F4416FBCFF4115E0C%0A5FEB4A575EE269E33890B39DBF366D8B0AC5E1A4A3D4538DEDE7C4EDB4AF70D4%0A75C493E3DACB4AA93E955962BE100DF64752EC0F530B1165A27B878303715349%0A3B5F72609B84599BADC4E194EE664C396D88315910276D05F1E1757687F62338%0ADF67A38E1721EABF8A25B53C0D19953CB7C5195D5D652FBB47A38BDEF2776F80%0A5ED3C9879E92A90D77E9C1EC03D53209B7642DB1A70A4C5D5AB80D15476C5834%0A9318AE18554B82821C4C2AEF58268916384BD766C146DB1D7550FF1723D80C13%0A7A515DE21830CC7749155015C42D06E41613CB790888B84FAC15A3FDAE3C5E17)
+* [level 1](https://bob.nem.ninja/sha3/#00%0AAEA61533C145D5B8F69D14446B11345A55C034724CFB308F1EDC0799A13DD41C%0A66032B0BC2EC34205CE44D93FE4E0178504C6FBE2AFF4401D022F5E59A148AF6%0AD7906691DAD9B8E95F7E59CB738CE5AE545E88F72388357D76E61670C2F4C1D1%0A832E2C283BEB2A665AB6296398FFDAC27B4AC5A455AB4542D4F7A0F8B9A95840%0ADED6FC5ED2AAB173D469449EAB64FA60E77EF2C147A4DCED4CA669A52B12761C%0AF6C3F3B867A0D32F3E3507DBD995D936F541598CBCD548E5245C8272A262F0B0%0AA6D22D7E0A3647F293C887D79C1C351B5541DB4D276D22AF2D9C108ECC209EFD%0A91B225331EF7E24BE72DCDD3C903CEAF5740B54E1573F4C3B0E4F05ADFE49B5C%0AAD19A111546263D46F0CD5822E29A6867E3FD784F74BD711EA8E35DE4A14799D%0A483A08860F7E4ADD67CCA115E52C24FA481E1B89D75187CD7550FFBEF8B761A3%0A8CB12E4EB87F17BB408F19AFA0131F95858C4624972E90466400B22F8B38ECAB%0AE0E431DAC43E46EDB316367DD17C1F58D60811F434E1E74AF14CEA5168BCA691%0A32344339B1EE0EA6AF7F363AF7BD95004A9B69EB8B68955985C10D0C141A077E%0AC21F2EEA25D8CE25D7BE0BF43DCD3E7EA425135253E482025BD34BAE0FD1E9B8%0A684FBE51599766482ECB51F76B9867F00DDC92D285A4F4493E7B4091D577ABE1%0AFF33A7AC483A54A5E6B772B215D7DEDDCB4EBC6132A878B5E722C35F699D6B60)
+
+Calculated root hash is `B6B9F48079B27914FFE030B8CBBE6C81ED30FEB4E007946962C4283CBD99C581`
+
+Finally, prover can check, that the calculated hash matches state tree hash at that concrete height, for which merkle tree path was obtained:
+
+http://explorer.testnet.symboldev.network/blocks/173056
+
+![Block explorer information for block at height 173056](2021-06-17-account.state.part1/05-explorer.block.png width=600)
+
+Now, I took a **shortcut** and referenced block explorer, but to do this fully trustlessly, the verifier should gather all block headers — only headers,
+no need to actually verify their contents — check that they form a chain, and then can validate that account state hash in that block actually matches computed one.
+
+That last part could be optimized, by checking only blocks at multiples of finalization epoch.
+
+# Summary:
+
+Prover provides:
+
+ * account state
+ * merkle tree path at given height
+
+Verifier:
+
+ * serializes account state,
+ * validates serialized state against merkle tree path
+ * validates state root hash against block header
+
+The title is blatant reference to [(in)famous 25 years old article](http://phrack.org/issues/49/14.html).
+
+# References:
+
+ * account information — https://docs.symbolplatform.com/symbol-openapi/v1.0.1/#operation/getAccountInfo
+ * account merkle path — https://docs.symbolplatform.com/symbol-openapi/v1.0.1/#operation/getAccountInfoMerkle
+
+---
+
+[^nibble]: half of a byte is called a nibble
+
+[^encodedPath]: how to obtain `encodedPath` from `path` is bit outside of the scope of this post, curious readers should take a look at [chapter 4 in catapult whitepaper](https://docs.symbolplatform.com/symbol-technicalref/main.pdf)
+
+<style class="fallback">body{visibility:hidden}</style><script>markdeepOptions={tocStyle:'long'};</script>
+<!-- Markdeep: --><script src="./markdeep.min.js" charset="utf-8"></script>

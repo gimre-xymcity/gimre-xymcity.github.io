@@ -1,0 +1,190 @@
+<meta charset="utf-8" emacsmode="-*- markdown -*-"><link rel="stylesheet" href="./slate.css">
+
+**Deploying node for paranoids - Part 2 - Node settings**
+
+This guide will show how to deploy node semi-manually, without using bootstrap.
+
+ * Part 1 - will explain how to create node certificates manually
+ * Part 1b - will explain how to create node certificates using helper tools from `symbol-node-configurator`
+ * Part 2 - (this part) will explain how to generate node configuration using `symbol-node-configurator` and what files are needed
+ * Part 3 - will explain how to create required link transactions using `nemcoldwallet`
+
+This part will describe what files are needed to generate node configuration and how to use symbol-node-configurator python tool.
+
+!!!
+    There might be future updates to this article.
+
+# Keys
+
+Key link transactions and key themselves are described in docs:
+
+ * https://docs.symbolplatform.com/serialization/account_link.html
+ * https://docs.symbolplatform.com/serialization/coresystem.html
+
+Short introduction to various keys, that the server is using:
+
+ * MAIN key - main account holding funds (funds might additionally be protected with multisig) - this account should **NEVER** be stored on the node
+ * remote key (account key link) - like in NIS1, this is an account used for harvesting, it has the power of MAIN account, but is not able to make any transactions
+ * vrf key (vrf key link) - also used in harvesting, it is used to introduce element of unpredictability to the harvesting process
+ * voting key file - file with multiple private keys used during voting process, where each key is bound to specific voting epoch, after epoch ends proper key is discarded.
+ * node key - random key used for communication purposes
+
+# Possible node types, node features and required files
+
+There are three main node types: `peer`, `api`, `dual`.
+
+Peer and dual nodes can be harvesting or not.
+
+All node types can be voting or non-voting.
+
+1. All configuration types require certificates described in part 1.
+2. harvesting nodes require either:
+  - `private.harvesting.pem` and `private.vrf.pem`
+  - `private.harvesting.txt` and `private.vrf.txt`
+3. voting nodes require voting key file with name `private_key_treeX.dat` where X is a number
+
+All examples below assume required certificate files: `ca.pubkey.pem`, `ca.crt.pem`, `node.key.pem`, `node.crt.pem`, `node.full.crt.pem` exist in certificates directory.
+
+# Download symbol-node-configurator
+
+`Python3` and `pip` are required, installation in debian-like systems:
+
+```shell
+$ sudo apt-get install python3 python3-pip
+```
+
+Download symbol-node-configurator and dependencies:
+
+```shell
+$ git clone https://github.com/nemtech/symbol-node-configurator.git
+$ cd symbol-node-configurator
+$ python3 -m pip install -r requirements.txt
+$ cd ..
+```
+
+All commands that follow are expected to be executed from parent directory.
+
+In examples below configuration is created inside `userconfig/` directory.
+
+# Creating basic node configuration (no harvesting, no voting)
+
+```shell
+$ ls certificates
+ca.crt.pem ca.pubkey.pem node.crt.pem node.full.crt.pem node.key.pem
+```
+
+Peer node:
+
+```shell
+$ python3 symbol-node-configurator\generator.py --mode peer --output userconfig
+```
+
+Api node:
+
+```shell
+$ python3 symbol-node-configurator\generator.py --mode api --output userconfig
+```
+
+Dual node:
+
+```shell
+$ python3 symbol-node-configurator\generator.py --mode dual --output userconfig
+```
+
+# Creating harvesting node configuration
+
+Configurator tool supports harvesting key in two formats:
+
+ * as `pem` files (can optionally be encrypted)
+ * as `txt` files containing private key in hex
+
+## Creating harvesting peer node configuration using encrypted pem files
+
+Create random, encrypted harvesting and vrf key pairs using openssl
+
+```shell
+$ openssl genpkey -aes-256-cbc -out private.harvesting.pem -outform PEM -algorithm ed25519
+```none output
+Enter PEM pass phrase:
+```shell
+$ openssl genpkey -aes-256-cbc -out private.vrf.pem -outform PEM -algorithm ed25519
+```none output
+Enter PEM pass phrase:
+```
+
+Create harvesting peer node configuration:
+
+```shell
+$ python3 symbol-node-configurator\generator.py --mode peer --output userconfig --harvesting --ask-pass
+```none output
+      i     | extracting nemesis seed
+      i     | preparing base settings
+      i     | turning on harvesting
+Provide private.harvesting.pem password:
+Provide private.vrf.pem password:
+      i     | copying certificates
+```
+
+## Creating harvesting dual node using unencrypted pem files
+
+Create random harvesting and vrf key pairs using `openssl`
+
+```shell
+$ openssl genpkey -out private.harvesting.pem -outform PEM -algorithm ed25519
+$ openssl genpkey -out private.vrf.pem -outform PEM -algorithm ed25519
+$ python3 symbol-node-configurator\generator.py --mode peer --output userconfig --harvesting
+```
+
+## Creating harvesting dual node using txt files
+
+```shell
+$ echo "11223344556677889900aabbccddeeff11223344556677889900aabbccddeeff" > private.harvesting.txt
+$ echo "556677889900aabbccddeeff11223344556677889900aabbccddeeff11223344" > private.vrf.txt
+$ python3 symbol-node-configurator\generator.py --mode peer --output userconfig --harvesting
+```
+
+# Creating voting key configuration
+
+As mentioned earlier, voting node requires voting key file named `private_key_treeX.dat`.
+This file can be generated using `catapult.tool.votingkey`, but there's also helper script
+in configurator repository, that can generate it as well.
+
+Generate voting key file:
+
+```shell
+$ python3 symbol-node-configurator\votingkey.py --start-epoch 20 --range 200
+      i     | voting key start epoch: 20, end epoch: 220
+      i     | voting key root public key: 7F1AFD82AB1EEE4C12AFC851A0C451D3AF67CF9A5700F7EA8B729D144CE6EC49
+```
+
+When `--start-epoch` is not provided, the script will try to pull current epoch from the mainnet network using NGL nodes:
+
+```shell
+$ python3 symbol-node-configurator\votingkey.py --range 200
+```none output
+...
+      i     | Got response [200] for URL: http://ngl-dual-502.symbolblockchain.io:3000/chain/info
+      i     | ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+      i     | voting key start epoch: 16, end epoch: 216
+      i     | voting key root public key: 7AF78866DEF7579506785997908098120BB3439FD958B7F4EEDCD4F3DBA34095
+```
+
+Having `private_key_tree1.dat` generate voting and harvesting dual node configuration:
+
+```shell
+$ openssl genpkey -out private.harvesting.pem -outform PEM -algorithm ed25519
+$ openssl genpkey -out private.vrf.pem -outform PEM -algorithm ed25519
+$ python3 symbol-node-configurator\generator.py --mode peer --output userconfig --harvesting --voting
+```none output
+      i     | extracting nemesis seed
+      i     | preparing base settings
+      i     | turning on harvesting
+      i     | turning on voting
+      i     | copying certificates
+      i     | moving private_key_tree1.dat -> userconfig\votingkeys\private_key_tree1.dat
+```
+
+Note, that voting file is moved into generated `userconfig/` directory.
+
+<style class="fallback">body{visibility:hidden}</style><script>markdeepOptions={tocStyle:'long'};</script>
+<!-- Markdeep: --><script src="./markdeep.min.js" charset="utf-8"></script>

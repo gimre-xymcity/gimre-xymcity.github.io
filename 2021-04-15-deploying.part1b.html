@@ -1,0 +1,115 @@
+<meta charset="utf-8" emacsmode="-*- markdown -*-"><link rel="stylesheet" href="./slate.css">
+
+**Deploying node for paranoids - Part 1b - Node certificates using helper tools**
+
+This guide will show how to deploy node semi-manually, without using bootstrap.
+
+ * Part 1 - will explain how to create node certificates manually
+ * Part 1b - (this part) will explain how to create node certificates using helper tools from `symbol-node-configurator`
+ * Part 2 - will explain how to generate node configuration using `symbol-node-configurator` and what files are needed
+ * Part 3 - will explain how to create required link transactions using `nemcoldwallet`
+
+There have been helper tools added to symbol-node-configurator, which significantly simplify creation of certificates.
+
+!!!
+    There might be future updates to this article.
+
+# Download symbol-node-configurator
+
+`Python3` and `pip` are required, installation in debian-like systems:
+
+```shell
+$ sudo apt-get install python3 python3-pip
+```
+
+Download symbol-node-configurator and dependencies:
+
+```shell
+$ git clone https://github.com/nemtech/symbol-node-configurator.git
+$ cd symbol-node-configurator
+$ python3 -m pip install -r requirements.txt
+$ cd ..
+```
+
+All commands that follow are expected to be executed from parent directory.
+
+In examples below configuration is created inside userconfig directory.
+
+# Pem tool - key conversion
+
+Pem tool is a small script that allows conversion between private keys in hex format and PEM file format. There are multiple possibilities:
+
+Create encrypted (`--ask-pass`) `ca.key.pem`, reading private key from provided input file (`--input`)
+
+```shell
+$ echo "0000000000000000000000000000000000000000000000000000000000000000" > private.key.txt
+$ python3 symbol-node-configurator/pemtool.py --input private.key.txt --output ca.key.pem --ask-pass
+```none output
+Provide ca.key.pem password:
+Confirm ca.key.pem password:
+saved ca.key.pem
+```
+
+Create encrypted (`--ask-pass`) `ca.key.pem`, reading private key from provided standard input
+
+```shell
+$ python3 symbol-node-configurator/pemtool.py --output ca.key.pem --ask-pass
+```none output
+Enter private key (in hex):
+Provide ca.key.pem password:
+Confirm ca.key.pem password:
+saved ca.key.pem
+```
+
+Create unencrypted `ca.key.pem` file, reading private key from provided standard input
+
+```shell
+$ python3 symbol-node-configurator/pemtool.py --output ca.key.pem
+```none output
+Enter private key (in hex):
+saved ca.key.pem
+```
+
+# Cert tool - certificate files generation
+
+Second tool is pretty simple. If PEM key file is encrypted it will ask about the password few times, it will also ask about "CA common name" and "node common name".
+
+Both names can be passed as arguments via `--name-ca` and `--name-node`.
+
+```shell
+$ python3 symbol-node-configurator/certtool.py --ca ca.key.pem
+```none output
+    i     | creating ca.pubkey.pem
+Enter pass phrase for ca.key.pem:
+      i     | creating random node.key.pem
+      i     | preparing configuration files
+Enter CA common name: Very Fancy CA
+Enter node common name: ngl-api-001.symbolblockchain.io
+      i     | creating CA certificate
+Enter pass phrase for ca.key.pem:
+      i     | signing node certificate
+Using configuration from ca.cnf
+Enter pass phrase for ca.key.pem:
+Check that the request matches the signature
+Signature ok
+The Subject's Distinguished Name is as follows
+commonName :ASN.1 12:'ngl-api-001.symbolblockchain.io'
+Certificate is to be certified until Apr 24 16:47:06 2022 GMT (375 days)
+
+Write out database with 1 new entries
+Data Base Updated
+      i     | certificates generated in certificates directory
+```
+
+Almost all required files are created in certificates directory:
+
+`ca.pubkey.pem`, `ca.crt.pem`, `node.key.pem`, `node.crt.pem`
+
+The only missing file for moving on to part 2 is `node.full.crt.pem`, but it can be obtained easily:
+
+```shell
+$ cat node.crt.pem ca.crt.pem > node.full.crt.pem
+```
+
+<style class="fallback">body{visibility:hidden}</style><script>markdeepOptions={tocStyle:'long'};</script>
+<!-- Markdeep: --><script src="./markdeep.min.js" charset="utf-8"></script>

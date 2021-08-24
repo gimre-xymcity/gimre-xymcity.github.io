@@ -1,0 +1,227 @@
+<meta charset="utf-8" emacsmode="-*- markdown -*-"><link rel="stylesheet" href="./slate.css">
+
+**Deploying node for paranoids - Part 1 - Certificates**
+
+
+This guide will show how to deploy node semi-manually, without using bootstrap.
+
+ * Part 1 - (this part) will explain how to create node certificates manually
+ * Part 1b - will explain how to create node certificates using helper tools from `symbol-node-configurator`
+ * Part 2 - will explain how to generate node configuration using `symbol-node-configurator` and what files are needed
+ * Part 3 - will explain how to create required link transactions using `nemcoldwallet`
+
+This is part 1, it will discuss how to generate all certs needed using `openssl`. Openssl version 1.1.1 is required.
+
+!!!
+    There might be future updates to this article.
+!!!
+    If you do not want to create certificates manually, you can skip this part and go to 1b instead.
+
+# Certificates and pem files:
+
+It is important to understand what different files represent:
+
+ * `ca.key.pem` - pem key file containing MAIN account private key, it should **NEVER** be stored on the node (and if possible should not be created on the node)
+ * `ca.pubkey.pem` - pem key file containing MAIN account public key, it is required on the server
+ * `ca.crt.pem` - self-signed CA certificate - this one is currently required by REST layer
+ * `node.key.pem` - pem key file containing node private key, it is required on the server, whole communication that the node is making with other nodes is done via ephemeral keys, created using this key
+ * `node.crt.pem` - node certificate signed using ca.key, it is currently required by REST layer, finally
+ * `node.full.crt.pem` - full "certificate chain", containing both certificates (node.crt and ca.crt) concatenated, it is required on the server
+
+# Creating certificates
+
+In all cases the steps are similar:
+
+1. create CA key pair (certificate authority)
+2. create CA certificate and self-sign it
+3. create random node key pair, create node certificate and sign it using CA key
+4. create "full" chain, by concatenating certs 3. and 2.
+
+# Creating CA key pair
+
+When creating CA key, there are few possibilities:
+
+* creating new, random, encrypted CA key
+* creating new, random CA key
+* creating CA key from some existing private key
+
+## Creating new, random, encrypted CA key
+
+```shell
+$ echo 'top-secret-password' > password.txt
+$ openssl genpkey -aes-256-cbc -pass file:password.txt -out ca.key.pem -outform PEM -algorithm ed25519
+```
+
+To read more about `-pass` option visit: [openssl-passphrase-options](https://www.openssl.org/docs/manmaster/man1/openssl-passphrase-options.html) documentation
+
+To obtain public key (password prompt will be presented):
+
+```shell
+$ openssl pkey -in ca.key.pem -pubout -out ca.pubkey.pem
+```none output
+Enter pass phrase for ca.key.pem:
+```
+
+Public key can be checked using command:
+
+```shell
+$ openssl pkey -pubin -in ca.pubkey.pem -text
+```
+
+## Creating new, random CA key
+
+This part is trivial:
+
+```shell
+$ openssl genpkey -out ca.key.pem -outform PEM -algorithm ed25519
+$ openssl pkey -in ca.key.pem -pubout -out ca.pubkey.pem
+```
+
+Public key can be checked using command:
+
+```shell
+$ openssl pkey -pubin -in ca.pubkey.pem -text
+```
+
+## Creating CA key from existing private key.
+
+This part is bit more complicated, it has been described in [NIP 10](https://github.com/symbol/NIP/blob/main/NIPs/nip-0010.md)
+
+```
+$ export ASN1PREFIX="302e020100300506032b657004220420"
+$  echo "${ASN1PREFIX}PRIVATE_KEY_IN_HEX_GOES_HERE" \
+  | xxd -r -p \
+  | openssl pkey -inform DER -out ca.key.pem
+$ openssl pkey -in ca.key.pem -pubout -out ca.pubkey.pem
+```
+
+example:
+
+```
+$  echo "${ASN1PREFIX}0000000000000000000000000000000000000000000000000000000000000000" \
+  | xxd -r -p \
+  | openssl pkey -inform DER -out ca.key.pem
+$ openssl pkey -in ca.key.pem -pubout -out ca.pubkey.pem
+```
+
+!!!
+    unless executed on OFFLINE machine this is **far** from secure, as someone using same machine could easily snoop the private key in the process list
+
+!!!
+    **additional space** before `echo` command is intentional. Most *nix shells will NOT add command to history if it begins with a space.
+
+# Creating CA certificate and self-signing it
+
+To create CA crt, ca configuration file is needed:
+
+```shell
+$ cat <<EOF>ca.cnf
+[ca]
+default_ca = CA_default
+
+[CA_default]
+new_certs_dir = ./new_certs
+database = index.txt
+serial = serial.dat
+private_key = ca.key.pem
+certificate = ca.crt.pem
+policy = policy_catapult
+
+[policy_catapult]
+commonName = supplied
+
+[req]
+prompt = no
+distinguished_name = dn
+
+[dn]
+CN =
+EOF
+```
+
+!!!
+    CN should contain _some_ value, it is suggested to put account address there.
+
+Now create self-signed CA certificate
+
+```shell
+$ openssl req -config ca.cnf -keyform PEM -key ca.key.pem -new -x509 -days 7300 -out ca.crt.pem
+```
+
+To display the certificate:
+
+```shell
+$ openssl x509 -in ca.crt.pem -text -noout
+```
+
+# Node certificate
+
+Command to create node key pair is identical to the one from subsection [creating new, random, encrypted CA key]
+
+```shell
+$ openssl genpkey -out node.key.pem -outform PEM -algorithm ed25519
+```
+
+Create node certificate configuration file:
+
+```shell
+$ cat <<EOF> node.cnf
+[req]
+prompt = no
+distinguished_name = dn
+
+[dn]
+CN =
+EOF
+```
+
+Again, CN should contain _some_ value. For node certificate, it is suggested to use something that identifies the node. It can be IP or hostname.
+Now Certificate Signing Request (CSR) can be created:
+
+```shell
+$ openssl req -config node.cnf -key node.key.pem -new -out node.csr.pem
+```
+
+Certificate Authority can now sign CSR, this way node certificate will be created
+
+```shell
+$ mkdir new_certs && chmod 700 new_certs
+$ touch index.txt
+$ openssl rand -out ./serial.dat -hex 19
+$ openssl ca -config ca.cnf -days 375 -notext -in node.csr.pem -out node.crt.pem
+```none output
+Using configuration from ca.cnf
+Check that the request matches the signature
+Signature ok
+The Subject's Distinguished Name is as follows
+commonName :ASN.1 12:'ngl-beacon-502.symbolblockchain.io'
+Certificate is to be certified until Apr 2 12:29:47 2022 GMT (375 days)
+Sign the certificate? [y/n]:y
+
+1 out of 1 certificate requests certified, commit? [y/n]y
+Write out database with 1 new entries
+Data Base Updated
+```
+
+!!!
+    with settings above, node certificate will need to be re-newed after 375 days.
+!!!
+    when re-newing node certificate it is suggested to generate new random `node.key.pem` as well
+
+Generated certificate can be verified using following command:
+
+```shell
+$ openssl verify -CAfile ca.crt.pem node.crt.pem
+```
+
+# Create certificate chain
+
+Last but not least, to create certificate chain used by the server, both certificates need to be concatenated.
+The order of certificate matters.
+
+```shell
+$ cat node.crt.pem ca.crt.pem > node.full.crt.pem
+```
+
+<style class="fallback">body{visibility:hidden}</style><script>markdeepOptions={tocStyle:'long'};</script>
+<!-- Markdeep: --><script src="./markdeep.min.js" charset="utf-8"></script>
