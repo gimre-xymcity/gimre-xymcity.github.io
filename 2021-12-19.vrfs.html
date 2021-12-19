@@ -1,0 +1,175 @@
+<meta charset="utf-8" emacsmode="-*- markdown -*-"><link rel="stylesheet" href="./slate.css">
+
+**VRFs - what are they and how do they work in Symbol**
+
+This article is split into three parts:
+ 1. background on HMACs - keyed-hash message authentication codes, if you're familiar with the topic, you can skip to next part
+ 2. VRFs - Verifiable Random Functions
+ 3. VRFs in Symbol
+
+ Reader is expected to know following basic crypto terms:
+ * [(cryptographic) hash function](https://en.wikipedia.org/wiki/Cryptographic_hash_function)
+ * [public key cryptography](https://en.wikipedia.org/wiki/Public-key_cryptography)
+ * [shared secret](https://en.wikipedia.org/wiki/Shared_secret) i.e. using [Diffie–Hellman key exchange](https://en.wikipedia.org/wiki/Diffie–Hellman_key_exchange)
+
+
+# HMACs - keyed-hash message authentication codes
+
+HMAC is a general construction that allows turning any hash function into keyed hashing function that can be used for message authentication.
+That all sounds fancy, so time to split it into digestible pieces[^hmac]:
+ * _keyed hashing function_ means that the function takes two arguments, one is a _key_ and since the function does hashing the other argument is a message, therefore $ \text{HMAC}(\textit{key}, \textit{message}) $ ![](https://hackmd.io/_uploads/BkTteeu9Y.png)
+
+ * _message authentication_ means that:
+   * _message_ has not been modified in transport and
+   * receiver can verify source of the message
+
+Wait, receiver, where did he come from? Glad you ask.
+
+ 1. HMAC is not used on its own it's appended to a message send between **two** parties.
+ 2. The key isn't some random key, it's a _shared secret_, that is known to both parties (and only if the secret is known only to both parties, hmac provides message authentication).
+
+
+Trivia:
+> authors of HMAC are [Bellare](https://www.mathgenealogy.org/id.php?id=85359), [Canetti](https://www.mathgenealogy.org/id.php?id=19236), [Krawczyk](https://www.mathgenealogy.org/id.php?id=102878). <br>
+> Bellare is the same Bellare, that - among other things - is known for [Bellare-Miner forward secure signature scheme](https://sci-hub.se/10.1007/3-540-48405-1_28). (joint work with [Miner](https://www.mathgenealogy.org/id.php?id=94573)). <br>
+> Krawczyk is known - among other things - for his work on ZKPs: [On the composition of zero-knowledge proof systems](https://sci-hub.se/10.1007/BFb0032038) (joint work with [Goldreich](https://www.mathgenealogy.org/id.php?id=19348)).
+
+
+# Verifiable Random Functions (VRFs)
+
+In case of HMAC only parties that _share a secret_ can calculate hmac value.
+
+VRF is also _keyed hash_ but based on public-key cryptography. What this means is that:
+ * only private key owner can calculate VRF hash.
+ * everyone who has public key can validate such hash.
+
+Owner of the private key is usually called a prover. Besides VRF hash, prover provides a proof, that the hash is valid.
+
+Before diving in, it's crucial to understand the elements.
+
+Prover calculates:
+
+```text
+proof = VRF_prove(secret_key, message)
+hash  = VRF_hashing(proof)
+```
+
+Note, that prover needs to publish both _proof_ and _hash_.
+
+Verifier can validate the hash:
+
+```text
+VRF_verify(public_key, message, proof)
+```
+
+If successful, `VRF_verify` will return _hash_.
+
+VRFs have some interesting properties.
+
+ * proof uniqueness - even when having ability to set _public key_ and _message_ the attacker cannot create two different proofs, for which call to VRF_verify returns success and returned hashes are different[^CBA].
+ * collision resistance - even when having ability to select _secret key_ the adverary is not able to create two different messages, which would produce same hash[^CBA].
+ * pseudorandomness (in the sense of [PRF](https://en.wikipedia.org/wiki/Pseudorandom_function_family))
+ * random-oracle-like unpredictability - if the _message_ cannot be predicted then the hash is indistinguishable from uniform - this property is used in Symbol, I will get back to that in last part.
+
+There is Internet Research Task Force (IRTF), that is working on standarizing VRF with various parameters.
+Construction is very generic, one of the reasons is that there are multiple public-key cryptosystems that can be used.
+Two biggest "groups" are:
+ * RSA based VRFs, and
+ * elliptic curve based VRFs
+
+Here, I will focus only on EC-based variant, as that is what we use in Symbol.
+
+## EC-VRF
+
+I'll try not to go into details.
+
+Both prover and verifier know:
+ * `B` - ed25519 base point
+ * prover's public key - `Y = x*B` (or will refer to Y simply as _public key_)
+ * `H` - point on an elliptic curve derived from prover's _public key_ and _message_
+
+Prover knows secret `x` (secret scalar derived from his secret key) and calculates:
+ 1. `Gamma = x*H` - since _H_ is a point and _x_ is a scalar, _Gamma_ is also a point
+ 2. `k` - nonce (random value) derived using hash function from secret key and _H_ (therefore konwn only to prover)
+ 3. `c` - magic coefficient derived from _Gamma_, `k*B` and `k*H` - also called "verification hash"
+ 4. `s = (k + c*x) mod q` - "s" for scalar
+
+ The proof is a triplet: _(Gamma, c, s)_
+
+ Last part, might look easy, however:
+  * `q` is a prime number (>250 bits prime)
+  * calculating `x` out of _Gamma_ would require solving [DLP](https://en.wikipedia.org/wiki/Discrete_logarithm) on elliptic curve
+  * finding out value of `k` is equivalent to finding pre-image of used hash function
+
+Therefore proof cannot be forged without knowledge of `x`.
+
+After proof is calculated, `VRF_hashing()` is basically hashing a _Gamma_ part of a proof triplet.
+
+Now more interesting part - the verifier. There are some tech peculiarities, but ultimately, verifier gets triplet _(Gamma, c, s)_
+and calculates:
+
+ 1. `U = s*B - c*Y` = `(k*B + c*x*B) - c*Y` = `(k*B + c*Y) - c*Y` = `k*B`
+ 2. `V = s*H - c*Gamma` = `(k*H + c*x*H) - c*Gamma` = `(k*H + c*Gamma) - c*Gamma` = `k*H`
+
+Now verifier has _Gamma_, `k*B` and `k*H`, therefore verifier can calculate `c'` the same way that prover calculates `c`.
+
+If _c'_ matches _c_ provided in a proof, proof is valid and verifier can calculate VRF hash by running `VRF_hashing` on whole proof.
+
+Note: all of this _might_ look a bit like a high school math, in reality however things are _slightly_ bit more complicated.
+Part of the calculations happen on elliptic curve and part in a finite field.
+
+# VRF in Symbol
+
+I've skimmed a bit over some details, but I can't continue without them.
+
+`H` in previous section is calculated using `ECVRF_hash_to_curve` function. _Hash to curve_[^h2c] is important part of crypto, and I don't
+think it's an overstatement if I say that it has become a discipline of its own (especially in the world of ZK-crypto).
+
+Currently symbol uses so called `ECVRF_hash_to_curve_try_and_increment` method, however, the implementation currently used is based on previous
+version of a draft (v6) and is missing additional zero byte. We will address that in near future.
+
+Full name of the VRF implementation used in Symbol is `ECVRF-EDWARDS25519-SHA512-TAI` (TAI comes from _try and increment_)
+
+## How is VRF used?
+
+Every harvester in Symbol has associated VRF public key (using [vrf key link transaction](https://docs.symbolplatform.com/serialization/index.html#vrfkeylinktransaction)).
+
+Half of a VRF hash (hashed _Gamma_) is used as what we call _generation hash_. As mentioned earlier, VRF hash can act like random-oracle **if** _message_ is unpredictable.<br>
+In case of Symbol, _message_ passed to VRF calculation is [generation hash of a previous block](https://github.com/symbol/catapult-client/blob/55a79871de6ca36cb6aa74d9d41cbbbe1ab71935/extensions/harvesting/src/Harvester.cpp#L116).
+
+```cpp
+// Harvester.cpp
+unlockedAccountsView.forEach([&context, &hitContext, &hitPredicate, &pHarvesterKeyPair, &vrfProof](const auto& descriptor) {
+	hitContext.Signer = descriptor.signingKeyPair().publicKey();
+
+	vrfProof = crypto::GenerateVrfProof(context.ParentContext.GenerationHash, descriptor.vrfKeyPair());
+```
+
+First [vrf proof was generated by nemesis account](https://github.com/symbol/catapult-client/blob/dev/tools/nemgen/BlockGenerator.cpp#L230-L231), _message_ passed to VRF calculation of the first block (genesis block) is called _generation hash seed_ it is specified via entry in `config-network.properties`.[^genhashtrivia]<br>
+
+Without VRF (i.e. in NEM) and with perfect information, it is possible to guess who will be harvester of a next block - at height `H`.
+If generation hash is dependent solely on harvester's public key, the attacker that could predict harvester of a block at height `H` could also calculate generation hash that block and then premine block at height `H+1`.
+
+With VRF in place, it's no longer possible to predict harvester, because [_hit_ value depends on _generation hash_](https://github.com/symbol/catapult-client/blob/55a79871de6ca36cb6aa74d9d41cbbbe1ab71935/src/catapult/chain/BlockScorer.cpp#L76-L100).
+
+# Summary
+
+You can find whole VRF draft in IETF datatracker: https://datatracker.ietf.org/doc/draft-irtf-cfrg-vrf/10/
+
+VRF Trivia:
+> all authors involved in VRF draft are involved in [DNSSEC](https://en.wikipedia.org/wiki/Domain_Name_System_Security_Extensions) improvements: [Goldberg](https://www.mathgenealogy.org/id.php?id=174998), [Papadopoulos](https://www.cse.ust.hk/~dipapado/), [Reyzin](https://www.mathgenealogy.org/id.php?id=8648), [Vcelak](https://twitter.com/fcelda)<br>
+> here you can find more information about [NSCE5](https://www.cs.bu.edu/~goldbe/papers/nsec5.html)<br>
+> EC-VRFs are fundamental piece of nsec5 redesign proposal, more details in [Making NSEC5 Practical for DNSSEC](https://eprint.iacr.org/2017/099.pdf) paper
+
+---
+
+[^CBA]: assuming computationally bounded adversary
+
+[^hmac]: HMAC wasn't _first_ attempt to create MAC around hashing function, but it has one more feature that beat competition: construction isn't susceptible to [length extension attacks](https://en.wikipedia.org/wiki/Length_extension_attack)
+
+[^h2c]: [Hashing to Elliptic Curves](https://datatracker.ietf.org/doc/draft-irtf-cfrg-hash-to-curve/)
+
+[^genhashtrivia]: generation hash seed in Symbol is a sha3-256 hash of the same quote that was used as a base for generation hash in NEM.
+
+<style class="fallback">body{visibility:hidden}</style><script>markdeepOptions={tocStyle:'long'};</script>
+<!-- Markdeep: --><script src="./markdeep.min.js" charset="utf-8"></script>
