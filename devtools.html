@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Dev tools</title>
+		<style type="text/css">
+		label { display: block; }
+		fieldset { border: 0; }
+		label.radio { display: inline-block; }
+		textarea { display: inline-block; background-color: #f3f2f2; }
+		input { background-color: #f3f2f2; }
+		/*
+{
+    name: 'tundra3',
+    colors: [
+      '#87c3ca',
+      '#7b7377',
+      '#b2475d',
+      '#7d3e3e',
+      '#eb7f64',
+      '#d9c67a',
+      '#f3f2f2'
+    ]
+  },
+		*/
+		</style>
+		<script src="https://cdn.jsdelivr.net/npm/json-bigint-parser-browser@1.0.4/json-bigint-browser.min.js"></script>
+	</head>
+	<body style='background-color: #f3efe6'>
+		<h2>dev tools, WIP, use at your own risk</h2>
+		<p>everything happens browser-side, enjoy</p>
+		<form>
+			<div class='section'>
+				<h2>privkey to pubkey</h2>
+				<div style='display: inline-block; vertical-align: top;'>
+					<label for="privkey-hex">Private key in hex (in hex):</label>
+					<input name="privkey-hex" id="privkey-hex" size="100" value="1A9FBB379403527C5AF09823D208224F3EF047C0D33575E58A7265E31844EFB2"/>
+				</div>
+				<div style='display: inline-block; border: 1px solid black; width: 50%; word-wrap: break-word;'>
+					<pre id="privkey-to-pubkey-output" style="width:100%; word-wrap: break-word;">&nbsp;</pre>
+				</div>
+				<div style="clear:both"></div>
+			</div>
+
+			<div class='section'>
+				<h2>pubkey to address</h2>
+				<div style='display: inline-block; vertical-align: top;'>
+					<label for="pubkey-hex">Public key in hex (in hex):</label>
+					<input name="pubkey-hex" id="pubkey-hex" size="100" value="E6833171B35BCBF1EBF8236F0BEE5E639C3721BC11096CEF13BACF5070EB48F4"/>
+				</div>
+				<div style='display: inline-block; border: 1px solid black; width: 50%; word-wrap: break-word;'>
+					<pre id="pubkey-to-address-output" style="width:100%; word-wrap: break-word;">&nbsp;</pre>
+				</div>
+				<div style="clear:both"></div>
+			</div>
+
+			<div class='section'>
+				<h2>hex-address to address</h2>
+				<div style='display: inline-block; vertical-align: top;'>
+					<label for="address-hex">Address (in hex):</label>
+					<input name="address-hex" id="address-hex" size="100" value="98F8D50272C1FBF0A8033C307C6543CF26A72774BE217202"/>
+				</div>
+				<div style='display: inline-block; border: 1px solid black; width: 50%;'>
+					<pre id="address-hex-to-address-output">&nbsp;</pre>
+				</div>
+				<div style="clear:both"></div>
+			</div>
+
+			<div class='section'>
+				<h2>transaction assembly</h2>
+				<div style='display: inline-block; vertical-align: top;'>
+					<fieldset>
+						<input type="radio" name="transaction-descriptor-network" id="transaction-descriptor-mainnet" value="mainnet">
+						<label class="radio" for="transaction-descriptor-mainnet">Mainnet</label>
+
+						<input type="radio" name="transaction-descriptor-network" id="transaction-descriptor-testnet" value="testnet" checked>
+						<label class="radio" for="transaction-descriptor-testnet">Testnet</label>
+					</fieldset>
+
+					<label for="transaction-descriptor">Transaction descriptor:</label>
+					<textarea name="transaction-descriptor" id="transaction-descriptor" rows="30" cols="100">
+{
+	"type": "secret_lock_transaction",
+	"signature": "5871A742A7139C84225700D3DA73F3E8D4D9BA43DDA07124B02A26777B1065DE7CEF7AA7DAAB466D8DDE1B689F90FE7D22791F977731742D111F3DF671882D0E",
+	"signerPublicKey": "093D4D1258785AD48BB4FD762D48569BC01F49669074FA72084550DF94B4F200",
+	"fee": "20900n",
+	"deadline": "25414456928n",
+
+	"mosaic": { "mosaicId": "0xE74B99BA41F4AFEEn", "amount": "7887000000n"},
+	"duration": "10419n",
+	"recipientAddress": "TALICECI35BNIJQA5CNUKI2DY3SXNEHPZJSOVAA",
+	"secret": "B867DB875479BCC0287352CDAA4A1755689B8338777D0915E9ACD9F6EDBC96CB",
+	"hashAlgorithm": "hash_256"
+}</textarea>
+				</div>
+
+				<div style='display: inline-block; border: 1px solid black; width: 50%;'>
+					Serialized transaction (in hex):
+					<pre id="transaction-serialized-output"> &nbsp; </pre>
+					Calculated transaction hash:
+					<pre id="transaction-serialized-hash"> &nbsp; </pre>
+				</div>
+				<div style="clear:both"></div>
+			</div>
+
+			<div class='section'>
+				<h2>transaction disector</h2>
+				<div style='display: inline-block; vertical-align: top;'>
+					<label for="transaction-hex">Transaction data (in hex):</label>
+					<textarea name="transaction-hex" id="transaction-hex" rows="30" cols="100">
+38010000
+00000000
+31c6338364173ff0aef735a028ce88e9d823987c17a96a203355ed52225bef40b686c28c475a5af0aa214a9d4425ed6873b36c2430b49dd3b552b663a013ed0b
+e6833171b35bcbf1ebf8236f0bee5e639c3721bc11096cef13bacf5070eb48f4
+00000000
+01 98 4141
+60e3160000000000
+b8ce9f8206000000
+0fde76073bb6d2779cf64d4ad4d230d00e61aa5906589f67924256875650ad8a
+90000000
+00000000
+46000000
+00000000
+e6833171b35bcbf1ebf8236f0bee5e639c3721bc11096cef13bacf5070eb48f4
+00000000
+01 98 4d41
+97a967203b33d451
+0000000000000000
+b04bd105
+02 00
+0000
+41000000
+00000000
+e6833171b35bcbf1ebf8236f0bee5e639c3721bc11096cef13bacf5070eb48f4
+00000000
+01 98 4d42
+97a967203b33d451
+0100000000000000
+01 00000000000000
+					</textarea>
+				</div>
+				<div style='display: inline-block; border: 1px solid black; width: 50%;'>
+					Dissected transaction:
+					<pre id="transaction-dissected-output"> &nbsp; </pre>
+					Calculated transaction hash:
+					<pre id="transaction-dissected-hash"> &nbsp; </pre>
+				</div>
+				<div style="clear:both"></div>
+			</div>
+		</form>
+		<script type="module">
+			import symbolSdk from './devtools-bundle/bundle.js';
+
+			const factory = symbolSdk.symbol.TransactionFactory;
+			const domPrivkeyHex = document.getElementById('privkey-hex');
+			const domPubkeyHex = document.getElementById('pubkey-hex');
+			const domAddressHex = document.getElementById('address-hex');
+			const domTransactionDescriptorNetwork = document.getElementById('transaction-descriptor-network');
+			const domTransactionDescriptor = document.getElementById('transaction-descriptor');
+			const domTransactionHex = document.getElementById('transaction-hex');
+
+			const domSetText = (domElem, textContent) => {
+				domElem.replaceChild(document.createTextNode(textContent), domElem.childNodes[0]);
+			}
+
+			domPrivkeyHex.addEventListener('input', () => {
+				const data = domPrivkeyHex.value.replaceAll(/\s/g, '');
+				const privateKey = new symbolSdk.PrivateKey(data);
+				const keyPair = new symbolSdk.facade.SymbolFacade.KeyPair(privateKey);
+
+				domSetText(document.getElementById('privkey-to-pubkey-output'), keyPair.publicKey);
+			});
+			domPrivkeyHex.dispatchEvent(new Event('input', {bublles:true}));
+
+			domPubkeyHex.addEventListener('input', () => {
+				const data = domPubkeyHex.value.replaceAll(/\s/g, '');
+				const publicKey = new symbolSdk.PublicKey(data);
+				const mainnet = new symbolSdk.facade.SymbolFacade('mainnet');
+				const testnet = new symbolSdk.facade.SymbolFacade('testnet');
+
+				const mainnetAddress = mainnet.network.publicKeyToAddress(publicKey);
+				const testnetAddress = testnet.network.publicKeyToAddress(publicKey);
+
+				const addresses = `mainnet: ${mainnetAddress}\ntestnet: ${testnetAddress}`;
+				domSetText(document.getElementById('pubkey-to-address-output'), addresses);
+			}, false);
+			domPubkeyHex.dispatchEvent(new Event('input', {bublles:true}));
+
+			domAddressHex.addEventListener('input', () => {
+				const addressInHex = domAddressHex.value.replaceAll(/\s/g, '');
+				const addressAsBytes = symbolSdk.utils.hexToUint8(addressInHex);
+				const address = new symbolSdk.facade.SymbolFacade.Address(addressAsBytes);
+				const addresses = `${address}`;
+				domSetText(document.getElementById('address-hex-to-address-output'), address);
+			}, false);
+			domAddressHex.dispatchEvent(new Event('input', {bublles:true}));
+
+			domTransactionDescriptor.addEventListener('input', () => {
+				const networkName = document.querySelector('input[name="transaction-descriptor-network"]:checked').value;
+				const facade = new symbolSdk.facade.SymbolFacade(networkName);
+
+				const domTransactionSerializedOutput = document.getElementById('transaction-serialized-output');
+				const domTransactionSerializedHash = document.getElementById('transaction-serialized-hash');
+				try {
+					// parse as json and try to treat strings ending with "n" as bigints
+					const descriptorData = JSONbig.parse(domTransactionDescriptor.value, (key, value) => {
+						if (('string' === typeof value) && ((value.match(/^0[x][a-f\d]+n$/i) || value.match(/^\d+n$/i)))) {
+							return BigInt(value.slice(0, -1));
+						}
+						return value;
+					});
+
+					let signature = null;
+					if ('signature' in descriptorData) {
+						signature = new symbolSdk.Signature(descriptorData['signature']);
+						console.log('(domTransactionDescriptor) temporarily removing signature', signature);
+						delete descriptorData['signature'];
+					}
+
+					// build transaction
+					const transaction = facade.transactionFactory.create(descriptorData);
+					if (signature) {
+						console.log('(domTransactionDescriptor) reattaching sig', signature);
+						symbolSdk.symbol.SymbolTransactionFactory.attachSignature(transaction, signature);
+					}
+
+					const transactionHex = symbolSdk.utils.uint8ToHex(transaction.serialize());
+					const transactionHexFixed = transactionHex.replaceAll(/(.{64})/g, "$1\n");
+					domSetText(domTransactionSerializedOutput, transactionHexFixed);
+
+					const transactionHash = facade.hashTransaction(transaction);
+					domSetText(domTransactionSerializedHash, transactionHash);
+
+				} catch (error) {
+					domSetText(domTransactionSerializedOutput, `exception occured:\n${error}`);
+				}
+			})
+			domTransactionDescriptor.dispatchEvent(new Event('input', {bublles:true}));
+
+			const reformat = (buf, a_start, a_level) => {
+				let formatted='';
+				const start = a_start || 0;
+				const level = a_level || 0;
+				// mode 1 = parse obj, mode 2 = parse array
+				const mode = 1;
+
+				if (level > 10)
+					return;
+
+				let i=start;
+				while (i < buf.length) {
+					if (buf[i]==')') {
+						break;
+					}
+
+					if (buf[i]==']' && level>1) {
+						break;
+					}
+
+					if (buf[i]=='(') {
+						formatted += ' '.repeat(2*level);
+						formatted += '(\n'
+						const res = reformat(buf, i+1, level+1);
+						formatted += res.formatted;
+						i += res.skip;
+
+						if (buf[i] !== ')') {
+							console.log('(reformat) ERROR, expected closing brace');
+							i = buf.length;
+							break;
+						}
+						formatted += ' '.repeat(2*level);
+						formatted += ')\n'
+						i += 1;
+
+						break;
+					}
+
+					const identifier = buf.slice(i).match(/([^:]+): /);
+					formatted += ' '.repeat(2*level);
+					formatted += identifier[0];
+					i += identifier[0].length;
+
+					if (buf[i]=='[') {
+						formatted += '[\n';
+						while (i < buf.length) {
+							const res = reformat(buf, i+1, level+1);
+							formatted += res.formatted;
+							i += res.skip;
+
+							if (buf[i] !== ',' && buf[i] !== ']') {
+								console.log('(reformat) ERROR, expected coma, got', buf[i]);
+								i = buf.length;
+								break;
+							}
+							if (buf[i] === ']') {
+								formatted += ' '.repeat(2*level);
+								formatted += ']\n'
+								i += 1;
+
+								break;
+							}
+
+							console.log('(reformat) got comma, will try to parse NEXT element');
+						}
+
+						if (buf[i] !== ',' || buf[i+1] !== ' ') {
+							console.log('(reformat) ERROR, expected coma followed by space, got', buf[i]);
+							i = buf.length;
+							break;
+						}
+						i += 2;
+
+						continue;
+					} else {
+						const value = buf.slice(i).match(/([^,]+,) /)
+						formatted += value[1] + '\n';
+						i += value[0].length;
+
+					}
+				}
+				return { formatted, skip: i - start + 1 };
+			};
+
+			domTransactionHex.addEventListener('input', () => {
+				const data = domTransactionHex.value.replaceAll(/\s/g, '');
+				const transaction_hex = symbolSdk.utils.hexToUint8(data);
+				const domTransactionDissectedOutput = document.getElementById('transaction-dissected-output');
+				const domTransactionDissectedHash = document.getElementById('transaction-dissected-hash');
+				try {
+					const transaction = factory.deserialize(transaction_hex);
+					const res = reformat(transaction.toString());
+					domSetText(domTransactionDissectedOutput, res.formatted);
+
+					const facade = new symbolSdk.facade.SymbolFacade('testnet');
+					const transactionHash = facade.hashTransaction(transaction);
+					domSetText(domTransactionDissectedHash, transactionHash);
+				} catch (error) {
+					domSetText(domTransactionDissectedOutput, `exception occured:\n${error}`);
+				}
+			}, false);
+			domTransactionHex.dispatchEvent(new Event('input', {bubbles:true}));
+
+		</script>
+	</body>
+</html>
