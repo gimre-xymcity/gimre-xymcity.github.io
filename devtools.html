@@ -78,7 +78,7 @@
 					</fieldset>
 
 					<label for="transaction-descriptor">Transaction descriptor:</label>
-					<textarea name="transaction-descriptor" id="transaction-descriptor" rows="30" cols="100">
+					<textarea name="transaction-descriptor" id="transaction-descriptor" rows="20" cols="100">
 {
 	"type": "secret_lock_transaction_v1",
 	"signature": "5871A742A7139C84225700D3DA73F3E8D4D9BA43DDA07124B02A26777B1065DE7CEF7AA7DAAB466D8DDE1B689F90FE7D22791F977731742D111F3DF671882D0E",
@@ -99,8 +99,15 @@
 					<pre id="transaction-serialized-output"> &nbsp; </pre>
 					Calculated transaction hash:
 					<pre id="transaction-serialized-hash"> &nbsp; </pre>
+
+					Generated transaction signature:
+					<pre id="transaction-signature"> &nbsp; </pre>
 				</div>
 				<div style="clear:both"></div>
+
+				<label for="transaction-privkey-hex">Private key in hex (in hex):</label>
+				<input name="transaction-privkey-hex" id="transaction-privkey-hex" size="100" value="1A9FBB379403527C5AF09823D208224F3EF047C0D33575E58A7265E31844EFB2"/>
+
 			</div>
 
 			<div class='section'>
@@ -156,8 +163,10 @@ e6833171b35bcbf1ebf8236f0bee5e639c3721bc11096cef13bacf5070eb48f4
 			const domPubkeyHex = document.getElementById('pubkey-hex');
 			const domAddressHex = document.getElementById('address-hex');
 			const domTransactionDescriptorNetwork = document.getElementById('transaction-descriptor-network');
+			
 			const domTransactionDescriptor = document.getElementById('transaction-descriptor');
 			const domTransactionHex = document.getElementById('transaction-hex');
+			const domTransactionPrivkeyHex = document.getElementById('transaction-privkey-hex');
 
 			const domSetText = (domElem, textContent) => {
 				domElem.replaceChild(document.createTextNode(textContent), domElem.childNodes[0]);
@@ -195,12 +204,13 @@ e6833171b35bcbf1ebf8236f0bee5e639c3721bc11096cef13bacf5070eb48f4
 			}, false);
 			domAddressHex.dispatchEvent(new Event('input', {bublles:true}));
 
-			domTransactionDescriptor.addEventListener('input', () => {
+			const updateTransactionOutput = () => {
 				const networkName = document.querySelector('input[name="transaction-descriptor-network"]:checked').value;
 				const facade = new symbolSdk.facade.SymbolFacade(networkName);
 
 				const domTransactionSerializedOutput = document.getElementById('transaction-serialized-output');
 				const domTransactionSerializedHash = document.getElementById('transaction-serialized-hash');
+				const domTransactionSignature = document.getElementById('transaction-signature');
 				try {
 					// parse as json and try to treat strings ending with "n" as bigints
 					const descriptorData = JSONbig.parse(domTransactionDescriptor.value, (key, value) => {
@@ -231,10 +241,20 @@ e6833171b35bcbf1ebf8236f0bee5e639c3721bc11096cef13bacf5070eb48f4
 					const transactionHash = facade.hashTransaction(transaction);
 					domSetText(domTransactionSerializedHash, transactionHash);
 
+					const data = domTransactionPrivkeyHex.value.replaceAll(/\s/g, '');
+					const privateKey = new symbolSdk.PrivateKey(data);
+					const keyPair = new symbolSdk.facade.SymbolFacade.KeyPair(privateKey);
+					const generatedSignature = facade.signTransaction(keyPair, transaction);
+					const generatedSignatureHex = symbolSdk.utils.uint8ToHex(generatedSignature.bytes);
+					domSetText(domTransactionSignature, generatedSignatureHex);
+
 				} catch (error) {
 					domSetText(domTransactionSerializedOutput, `exception occured:\n${error}`);
 				}
-			})
+			};
+			domTransactionDescriptor.addEventListener('input', updateTransactionOutput);
+			domTransactionPrivkeyHex.addEventListener('input', updateTransactionOutput);
+			document.getElementsByName('transaction-descriptor-network').forEach(x => x.addEventListener('click', updateTransactionOutput));
 			domTransactionDescriptor.dispatchEvent(new Event('input', {bublles:true}));
 
 			const reformat = (buf, a_start, a_level) => {
