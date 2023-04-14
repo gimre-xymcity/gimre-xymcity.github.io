@@ -80,7 +80,7 @@
 					<label for="transaction-descriptor">Transaction descriptor:</label>
 					<textarea name="transaction-descriptor" id="transaction-descriptor" rows="30" cols="100">
 {
-	"type": "secret_lock_transaction",
+	"type": "secret_lock_transaction_v1",
 	"signature": "5871A742A7139C84225700D3DA73F3E8D4D9BA43DDA07124B02A26777B1065DE7CEF7AA7DAAB466D8DDE1B689F90FE7D22791F977731742D111F3DF671882D0E",
 	"signerPublicKey": "093D4D1258785AD48BB4FD762D48569BC01F49669074FA72084550DF94B4F200",
 	"fee": "20900n",
@@ -221,7 +221,7 @@ e6833171b35bcbf1ebf8236f0bee5e639c3721bc11096cef13bacf5070eb48f4
 					const transaction = facade.transactionFactory.create(descriptorData);
 					if (signature) {
 						console.log('(domTransactionDescriptor) reattaching sig', signature);
-						symbolSdk.symbol.SymbolTransactionFactory.attachSignature(transaction, signature);
+						symbolSdk.symbol.SymbolTransactionFactory.default.attachSignature(transaction, signature);
 					}
 
 					const transactionHex = symbolSdk.utils.uint8ToHex(transaction.serialize());
