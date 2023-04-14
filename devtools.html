@@ -151,8 +151,20 @@ e6833171b35bcbf1ebf8236f0bee5e639c3721bc11096cef13bacf5070eb48f4
 					<pre id="transaction-dissected-output"> &nbsp; </pre>
 					Calculated transaction hash:
 					<pre id="transaction-dissected-hash"> &nbsp; </pre>
+
+					Signature verification:
+					<div id="transaction-dissected-verify"> &nbsp; </div>
 				</div>
 				<div style="clear:both"></div>
+				<div style='display: inline-block; border: 1px solid black; width: 50%;'>
+				Try following mainnet transaction
+				<pre>B000000000000000CB5F66BE485E944261247B8F0A43B1DCAE15EB3D7E63C4DE
+C0AFC93FEB9753EA75ABA60E94844BDEF17F8282F96DC70A9D5267EEA60A370F
+2F8C6043F9B4FD04BB96F55104638A1455B1D9BF0273753D86ADBA95182DFF3B
+EB56470E6683102D0000000001685441C0440000000000008CC76C470F000000
+686CAB4F4761FE018B2ED187905C97B8D1272A0E2C87BC580000010000000000
+F82302A23F91ED6B8065140600000000</pre>
+				</div>
 			</div>
 		</form>
 		<script type="module">
@@ -167,6 +179,10 @@ e6833171b35bcbf1ebf8236f0bee5e639c3721bc11096cef13bacf5070eb48f4
 			const domTransactionDescriptor = document.getElementById('transaction-descriptor');
 			const domTransactionHex = document.getElementById('transaction-hex');
 			const domTransactionPrivkeyHex = document.getElementById('transaction-privkey-hex');
+
+			const domTransactionDissectedOutput = document.getElementById('transaction-dissected-output');
+			const domTransactionDissectedHash = document.getElementById('transaction-dissected-hash');
+			const domTransactionDissectedVerify = document.getElementById('transaction-dissected-verify');
 
 			const domSetText = (domElem, textContent) => {
 				domElem.replaceChild(document.createTextNode(textContent), domElem.childNodes[0]);
@@ -345,16 +361,29 @@ e6833171b35bcbf1ebf8236f0bee5e639c3721bc11096cef13bacf5070eb48f4
 			domTransactionHex.addEventListener('input', () => {
 				const data = domTransactionHex.value.replaceAll(/\s/g, '');
 				const transaction_hex = symbolSdk.utils.hexToUint8(data);
-				const domTransactionDissectedOutput = document.getElementById('transaction-dissected-output');
-				const domTransactionDissectedHash = document.getElementById('transaction-dissected-hash');
 				try {
 					const transaction = factory.deserialize(transaction_hex);
+
+					console.log(transaction);
 					const res = reformat(transaction.toString());
 					domSetText(domTransactionDissectedOutput, res.formatted);
 
-					const facade = new symbolSdk.facade.SymbolFacade('testnet');
-					const transactionHash = facade.hashTransaction(transaction);
-					domSetText(domTransactionDissectedHash, transactionHash);
+					const testnet = new symbolSdk.facade.SymbolFacade('testnet');
+					if (testnet.network.identifier == transaction.network.value) {
+						const transactionHash = testnet.hashTransaction(transaction);
+						domSetText(domTransactionDissectedHash, transactionHash);
+
+						const verifyResult = testnet.verifyTransaction(transaction, transaction.signature);
+						domSetText(domTransactionDissectedVerify, verifyResult ? 'VALID 👍 (testnet)' : 'invalid signature 👎 (testnet)');
+					} else {
+						const mainnet = new symbolSdk.facade.SymbolFacade('mainnet');
+						const transactionHash = mainnet.hashTransaction(transaction);
+						domSetText(domTransactionDissectedHash, transactionHash);
+
+						const verifyResult = mainnet.verifyTransaction(transaction, transaction.signature);
+						domSetText(domTransactionDissectedVerify, verifyResult ? 'VALID 👍 (mainnet)' : 'invalid signature 👎 (mainnet)');
+					}
+
 				} catch (error) {
 					domSetText(domTransactionDissectedOutput, `exception occured:\n${error}`);
 				}
@@ -364,3 +393,4 @@ e6833171b35bcbf1ebf8236f0bee5e639c3721bc11096cef13bacf5070eb48f4
 		</script>
 	</body>
 </html>
+
