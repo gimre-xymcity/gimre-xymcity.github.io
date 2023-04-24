@@ -157,7 +157,7 @@ e6833171b35bcbf1ebf8236f0bee5e639c3721bc11096cef13bacf5070eb48f4
 				</div>
 				<div style="clear:both"></div>
 				<div style='display: inline-block; border: 1px solid black; width: 50%;'>
-				Try following mainnet transaction
+				Try following mainnet transaction (with valid signature)
 				<pre>B000000000000000CB5F66BE485E944261247B8F0A43B1DCAE15EB3D7E63C4DE
 C0AFC93FEB9753EA75ABA60E94844BDEF17F8282F96DC70A9D5267EEA60A370F
 2F8C6043F9B4FD04BB96F55104638A1455B1D9BF0273753D86ADBA95182DFF3B
@@ -168,7 +168,7 @@ F82302A23F91ED6B8065140600000000</pre>
 			</div>
 		</form>
 		<script type="module">
-			import symbolSdk from './devtools-bundle/bundle.js';
+			import symbolSdk from './devtools-bundle/bundle.web.js';
 
 			const factory = symbolSdk.symbol.TransactionFactory;
 			const domPrivkeyHex = document.getElementById('privkey-hex');
@@ -364,7 +364,6 @@ F82302A23F91ED6B8065140600000000</pre>
 				try {
 					const transaction = factory.deserialize(transaction_hex);
 
-					console.log(transaction);
 					const res = reformat(transaction.toString());
 					domSetText(domTransactionDissectedOutput, res.formatted);
 
