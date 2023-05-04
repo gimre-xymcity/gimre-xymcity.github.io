@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Avatar reader</title>
+		<style type="text/css">
+		label { display: block; }
+		fieldset { border: 0; }
+		label.radio { display: inline-block; }
+		textarea { display: inline-block; background-color: #f3f2f2; }
+		input { background-color: #f3f2f2; }
+
+		</style>
+		<script src="https://cdn.jsdelivr.net/npm/json-bigint-parser-browser@1.0.4/json-bigint-browser.min.js"></script>
+	</head>
+	<body style='background-color: #f3efe6'>
+		<h2>avatar reader</h2>
+		<p>everything happens browser-side, enjoy</p>
+		<form>
+			<div class='section'>
+				<h2>account address</h2>
+				<div style='display: inline-block; vertical-align: top;'>
+					<label for="address">Address:</label>
+					<input name="address-b32" id="address-b32" size="100" value="NBGIMRE77YEEBDK524AJEHPYTRDVTPNTSIQT3ZY"/>
+				</div>
+				<div style='display: inline-block; border: 1px solid black; width: 50%;'>
+					<pre id="address-b32-to-address-output"></pre>
+					<div id="address-b32-image">&nbsp;</div>
+				</div>
+				<div style="clear:both"></div>
+			</div>
+
+		</form>
+		<script type="module">
+			import symbolSdk from './devtools-bundle/bundle.web.js';
+
+			const factory = symbolSdk.symbol.TransactionFactory;
+			const domAddressB32 = document.getElementById('address-b32');
+			const domAddressB32Pre = document.getElementById('address-b32-to-address-output');
+
+			const  hexToBase64 = str => {
+				var bString = "";
+				for( var i = 0; i < str.length; i +=2) {
+					bString += String.fromCharCode( parseInt( str.substr( i, 2), 16));
+				}
+				return btoa(bString);
+			};
+
+			const domAppendText = (domElem, textContent) => {
+				domElem.appendChild(document.createTextNode(textContent));
+			};
+
+			domAddressB32.addEventListener('input', () => {
+				const request = new XMLHttpRequest();
+				request.open('GET', 'https://symbol.services/nodes?filter=suggested&limit=10', true);
+
+				request.onload = () => {
+					if (request.status >= 200 && request.status < 400) {
+						const data = JSON.parse(request.responseText);
+						const addressInHex = domAddressB32.value.replaceAll(/\s/g, '');
+
+						const request_meta = new XMLHttpRequest();
+						request_meta.open('GET', data[0].apiStatus.restGatewayUrl + `/metadata?targetAddress=${addressInHex}&scopedMetadataKey=0000524154416541`, true);
+						request_meta.onload = () => {
+							if (request_meta.status >= 200 && request_meta.status < 400) {
+								const sub_data = JSON.parse(request_meta.responseText);
+								const base64String = hexToBase64(sub_data.data[0].metadataEntry.value)
+
+								const timg = new Image();
+								timg.src = `data:image/jpg;base64,${base64String}`;
+
+								domAppendText(domAddressB32Pre, 'displaying element\n');
+
+								const imgElem = document.getElementById('address-b32-image');
+								imgElem.replaceChild(timg, imgElem.childNodes[0]);
+							} else {
+								console.error('request_meta', request_meta);
+							}
+						};
+
+						domAppendText(domAddressB32Pre, 'requesting AVATAR metadata\n');
+						request_meta.send();
+					} else {
+					}
+				};
+
+				domAppendText(domAddressB32Pre, 'loading nodes information\n');
+
+				request.send();
+			}, false);
+			domAddressB32.dispatchEvent(new Event('input', {bublles:true}));
+
+		</script>
+	</body>
+</html>
+
