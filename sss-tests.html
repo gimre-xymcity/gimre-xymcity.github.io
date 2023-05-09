@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>SSS tests</title>
+		<style type="text/css">
+		label { display: block; }
+		fieldset { border: 0; }
+		label.radio { display: inline-block; }
+		textarea { display: inline-block; background-color: #f3f2f2; }
+		input { background-color: #f3f2f2; }
+
+		</style>
+		<script src="https://cdn.jsdelivr.net/npm/json-bigint-parser-browser@1.0.4/json-bigint-browser.min.js"></script>
+	</head>
+	<body style='background-color: #f3efe6'>
+		<form>
+			<div class='section'>
+				<h2>SSS tester</h2>
+
+				<div style='display: inline-block; border: 1px solid black; width: 50%;'>
+					<pre id="console-box"></pre>
+				</div>
+				<div style="clear:both"></div>
+			</div>
+
+		</form>
+
+		<script type="module">
+			import symbolSdk from './devtools-bundle/bundle.web.js';
+
+			const domConsoleBox = document.getElementById('console-box');
+
+			const domAppendText = (domElem, textContent) => {
+				domElem.appendChild(document.createTextNode(textContent));
+			};
+
+			if (isAllowedSSS && isAllowedSSS()) {
+				const publicKey = window.SSS.activePublicKey;
+				const address = window.SSS.activeAddress;
+				domAppendText(domConsoleBox, `current public key: ${publicKey}\n`);
+				domAppendText(domConsoleBox, `current address: ${address}\n`);
+			} else {
+				requestSSS();
+			}
+		</script>
+	</body>
+</html>
