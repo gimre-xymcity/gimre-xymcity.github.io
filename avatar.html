@@ -88,8 +88,13 @@
 
 				request.send();
 			}, false);
-			domAddressB32.dispatchEvent(new Event('input', {bublles:true}));
 
+			const addressRegex = /^[A-Z234567]{39}$/;
+			const queriedAddress = window.location.hash.substr(1);
+			if (queriedAddress.match(addressRegex)) {
+				domAddressB32.value = queriedAddress;
+			}
+			domAddressB32.dispatchEvent(new Event('input', {bublles:true}));
 		</script>
 	</body>
 </html>
