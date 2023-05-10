@@ -92,7 +92,7 @@
 					if (!response.ok) {
 						console.log('fetch http error', response.status);
 						if (!--tries) {
-							throw err;
+							return new Promise((resolve, reject) => reject('exceeded max tries'));
 						}
 
 						return wait(delay).then(() => fetchRetry(url, delay, tries, fetchOptions));
