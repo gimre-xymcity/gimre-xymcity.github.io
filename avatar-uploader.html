@@ -77,6 +77,13 @@
 				return hexOctets.join("");
 			};
 
+			const hexToUint8 = str => {
+				var bytes = new Uint8Array(Math.floor(str.length / 2));
+				for (let i = 0; i < bytes.length; i++)
+					bytes[i] = parseInt(str.substr(i * 2, 2), 16);
+				return bytes;
+			};
+
 			const pickNode = () => {
 				return fetch('https://symbol.services/nodes?filter=suggested&limit=10&ssl=true')
 					.then(response => response.json())
@@ -87,39 +94,70 @@
 				const signerPublicKey = window.SSS.activePublicKey;
 				const targetAddress = window.SSS.activeAddress;
 
+				const facade = new symbolSdk.facade.SymbolFacade('mainnet');
+
 				document.getElementById('sss-address').innerText = targetAddress;
 
-				domImageUpload.addEventListener('change', () => {
-					const file = domImageUpload.files[0];
-					const reader = new FileReader();
-					reader.onloadend = () => {
-						if (reader.result.byteLength > 1024) {
-							domAppendText(domConsoleBox, 'selected image is too large\n');
-						} else {
+				const createImageChangeHandler = reader => () => {
+					if (reader.result.byteLength > 1024) {
+						domAppendText(domConsoleBox, 'selected image is too large\n');
+						return;
+					}
+
+					// convert image to base64 and display image
+					base64_arraybuffer(reader.result)
+					.then(imageData => {
+						const timg = new Image();
+						timg.src = `data:image/jpg;base64,${imageData}`;
+						const imgElem = document.getElementById('b32-image');
+						imgElem.replaceChild(timg, imgElem.childNodes[0]);
+					});
+
+					const avatarValue = new Uint8Array(reader.result);
+
+					pickNode()
+					.then(restGateway => {
+						domAppendText(domConsoleBox, `picked node: ${restGateway}\n`)
+
+						domAppendText(domConsoleBox, `retrieving existing metadata\n`)
+						fetch(`${restGateway}/metadata?targetAddress=${targetAddress}&scopedMetadataKey=0000524154416541`)
+						.then(response => response.json())
+						.then(metadata_response => metadata_response.data[0] ? hexToUint8(metadata_response.data[0].metadataEntry.value) : null)
+						.then(existingEntry => ({ oldValue: existingEntry, newValue: symbolSdk.symbol.metadataUpdateValue(existingEntry, avatarValue) }))
+						.then(oldNewObj => {
+							// just additional hack to save some bytes inside transaction
+							let saveSpaceHack = false;
+							if (oldNewObj.newValue.length === oldNewObj.oldValue.length) {
+								let i = oldNewObj.newValue.length - 1;
+								while (oldNewObj.newValue[i] === 0) --i;
+								if (i !== oldNewObj.newValue.length - 1) {
+									oldNewObj.newValue = new Uint8Array(oldNewObj.newValue.buffer, 0, i + 1);
+
+									saveSpaceHack = true;
+								}
+							}
+
+							let valueSizeDelta = oldNewObj.newValue.length;
+							if (oldNewObj.oldValue) {
+								valueSizeDelta = oldNewObj.newValue.length - oldNewObj.oldValue.length
+							}
+
+							if (saveSpaceHack) {
+								valueSizeDelta = 0;
+							}
+
+							// create transaction
 							domAppendText(domConsoleBox, 'all ok, preparing transaction\n');
-
-							// convert image to base64 and display image
-							base64_arraybuffer(reader.result)
-							.then(imageData => {
-								const timg = new Image();
-								timg.src = `data:image/jpg;base64,${imageData}`;
-								const imgElem = document.getElementById('b32-image');
-								imgElem.replaceChild(timg, imgElem.childNodes[0]);
-							});
-
-							const avatarValue = new Uint8Array(reader.result);
 							const embeddedDescriptor = {
 								'type': 'account_metadata_transaction_v1',
 								'signerPublicKey': signerPublicKey,
 								'scopedMetadataKey': 0x524154416541n,
 								'targetAddress': targetAddress,
-								'value': avatarValue,
-								'valueSizeDelta': avatarValue.length
+								'value': oldNewObj.newValue,
+								'valueSizeDelta': valueSizeDelta
 							};
 
-							const facade = new symbolSdk.facade.SymbolFacade('mainnet');
 							const embeddedMetadataTransaction = facade.transactionFactory.createEmbedded(embeddedDescriptor);
-
 							const transaction = facade.transactionFactory.create({
 								'type': 'aggregate_complete_transaction_v2',
 								'signerPublicKey': signerPublicKey,
@@ -132,53 +170,59 @@
 							transaction.fee = new symbolSdk.symbol.Amount(feeMultiplier * BigInt(transaction.size))
 							domAppendText(domConsoleBox, `maximal transaction fee ${transaction.fee.value} (hex ${transaction.fee})\n`);
 
+							return transaction;
+						})
+						.then(transaction => {
+
 							// get timestamp and prepare deadline 1h in future
-							pickNode()
-							.then(restGateway => {
-								domAppendText(domConsoleBox, `picked node: ${restGateway}\n`)
+							return fetch(`${restGateway}/node/time`)
+							.then(response => response.json())
+							.then(timestamps => {
+								const timestamp = new facade.network.NetworkTimestampClass(timestamps.communicationTimestamps.sendTimestamp);
+								const deadline = timestamp.addHours(1);
+								const displayedDeadline = facade.network.toDatetime(deadline);
 
-								fetch(`${restGateway}/node/time`)
-								.then(response => response.json())
-								.then(timestamps => {
-									const timestamp = new facade.network.NetworkTimestampClass(timestamps.communicationTimestamps.sendTimestamp);
-									const deadline = timestamp.addHours(1);
-									const displayedDeadline = facade.network.toDatetime(deadline);
+								domAppendText(domConsoleBox, `current timestamp ${timestamp}, setting deadline: ${displayedDeadline}\n`);
+								transaction.deadline = new symbolSdk.symbol.Timestamp(deadline.timestamp);
 
-									domAppendText(domConsoleBox, `current timestamp ${timestamp}, setting deadline: ${displayedDeadline}\n`);
-									transaction.deadline = new symbolSdk.symbol.Timestamp(deadline.timestamp);
-
-									const serializedTransaction = transaction.serialize();
-
-									// old js api is dumb and needs serialized tx in hex
-									const hexed = toHex(serializedTransaction);
-
-									window.SSS.setTransactionByPayload(hexed);
-									window.SSS.requestSign().then(signedTransaction => {
-										domAppendText(domConsoleBox, `transaction hash: ${signedTransaction.hash}\n`);
-										domAppendText(domConsoleBox, `got signed payload, announcing to the network 🤞\n`);
-
-										fetch(`${restGateway}/transactions`, {
-											method: "PUT",
-											cache: "no-cache",
-											credentials: "same-origin",
-											headers: { "Content-Type": "application/json", },
-											redirect: "follow",
-											referrerPolicy: "no-referrer",
-											body: JSON.stringify({ payload: signedTransaction.payload }),
-										}).then(response => {
-											console.log(response);
-											return response.json();
-										}).then(announcement_response => {
-											console.log(m);
-											domAppendText(domConsoleBox, `got response: ${announcement_response.message}`)
-
-											domAppendText(domConsoleBox, `check transaction status on https://symbol.fyi`)
-										});
-									});
-								});
+								return transaction;
 							});
-						}
-					}
+						}).then(transaction => {
+							const serializedTransaction = transaction.serialize();
+
+							// old js api is dumb and needs serialized tx in hex
+							const hexed = toHex(serializedTransaction);
+
+							window.SSS.setTransactionByPayload(hexed);
+							return window.SSS.requestSign();
+						}).then(signedTransaction => {
+							domAppendText(domConsoleBox, `transaction hash: ${signedTransaction.hash}\n`);
+							domAppendText(domConsoleBox, `got signed payload, announcing to the network 🤞\n`);
+
+							return fetch(`${restGateway}/transactions`, {
+								method: "PUT",
+								cache: "no-cache",
+								credentials: "same-origin",
+								headers: { "Content-Type": "application/json", },
+								redirect: "follow",
+								referrerPolicy: "no-referrer",
+								body: JSON.stringify({ payload: signedTransaction.payload }),
+							});
+						})
+						.then(response => response.json())
+						.then(announcement_response => {
+							console.log(announcement_response);
+							domAppendText(domConsoleBox, `got response: ${announcement_response.message}`)
+
+							domAppendText(domConsoleBox, `check transaction status on https://symbol.fyi`)
+						});
+					});
+				};
+
+				domImageUpload.addEventListener('change', () => {
+					const file = domImageUpload.files[0];
+					const reader = new FileReader();
+					reader.onloadend = createImageChangeHandler(reader);
 
 					// trigger read
 					if (file) {
@@ -186,6 +230,7 @@
 					} else {
 						domAppendText(domConsoleBox, 'no file provided\n');
 					}
+
 				}, true);
 			} else {
 				domAppendText(domConsoleBox, 'SSS extension needs to be allowed on this page\n');
