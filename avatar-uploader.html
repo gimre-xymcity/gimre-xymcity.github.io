@@ -125,26 +125,7 @@
 						.then(metadata_response => metadata_response.data[0] ? hexToUint8(metadata_response.data[0].metadataEntry.value) : null)
 						.then(existingEntry => ({ oldValue: existingEntry, newValue: symbolSdk.symbol.metadataUpdateValue(existingEntry, avatarValue) }))
 						.then(oldNewObj => {
-							// just additional hack to save some bytes inside transaction
-							let saveSpaceHack = false;
-							if (oldNewObj.newValue.length === oldNewObj.oldValue.length) {
-								let i = oldNewObj.newValue.length - 1;
-								while (oldNewObj.newValue[i] === 0) --i;
-								if (i !== oldNewObj.newValue.length - 1) {
-									oldNewObj.newValue = new Uint8Array(oldNewObj.newValue.buffer, 0, i + 1);
-
-									saveSpaceHack = true;
-								}
-							}
-
-							let valueSizeDelta = oldNewObj.newValue.length;
-							if (oldNewObj.oldValue) {
-								valueSizeDelta = oldNewObj.newValue.length - oldNewObj.oldValue.length
-							}
-
-							if (saveSpaceHack) {
-								valueSizeDelta = 0;
-							}
+							let valueSizeDelta = oldNewObj.newValue.length - (oldNewObj.oldValue ? oldNewObj.oldValue.length : 0);
 
 							// create transaction
 							domAppendText(domConsoleBox, 'all ok, preparing transaction\n');
