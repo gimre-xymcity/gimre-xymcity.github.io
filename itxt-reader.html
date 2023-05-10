@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>PNG iTXT reader</title>
+		<style type="text/css">
+		label { display: block; }
+		fieldset { border: 0; }
+		label.radio { display: inline-block; }
+		textarea { display: inline-block; background-color: #f3f2f2; }
+		input { background-color: #f3f2f2; }
+		</style>
+		<script src="https://cdn.jsdelivr.net/npm/json-bigint-parser-browser@1.0.4/json-bigint-browser.min.js"></script>
+	</head>
+	<body style='background-color: #f3efe6'>
+		<h2>png reader (with itxt chunk)</h2>
+		<div>transaction that contains IHDR must also contain <a href="http://www.libpng.org/pub/png/spec/1.2/PNG-Chunks.html">iTXt PNG chunk</a> </div>
+		<form>
+			<div class='section'>
+				<h2>transaction hash</h2>
+				<div style='display: inline-block; vertical-align: top;'>
+					<label for="transaction-hash">Hash:</label>
+					<input name="transaction-hash" id="transaction-hash" size="100" value="C259C5F4F306B1A89AC32084A0A58D7873ADF19C3C5F59B479D4865857A859E8"/>
+
+					<p>Some other hashes:
+					8A9FE6D2880E57A259DB374F857084AF6359FE262C00BA79624FF1895FDF246E<br>
+					0772829EFB0D3E2BE316B9217978975B6DE3FDE71E41347D3BD0A6770E3F6996</p>
+				</div>
+				<div style='display: inline-block; border: 1px solid black; width: 50%;'>
+					<pre id="console-box"></pre>
+					<figure>
+						<div id="b64-image">&nbsp;</div>
+						<figcaption>image preview</figcaption>
+					</figure>
+				</div>
+				<div style="clear:both"></div>
+			</div>
+
+		</form>
+		<script type="module">
+			import symbolSdk from './devtools-bundle/bundle.web.js';
+
+			const factory = symbolSdk.symbol.TransactionFactory;
+			const domTransactionHash = document.getElementById('transaction-hash');
+			const domConsoleBox = document.getElementById('console-box');
+			const transactionHashRegex = /^[A-Fa-f0-9]{64}$/;
+
+			const base64_blob = blob => {
+				// Use a FileReader to generate a base64 data URI
+				const base64promise = new Promise(resolve => {
+					const reader = new FileReader();
+					reader.onload = () => resolve(reader.result);
+					reader.readAsDataURL(blob);
+				});
+
+				return base64promise.then(result => result.split(",", 2)[1]);
+			};
+
+			const hexToUint8 = str => {
+				var bytes = new Uint8Array(Math.floor(str.length / 2));
+				for (let i = 0; i < bytes.length; i++)
+					bytes[i] = parseInt(str.substr(i * 2, 2), 16);
+				return bytes;
+			};
+
+			const domAppendText = (domElem, textContent) => {
+				domElem.appendChild(document.createTextNode(textContent));
+			};
+
+			// Selects random Symbol node
+			const pickNode = () => {
+				return fetch('https://symbol.services/nodes?filter=suggested&limit=10&ssl=true')
+					.then(response => response.json())
+					.then(data => data[0].apiStatus.restGatewayUrl);
+			};
+
+			const isAggregate = transaction => [
+					symbolSdk.symbol.TransactionType.AGGREGATE_BONDED.value,
+					symbolSdk.symbol.TransactionType.AGGREGATE_COMPLETE.value
+				].includes(transaction.type);
+
+			const crcTable = (() => {
+				let crcTable = [];
+				for (let n = 0; n < 256; n++) {
+					let c = n;
+					for (var k = 0; k < 8; k++) {
+						c = ((c & 1) ? (0xEDB88320 ^ (c >>> 1)) : (c >>> 1));
+					}
+					crcTable[n] = c;
+				}
+				return crcTable;
+			})();
+
+			// Calculates crc32 value.
+			const crc32 = buffer => {
+				let crc = 0 ^ (-1);
+				for (let i = 0; i < buffer.byteLength; i++ ) {
+					crc = (crc >>> 8) ^ crcTable[(crc ^ buffer[i]) & 0xFF];
+				}
+				return (crc ^ (-1)) >>> 0;
+			};
+
+			// Performs following checks on the transaction:
+			//  * check that it's a transfer transaction
+			//  * check that it looks like PNG chunk: contains size, type and crc, crc values is ignored
+			// Returns chunk type and chunk data if ok
+			const getChunk = transaction => {
+				if (transaction.type !== symbolSdk.symbol.TransactionType.TRANSFER.value)
+					return { result: false };
+
+				const message = hexToUint8(transaction.message);
+				const dataView = new DataView(message.buffer);
+
+				if (dataView.byteLength < 12)
+					return { result: false };
+
+				const size = dataView.getUint32();
+				if (dataView.byteLength !== size + 12)
+					return { result: false };
+
+				const chunkType = dataView.getUint32(4);
+
+				const res = crc32(new Uint8Array(message.buffer, 4, size + 4));
+				const current = dataView.getUint32(8 + size);
+				if (res !== current) {
+					domAppendText(domConsoleBox, `chunk ${chunkType} has invalid crc 👎, image will likely not show up\n`);
+					console.log('ignoring crc mismatch in the chunk');
+				}
+
+				return {
+					result: true,
+					chunkType,
+					wholeChunk: message
+				};
+			}
+
+			// check it's a IHDR chunk
+			const checkIhdr = transaction_and_meta => {
+				const { result, chunkType, wholeChunk } = getChunk(transaction_and_meta.transaction);
+				if (!result || 0x49484452 !== chunkType)
+					return { result: false };
+
+				return { result, chunkType, wholeChunk };
+			};
+
+			// check it's a iTXt chunk and if so retrieve transaction hashes
+			const checkItxt = transaction_and_meta => {
+				const { result, chunkType, wholeChunk } = getChunk(transaction_and_meta.transaction);
+				if (!result || 0x69545874 !== chunkType)
+					return false;
+
+				const chunkContent = new TextDecoder().decode(new Uint8Array(wholeChunk.buffer, 8, wholeChunk.byteLength - 12));
+				if (!chunkContent.match(/^Aggregates\0\0\0\0\0hashes /))
+					return false;
+
+				return chunkContent.substring(22).split(/\s*(?:,)\s*/).filter(h => h.match(transactionHashRegex));
+			};
+
+
+			// similar to getChunk, but sligtly different, while getChunk analyses single sub-transaction
+			// this one needs to process whole aggregate, cause IDAT chunks might be split
+			// upon multiple transfers (within single aggregate)
+			//
+			const analyseChunk = transaction_and_meta => {
+				const t = transaction_and_meta.transaction;
+				if (!isAggregate(t) || t.transactions.length < 1)
+					return { result: false };
+
+				const first = t.transactions[0].transaction;
+				if (first.type !== symbolSdk.symbol.TransactionType.TRANSFER.value)
+					return { result: false };
+
+				const messageHex = first.message;
+				const message = hexToUint8(messageHex);
+				const dataView = new DataView(message.buffer);
+
+				if (dataView.byteLength < 12)
+					return { result: false };
+
+				// each transfer message is max 1024b, max 100 txes per aggregate
+				const size = dataView.getUint32();
+				if (dataView.byteLength > size + 12 || size + 12 > 1024 * 100)
+					return { result: false };
+
+				// IEND or PLTE
+				const chunkType = dataView.getUint32(4);
+				if ([0x49454e44, 0x504c5445].includes(chunkType))  {
+					if (t.transactions.length !== 1)
+						return { result: false };
+
+					return { result: true, wholeChunk: message };
+
+				// IDAT
+				} else if (chunkType == 0x49444154) {
+					// check that all subtx are transfers
+					if (t.transactions.find(sub => sub.transaction.type !== first.type) !== undefined) {
+						domAppendText(domConsoleBox, 'IDAT chunk has sub transaction with invalid type\n');
+						return { result: false };
+					}
+
+					// check total size
+					const total = t.transactions.map(sub => Math.floor(sub.transaction.message.length / 2)).reduce((a,b) => a + b);
+					if (total != size + 12) {
+						domAppendText(domConsoleBox, 'IDAT chunk size mismatch\n');
+						return { result: false };
+					}
+
+					let offset = 0;
+					const wholeChunk = new Uint8Array(size + 12);
+					for (const sub of t.transactions) {
+						const message = hexToUint8(sub.transaction.message);
+						wholeChunk.set(message, offset);
+						offset += message.length;
+
+					}
+
+					const dataView = new DataView(wholeChunk.buffer);
+					const res = crc32(new Uint8Array(wholeChunk.buffer, 4, size + 4));
+					const current = dataView.getUint32(8 + size);
+					if (res === current) {
+						domAppendText(domConsoleBox, 'IDAT has valid crc👍🎉\n');
+					} else {
+						domAppendText(domConsoleBox, 'IDAT has INVALID crc 👎, image will likely not show up\n');
+					}
+
+					return { result: true, wholeChunk };
+				}
+
+			};
+
+			domTransactionHash.addEventListener('input', () => {
+				pickNode()
+				.then(restGateway => {
+					domAppendText(domConsoleBox, `picked node: ${restGateway}\n`)
+
+					const getTransactionByHash = hash => fetch(`${restGateway}/transactions/confirmed/${hash}`)
+						.then(response => response.json());
+
+					if (domTransactionHash.value.match(transactionHashRegex)) {
+						getTransactionByHash(domTransactionHash.value)
+						.then(transaction_and_meta => {
+							domAppendText(domConsoleBox, 'analysing transaction\n')
+							const t = transaction_and_meta.transaction;
+
+							// require main transaction to be aggregate with IHDR and iTXt chunks
+							const error_message = 'first transaction needs to contain both IHDR and iTXt chunks as transfers\n';
+							if (!isAggregate(t) || t.transactions.length !== 2) {
+								domAppendText(domConsoleBox, error_message);
+								return;
+							}
+							const ihdrChunk = checkIhdr(t.transactions[0]);
+							if (!ihdrChunk.result) {
+								domAppendText(domConsoleBox, error_message);
+								return;
+							}
+
+							domAppendText(domConsoleBox, 'analysing iTXt chunk\n');
+							const hashes = checkItxt(t.transactions[1]);
+							if (!hashes) {
+								domAppendText(domConsoleBox, error_message);
+								return;
+							}
+							domAppendText(domConsoleBox, `iTXt chunk consists of ${hashes.length} transactions\n`);
+
+							let promises = new Array(hashes.length);
+
+							for (let i = 0; i < hashes.length; ++i) {
+								const hash = hashes[i];
+								domAppendText(domConsoleBox, ` * retrieving ${hash}\n`);
+								const txPromise = getTransactionByHash(hash)
+								.then(analyseChunk);
+
+								promises[i] = txPromise;
+							}
+
+							Promise.all(promises).then(results => {
+								domAppendText(domConsoleBox, 'concatenating chunks\n');
+
+								// time for something terrible, need to concat everything
+								const everythingEverywherAllAtOnce = new Blob([
+									new Uint8Array([137, 80, 78, 71, 13, 10, 26, 10]),
+									ihdrChunk.wholeChunk,
+									...results.map(e => e.wholeChunk)
+								]);
+
+								base64_blob(everythingEverywherAllAtOnce)
+								.then(imageData => {
+									const timg = new Image();
+									timg.src = `data:image/jpg;base64,${imageData}`;
+
+									domAppendText(domConsoleBox, 'displaying element\n');
+
+									const imgElem = document.getElementById('b64-image');
+									imgElem.replaceChild(timg, imgElem.childNodes[0]);
+								})
+							})
+						})
+
+					} else {
+						domAppendText(domConsoleBox, 'value does not look like transaction hash\n');
+					}
+				});
+			}, false);
+
+
+			const transactionHash = window.location.hash.substr(1);
+			if (transactionHash.match(transactionHashRegex)) {
+				domTransactionHash.value = transactionHash;
+			}
+			domTransactionHash.dispatchEvent(new Event('input', {bublles:true}));
+		</script>
+	</body>
+</html>
+
