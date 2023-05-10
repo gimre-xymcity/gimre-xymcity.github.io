@@ -17,7 +17,7 @@
 		<form>
 			<div class='section'>
 				<h2>avatar uploader (works with SSS extension)</h2>
-				<h3>⚠️ note, updating is not handled yet</h3>
+				<h3>🟢 updating should also wor🎉</h3>
 				<h3>Currently selected (SSS) account <span id="sss-address"></span></h3>
 
 				<div style='display: inline-block; vertical-align: top;'>
@@ -83,6 +83,23 @@
 					bytes[i] = parseInt(str.substr(i * 2, 2), 16);
 				return bytes;
 			};
+
+			const wait = delay => new Promise(resolve => setTimeout(resolve, delay));
+
+			const fetchRetry = (url, delay, tries, fetchOptions = {}) =>
+				fetch(url, fetchOptions)
+				.then(response => {
+					if (!response.ok) {
+						console.log('fetch http error', response.status);
+						if (!--tries) {
+							throw err;
+						}
+
+						return wait(delay).then(() => fetchRetry(url, delay, tries, fetchOptions));
+					} else {
+						return response;
+					}
+				});
 
 			const pickNode = () => {
 				return fetch('https://symbol.services/nodes?filter=suggested&limit=10&ssl=true')
@@ -188,14 +205,19 @@
 								redirect: "follow",
 								referrerPolicy: "no-referrer",
 								body: JSON.stringify({ payload: signedTransaction.payload }),
-							});
-						})
-						.then(response => response.json())
-						.then(announcement_response => {
-							console.log(announcement_response);
-							domAppendText(domConsoleBox, `got response: ${announcement_response.message}`)
+							})
+							.then(response => response.json())
+							.then(announcement_response => {
+								console.log(announcement_response);
+								domAppendText(domConsoleBox, `got response: ${announcement_response.message}\n`)
 
-							domAppendText(domConsoleBox, `check transaction status on https://symbol.fyi`)
+								return wait(100)
+									.then(() => fetchRetry(`${restGateway}/transactionStatus/${signedTransaction.hash}`, 100, 3))
+									.then(response => response.json())
+									.then(transactionStatus_response => {
+										domAppendText(domConsoleBox, `/transactionStatus group: ${transactionStatus_response.group}\n`)
+									})
+							})
 						});
 					});
 				};
