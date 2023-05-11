@@ -52,7 +52,7 @@
 
 			domAddressB32.addEventListener('input', () => {
 				const request = new XMLHttpRequest();
-				request.open('GET', 'https://symbol.services/nodes?filter=suggested&limit=10', true);
+				request.open('GET', 'https://symbol.services/nodes?filter=suggested&limit=10&ssl=true', true);
 
 				request.onload = () => {
 					if (request.status >= 200 && request.status < 400) {

@@ -90,6 +90,8 @@
 				fetch(url, fetchOptions)
 				.then(response => {
 					if (!response.ok) {
+						domAppendText(domConsoleBox, '.');
+
 						console.log('fetch http error', response.status);
 						if (!--tries) {
 							return new Promise((resolve, reject) => reject('exceeded max tries'));
@@ -212,10 +214,10 @@
 								domAppendText(domConsoleBox, `got response: ${announcement_response.message}\n`)
 
 								return wait(100)
-									.then(() => fetchRetry(`${restGateway}/transactionStatus/${signedTransaction.hash}`, 100, 3))
+									.then(() => fetchRetry(`${restGateway}/transactionStatus/${signedTransaction.hash}`, 150, 10))
 									.then(response => response.json())
 									.then(transactionStatus_response => {
-										domAppendText(domConsoleBox, `/transactionStatus group: ${transactionStatus_response.group}\n`)
+										domAppendText(domConsoleBox, `transaction group: ${transactionStatus_response.group}\n`)
 									})
 							})
 						});
