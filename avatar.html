@@ -28,6 +28,21 @@
 					<div id="address-b32-image">&nbsp;</div>
 				</div>
 				<div style="clear:both"></div>
+				<div>
+					Some other addresses
+					<ul>
+						<li><a href="#NAQ67YTFDGHBGOV4WMMNS6ZTWR6HDR45NFV7NAQ">NAQ67YTFDGHBGOV4WMMNS6ZTWR6HDR45NFV7NAQ</a></li>
+						<li><a href="#NAREHOTMHZUWV4STQEZHFORJVD6D5FFZ2TTLF2I">NAREHOTMHZUWV4STQEZHFORJVD6D5FFZ2TTLF2I</a></li>
+						<li><a href="#NASLTPYDIITCS7HEBDMNR6GJ3WHH3PFHDSTERIA">NASLTPYDIITCS7HEBDMNR6GJ3WHH3PFHDSTERIA</a></li>
+						<li><a href="#NB5KBLPDGYOIXFCWBVCSFTWKNOW6AMBPBHUFLPI">NB5KBLPDGYOIXFCWBVCSFTWKNOW6AMBPBHUFLPI</a></li>
+						<li><a href="#NBGIMRE77YEEBDK524AJEHPYTRDVTPNTSIQT3ZY">NBGIMRE77YEEBDK524AJEHPYTRDVTPNTSIQT3ZY</a></li>
+						<li><a href="#NBKTKAJOAAENFTMXZVNJR3MG5PACFFHFUDVCRKI">NBKTKAJOAAENFTMXZVNJR3MG5PACFFHFUDVCRKI</a></li>
+						<li><a href="#NBOJ5PG6LF4T6IJ2U5PFPUPF55TC3JAQFCWP74A">NBOJ5PG6LF4T6IJ2U5PFPUPF55TC3JAQFCWP74A</a></li>
+						<li><a href="#NBPUXJCPRDBVUC2ER2O22NLJIBT55H46ZABIMCI">NBPUXJCPRDBVUC2ER2O22NLJIBT55H46ZABIMCI</a></li>
+						<li><a href="#NBTJRNRFTPME4KNOKQ735GPCL5JIV6G6XZT7X7Y">NBTJRNRFTPME4KNOKQ735GPCL5JIV6G6XZT7X7Y</a></li>
+						<li><a href="#NC2RKJNQ52AX7VAQ5BFWMN2F4HXAGMUUUIB3ASA">NC2RKJNQ52AX7VAQ5BFWMN2F4HXAGMUUUIB3ASA</a></li>
+					</ul>
+				</div>
 			</div>
 
 		</form>
@@ -95,6 +110,16 @@
 				domAddressB32.value = queriedAddress;
 			}
 			domAddressB32.dispatchEvent(new Event('input', {bublles:true}));
+
+
+			document.addEventListener('click', ev => {
+				const e = window.ev || ev;
+    			if (e.target.tagName !== 'A')
+        			return;
+
+				domAddressB32.value = e.target.innerText;
+				domAddressB32.dispatchEvent(new Event('input', {bublles:true}));
+			}, false);
 		</script>
 	</body>
 </html>
