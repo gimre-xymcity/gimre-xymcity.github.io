@@ -247,7 +247,7 @@ F82302A23F91ED6B8065140600000000</pre>
 					const transaction = facade.transactionFactory.create(descriptorData);
 					if (signature) {
 						console.log('(domTransactionDescriptor) reattaching sig', signature);
-						symbolSdk.symbol.SymbolTransactionFactory.default.attachSignature(transaction, signature);
+						symbolSdk.symbol.SymbolTransactionFactory.attachSignature(transaction, signature);
 					}
 
 					const transactionHex = symbolSdk.utils.uint8ToHex(transaction.serialize());

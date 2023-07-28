@@ -9,22 +9,22 @@
 __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "HashMode": () => (/* binding */ HashMode),
-/* harmony export */   "__wbg_buffer_3f3d764d4747d564": () => (/* binding */ __wbg_buffer_3f3d764d4747d564),
-/* harmony export */   "__wbg_error_f851667af71bcfc6": () => (/* binding */ __wbg_error_f851667af71bcfc6),
-/* harmony export */   "__wbg_length_9e1ae1900cb0fbd5": () => (/* binding */ __wbg_length_9e1ae1900cb0fbd5),
-/* harmony export */   "__wbg_new_8c3f0052272a457a": () => (/* binding */ __wbg_new_8c3f0052272a457a),
-/* harmony export */   "__wbg_new_abda76e883ba8a5f": () => (/* binding */ __wbg_new_abda76e883ba8a5f),
-/* harmony export */   "__wbg_newwithbyteoffsetandlength_d9aa266703cb98be": () => (/* binding */ __wbg_newwithbyteoffsetandlength_d9aa266703cb98be),
-/* harmony export */   "__wbg_set_83db9690f9353e79": () => (/* binding */ __wbg_set_83db9690f9353e79),
-/* harmony export */   "__wbg_slice_49497b5040938ef1": () => (/* binding */ __wbg_slice_49497b5040938ef1),
-/* harmony export */   "__wbg_stack_658279fe44541cf6": () => (/* binding */ __wbg_stack_658279fe44541cf6),
-/* harmony export */   "__wbindgen_memory": () => (/* binding */ __wbindgen_memory),
-/* harmony export */   "__wbindgen_object_drop_ref": () => (/* binding */ __wbindgen_object_drop_ref),
-/* harmony export */   "__wbindgen_throw": () => (/* binding */ __wbindgen_throw),
-/* harmony export */   "crypto_private_sign": () => (/* binding */ crypto_private_sign),
-/* harmony export */   "crypto_private_verify": () => (/* binding */ crypto_private_verify),
-/* harmony export */   "crypto_sign_keypair": () => (/* binding */ crypto_sign_keypair)
+/* harmony export */   HashMode: () => (/* binding */ HashMode),
+/* harmony export */   __wbg_buffer_3f3d764d4747d564: () => (/* binding */ __wbg_buffer_3f3d764d4747d564),
+/* harmony export */   __wbg_error_f851667af71bcfc6: () => (/* binding */ __wbg_error_f851667af71bcfc6),
+/* harmony export */   __wbg_length_9e1ae1900cb0fbd5: () => (/* binding */ __wbg_length_9e1ae1900cb0fbd5),
+/* harmony export */   __wbg_new_8c3f0052272a457a: () => (/* binding */ __wbg_new_8c3f0052272a457a),
+/* harmony export */   __wbg_new_abda76e883ba8a5f: () => (/* binding */ __wbg_new_abda76e883ba8a5f),
+/* harmony export */   __wbg_newwithbyteoffsetandlength_d9aa266703cb98be: () => (/* binding */ __wbg_newwithbyteoffsetandlength_d9aa266703cb98be),
+/* harmony export */   __wbg_set_83db9690f9353e79: () => (/* binding */ __wbg_set_83db9690f9353e79),
+/* harmony export */   __wbg_slice_49497b5040938ef1: () => (/* binding */ __wbg_slice_49497b5040938ef1),
+/* harmony export */   __wbg_stack_658279fe44541cf6: () => (/* binding */ __wbg_stack_658279fe44541cf6),
+/* harmony export */   __wbindgen_memory: () => (/* binding */ __wbindgen_memory),
+/* harmony export */   __wbindgen_object_drop_ref: () => (/* binding */ __wbindgen_object_drop_ref),
+/* harmony export */   __wbindgen_throw: () => (/* binding */ __wbindgen_throw),
+/* harmony export */   crypto_private_sign: () => (/* binding */ crypto_private_sign),
+/* harmony export */   crypto_private_verify: () => (/* binding */ crypto_private_verify),
+/* harmony export */   crypto_sign_keypair: () => (/* binding */ crypto_sign_keypair)
 /* harmony export */ });
 /* harmony import */ var _symbol_crypto_wasm_bg_wasm__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./symbol_crypto_wasm_bg.wasm */ "./_build/wasm/web_webpack/symbol_crypto_wasm_bg.wasm");
 /* module decorator */ module = __webpack_require__.hmd(module);
@@ -66740,6 +66740,528 @@ utils.encode = function encode(arr, enc) {
 
 /***/ }),
 
+/***/ "./node_modules/object-inspect/index.js":
+/*!**********************************************!*\
+  !*** ./node_modules/object-inspect/index.js ***!
+  \**********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var hasMap = typeof Map === 'function' && Map.prototype;
+var mapSizeDescriptor = Object.getOwnPropertyDescriptor && hasMap ? Object.getOwnPropertyDescriptor(Map.prototype, 'size') : null;
+var mapSize = hasMap && mapSizeDescriptor && typeof mapSizeDescriptor.get === 'function' ? mapSizeDescriptor.get : null;
+var mapForEach = hasMap && Map.prototype.forEach;
+var hasSet = typeof Set === 'function' && Set.prototype;
+var setSizeDescriptor = Object.getOwnPropertyDescriptor && hasSet ? Object.getOwnPropertyDescriptor(Set.prototype, 'size') : null;
+var setSize = hasSet && setSizeDescriptor && typeof setSizeDescriptor.get === 'function' ? setSizeDescriptor.get : null;
+var setForEach = hasSet && Set.prototype.forEach;
+var hasWeakMap = typeof WeakMap === 'function' && WeakMap.prototype;
+var weakMapHas = hasWeakMap ? WeakMap.prototype.has : null;
+var hasWeakSet = typeof WeakSet === 'function' && WeakSet.prototype;
+var weakSetHas = hasWeakSet ? WeakSet.prototype.has : null;
+var hasWeakRef = typeof WeakRef === 'function' && WeakRef.prototype;
+var weakRefDeref = hasWeakRef ? WeakRef.prototype.deref : null;
+var booleanValueOf = Boolean.prototype.valueOf;
+var objectToString = Object.prototype.toString;
+var functionToString = Function.prototype.toString;
+var $match = String.prototype.match;
+var $slice = String.prototype.slice;
+var $replace = String.prototype.replace;
+var $toUpperCase = String.prototype.toUpperCase;
+var $toLowerCase = String.prototype.toLowerCase;
+var $test = RegExp.prototype.test;
+var $concat = Array.prototype.concat;
+var $join = Array.prototype.join;
+var $arrSlice = Array.prototype.slice;
+var $floor = Math.floor;
+var bigIntValueOf = typeof BigInt === 'function' ? BigInt.prototype.valueOf : null;
+var gOPS = Object.getOwnPropertySymbols;
+var symToString = typeof Symbol === 'function' && typeof Symbol.iterator === 'symbol' ? Symbol.prototype.toString : null;
+var hasShammedSymbols = typeof Symbol === 'function' && typeof Symbol.iterator === 'object';
+// ie, `has-tostringtag/shams
+var toStringTag = typeof Symbol === 'function' && Symbol.toStringTag && (typeof Symbol.toStringTag === hasShammedSymbols ? 'object' : 'symbol')
+    ? Symbol.toStringTag
+    : null;
+var isEnumerable = Object.prototype.propertyIsEnumerable;
+
+var gPO = (typeof Reflect === 'function' ? Reflect.getPrototypeOf : Object.getPrototypeOf) || (
+    [].__proto__ === Array.prototype // eslint-disable-line no-proto
+        ? function (O) {
+            return O.__proto__; // eslint-disable-line no-proto
+        }
+        : null
+);
+
+function addNumericSeparator(num, str) {
+    if (
+        num === Infinity
+        || num === -Infinity
+        || num !== num
+        || (num && num > -1000 && num < 1000)
+        || $test.call(/e/, str)
+    ) {
+        return str;
+    }
+    var sepRegex = /[0-9](?=(?:[0-9]{3})+(?![0-9]))/g;
+    if (typeof num === 'number') {
+        var int = num < 0 ? -$floor(-num) : $floor(num); // trunc(num)
+        if (int !== num) {
+            var intStr = String(int);
+            var dec = $slice.call(str, intStr.length + 1);
+            return $replace.call(intStr, sepRegex, '$&_') + '.' + $replace.call($replace.call(dec, /([0-9]{3})/g, '$&_'), /_$/, '');
+        }
+    }
+    return $replace.call(str, sepRegex, '$&_');
+}
+
+var utilInspect = __webpack_require__(/*! ./util.inspect */ "?4f7e");
+var inspectCustom = utilInspect.custom;
+var inspectSymbol = isSymbol(inspectCustom) ? inspectCustom : null;
+
+module.exports = function inspect_(obj, options, depth, seen) {
+    var opts = options || {};
+
+    if (has(opts, 'quoteStyle') && (opts.quoteStyle !== 'single' && opts.quoteStyle !== 'double')) {
+        throw new TypeError('option "quoteStyle" must be "single" or "double"');
+    }
+    if (
+        has(opts, 'maxStringLength') && (typeof opts.maxStringLength === 'number'
+            ? opts.maxStringLength < 0 && opts.maxStringLength !== Infinity
+            : opts.maxStringLength !== null
+        )
+    ) {
+        throw new TypeError('option "maxStringLength", if provided, must be a positive integer, Infinity, or `null`');
+    }
+    var customInspect = has(opts, 'customInspect') ? opts.customInspect : true;
+    if (typeof customInspect !== 'boolean' && customInspect !== 'symbol') {
+        throw new TypeError('option "customInspect", if provided, must be `true`, `false`, or `\'symbol\'`');
+    }
+
+    if (
+        has(opts, 'indent')
+        && opts.indent !== null
+        && opts.indent !== '\t'
+        && !(parseInt(opts.indent, 10) === opts.indent && opts.indent > 0)
+    ) {
+        throw new TypeError('option "indent" must be "\\t", an integer > 0, or `null`');
+    }
+    if (has(opts, 'numericSeparator') && typeof opts.numericSeparator !== 'boolean') {
+        throw new TypeError('option "numericSeparator", if provided, must be `true` or `false`');
+    }
+    var numericSeparator = opts.numericSeparator;
+
+    if (typeof obj === 'undefined') {
+        return 'undefined';
+    }
+    if (obj === null) {
+        return 'null';
+    }
+    if (typeof obj === 'boolean') {
+        return obj ? 'true' : 'false';
+    }
+
+    if (typeof obj === 'string') {
+        return inspectString(obj, opts);
+    }
+    if (typeof obj === 'number') {
+        if (obj === 0) {
+            return Infinity / obj > 0 ? '0' : '-0';
+        }
+        var str = String(obj);
+        return numericSeparator ? addNumericSeparator(obj, str) : str;
+    }
+    if (typeof obj === 'bigint') {
+        var bigIntStr = String(obj) + 'n';
+        return numericSeparator ? addNumericSeparator(obj, bigIntStr) : bigIntStr;
+    }
+
+    var maxDepth = typeof opts.depth === 'undefined' ? 5 : opts.depth;
+    if (typeof depth === 'undefined') { depth = 0; }
+    if (depth >= maxDepth && maxDepth > 0 && typeof obj === 'object') {
+        return isArray(obj) ? '[Array]' : '[Object]';
+    }
+
+    var indent = getIndent(opts, depth);
+
+    if (typeof seen === 'undefined') {
+        seen = [];
+    } else if (indexOf(seen, obj) >= 0) {
+        return '[Circular]';
+    }
+
+    function inspect(value, from, noIndent) {
+        if (from) {
+            seen = $arrSlice.call(seen);
+            seen.push(from);
+        }
+        if (noIndent) {
+            var newOpts = {
+                depth: opts.depth
+            };
+            if (has(opts, 'quoteStyle')) {
+                newOpts.quoteStyle = opts.quoteStyle;
+            }
+            return inspect_(value, newOpts, depth + 1, seen);
+        }
+        return inspect_(value, opts, depth + 1, seen);
+    }
+
+    if (typeof obj === 'function' && !isRegExp(obj)) { // in older engines, regexes are callable
+        var name = nameOf(obj);
+        var keys = arrObjKeys(obj, inspect);
+        return '[Function' + (name ? ': ' + name : ' (anonymous)') + ']' + (keys.length > 0 ? ' { ' + $join.call(keys, ', ') + ' }' : '');
+    }
+    if (isSymbol(obj)) {
+        var symString = hasShammedSymbols ? $replace.call(String(obj), /^(Symbol\(.*\))_[^)]*$/, '$1') : symToString.call(obj);
+        return typeof obj === 'object' && !hasShammedSymbols ? markBoxed(symString) : symString;
+    }
+    if (isElement(obj)) {
+        var s = '<' + $toLowerCase.call(String(obj.nodeName));
+        var attrs = obj.attributes || [];
+        for (var i = 0; i < attrs.length; i++) {
+            s += ' ' + attrs[i].name + '=' + wrapQuotes(quote(attrs[i].value), 'double', opts);
+        }
+        s += '>';
+        if (obj.childNodes && obj.childNodes.length) { s += '...'; }
+        s += '</' + $toLowerCase.call(String(obj.nodeName)) + '>';
+        return s;
+    }
+    if (isArray(obj)) {
+        if (obj.length === 0) { return '[]'; }
+        var xs = arrObjKeys(obj, inspect);
+        if (indent && !singleLineValues(xs)) {
+            return '[' + indentedJoin(xs, indent) + ']';
+        }
+        return '[ ' + $join.call(xs, ', ') + ' ]';
+    }
+    if (isError(obj)) {
+        var parts = arrObjKeys(obj, inspect);
+        if (!('cause' in Error.prototype) && 'cause' in obj && !isEnumerable.call(obj, 'cause')) {
+            return '{ [' + String(obj) + '] ' + $join.call($concat.call('[cause]: ' + inspect(obj.cause), parts), ', ') + ' }';
+        }
+        if (parts.length === 0) { return '[' + String(obj) + ']'; }
+        return '{ [' + String(obj) + '] ' + $join.call(parts, ', ') + ' }';
+    }
+    if (typeof obj === 'object' && customInspect) {
+        if (inspectSymbol && typeof obj[inspectSymbol] === 'function' && utilInspect) {
+            return utilInspect(obj, { depth: maxDepth - depth });
+        } else if (customInspect !== 'symbol' && typeof obj.inspect === 'function') {
+            return obj.inspect();
+        }
+    }
+    if (isMap(obj)) {
+        var mapParts = [];
+        mapForEach.call(obj, function (value, key) {
+            mapParts.push(inspect(key, obj, true) + ' => ' + inspect(value, obj));
+        });
+        return collectionOf('Map', mapSize.call(obj), mapParts, indent);
+    }
+    if (isSet(obj)) {
+        var setParts = [];
+        setForEach.call(obj, function (value) {
+            setParts.push(inspect(value, obj));
+        });
+        return collectionOf('Set', setSize.call(obj), setParts, indent);
+    }
+    if (isWeakMap(obj)) {
+        return weakCollectionOf('WeakMap');
+    }
+    if (isWeakSet(obj)) {
+        return weakCollectionOf('WeakSet');
+    }
+    if (isWeakRef(obj)) {
+        return weakCollectionOf('WeakRef');
+    }
+    if (isNumber(obj)) {
+        return markBoxed(inspect(Number(obj)));
+    }
+    if (isBigInt(obj)) {
+        return markBoxed(inspect(bigIntValueOf.call(obj)));
+    }
+    if (isBoolean(obj)) {
+        return markBoxed(booleanValueOf.call(obj));
+    }
+    if (isString(obj)) {
+        return markBoxed(inspect(String(obj)));
+    }
+    if (!isDate(obj) && !isRegExp(obj)) {
+        var ys = arrObjKeys(obj, inspect);
+        var isPlainObject = gPO ? gPO(obj) === Object.prototype : obj instanceof Object || obj.constructor === Object;
+        var protoTag = obj instanceof Object ? '' : 'null prototype';
+        var stringTag = !isPlainObject && toStringTag && Object(obj) === obj && toStringTag in obj ? $slice.call(toStr(obj), 8, -1) : protoTag ? 'Object' : '';
+        var constructorTag = isPlainObject || typeof obj.constructor !== 'function' ? '' : obj.constructor.name ? obj.constructor.name + ' ' : '';
+        var tag = constructorTag + (stringTag || protoTag ? '[' + $join.call($concat.call([], stringTag || [], protoTag || []), ': ') + '] ' : '');
+        if (ys.length === 0) { return tag + '{}'; }
+        if (indent) {
+            return tag + '{' + indentedJoin(ys, indent) + '}';
+        }
+        return tag + '{ ' + $join.call(ys, ', ') + ' }';
+    }
+    return String(obj);
+};
+
+function wrapQuotes(s, defaultStyle, opts) {
+    var quoteChar = (opts.quoteStyle || defaultStyle) === 'double' ? '"' : "'";
+    return quoteChar + s + quoteChar;
+}
+
+function quote(s) {
+    return $replace.call(String(s), /"/g, '&quot;');
+}
+
+function isArray(obj) { return toStr(obj) === '[object Array]' && (!toStringTag || !(typeof obj === 'object' && toStringTag in obj)); }
+function isDate(obj) { return toStr(obj) === '[object Date]' && (!toStringTag || !(typeof obj === 'object' && toStringTag in obj)); }
+function isRegExp(obj) { return toStr(obj) === '[object RegExp]' && (!toStringTag || !(typeof obj === 'object' && toStringTag in obj)); }
+function isError(obj) { return toStr(obj) === '[object Error]' && (!toStringTag || !(typeof obj === 'object' && toStringTag in obj)); }
+function isString(obj) { return toStr(obj) === '[object String]' && (!toStringTag || !(typeof obj === 'object' && toStringTag in obj)); }
+function isNumber(obj) { return toStr(obj) === '[object Number]' && (!toStringTag || !(typeof obj === 'object' && toStringTag in obj)); }
+function isBoolean(obj) { return toStr(obj) === '[object Boolean]' && (!toStringTag || !(typeof obj === 'object' && toStringTag in obj)); }
+
+// Symbol and BigInt do have Symbol.toStringTag by spec, so that can't be used to eliminate false positives
+function isSymbol(obj) {
+    if (hasShammedSymbols) {
+        return obj && typeof obj === 'object' && obj instanceof Symbol;
+    }
+    if (typeof obj === 'symbol') {
+        return true;
+    }
+    if (!obj || typeof obj !== 'object' || !symToString) {
+        return false;
+    }
+    try {
+        symToString.call(obj);
+        return true;
+    } catch (e) {}
+    return false;
+}
+
+function isBigInt(obj) {
+    if (!obj || typeof obj !== 'object' || !bigIntValueOf) {
+        return false;
+    }
+    try {
+        bigIntValueOf.call(obj);
+        return true;
+    } catch (e) {}
+    return false;
+}
+
+var hasOwn = Object.prototype.hasOwnProperty || function (key) { return key in this; };
+function has(obj, key) {
+    return hasOwn.call(obj, key);
+}
+
+function toStr(obj) {
+    return objectToString.call(obj);
+}
+
+function nameOf(f) {
+    if (f.name) { return f.name; }
+    var m = $match.call(functionToString.call(f), /^function\s*([\w$]+)/);
+    if (m) { return m[1]; }
+    return null;
+}
+
+function indexOf(xs, x) {
+    if (xs.indexOf) { return xs.indexOf(x); }
+    for (var i = 0, l = xs.length; i < l; i++) {
+        if (xs[i] === x) { return i; }
+    }
+    return -1;
+}
+
+function isMap(x) {
+    if (!mapSize || !x || typeof x !== 'object') {
+        return false;
+    }
+    try {
+        mapSize.call(x);
+        try {
+            setSize.call(x);
+        } catch (s) {
+            return true;
+        }
+        return x instanceof Map; // core-js workaround, pre-v2.5.0
+    } catch (e) {}
+    return false;
+}
+
+function isWeakMap(x) {
+    if (!weakMapHas || !x || typeof x !== 'object') {
+        return false;
+    }
+    try {
+        weakMapHas.call(x, weakMapHas);
+        try {
+            weakSetHas.call(x, weakSetHas);
+        } catch (s) {
+            return true;
+        }
+        return x instanceof WeakMap; // core-js workaround, pre-v2.5.0
+    } catch (e) {}
+    return false;
+}
+
+function isWeakRef(x) {
+    if (!weakRefDeref || !x || typeof x !== 'object') {
+        return false;
+    }
+    try {
+        weakRefDeref.call(x);
+        return true;
+    } catch (e) {}
+    return false;
+}
+
+function isSet(x) {
+    if (!setSize || !x || typeof x !== 'object') {
+        return false;
+    }
+    try {
+        setSize.call(x);
+        try {
+            mapSize.call(x);
+        } catch (m) {
+            return true;
+        }
+        return x instanceof Set; // core-js workaround, pre-v2.5.0
+    } catch (e) {}
+    return false;
+}
+
+function isWeakSet(x) {
+    if (!weakSetHas || !x || typeof x !== 'object') {
+        return false;
+    }
+    try {
+        weakSetHas.call(x, weakSetHas);
+        try {
+            weakMapHas.call(x, weakMapHas);
+        } catch (s) {
+            return true;
+        }
+        return x instanceof WeakSet; // core-js workaround, pre-v2.5.0
+    } catch (e) {}
+    return false;
+}
+
+function isElement(x) {
+    if (!x || typeof x !== 'object') { return false; }
+    if (typeof HTMLElement !== 'undefined' && x instanceof HTMLElement) {
+        return true;
+    }
+    return typeof x.nodeName === 'string' && typeof x.getAttribute === 'function';
+}
+
+function inspectString(str, opts) {
+    if (str.length > opts.maxStringLength) {
+        var remaining = str.length - opts.maxStringLength;
+        var trailer = '... ' + remaining + ' more character' + (remaining > 1 ? 's' : '');
+        return inspectString($slice.call(str, 0, opts.maxStringLength), opts) + trailer;
+    }
+    // eslint-disable-next-line no-control-regex
+    var s = $replace.call($replace.call(str, /(['\\])/g, '\\$1'), /[\x00-\x1f]/g, lowbyte);
+    return wrapQuotes(s, 'single', opts);
+}
+
+function lowbyte(c) {
+    var n = c.charCodeAt(0);
+    var x = {
+        8: 'b',
+        9: 't',
+        10: 'n',
+        12: 'f',
+        13: 'r'
+    }[n];
+    if (x) { return '\\' + x; }
+    return '\\x' + (n < 0x10 ? '0' : '') + $toUpperCase.call(n.toString(16));
+}
+
+function markBoxed(str) {
+    return 'Object(' + str + ')';
+}
+
+function weakCollectionOf(type) {
+    return type + ' { ? }';
+}
+
+function collectionOf(type, size, entries, indent) {
+    var joinedEntries = indent ? indentedJoin(entries, indent) : $join.call(entries, ', ');
+    return type + ' (' + size + ') {' + joinedEntries + '}';
+}
+
+function singleLineValues(xs) {
+    for (var i = 0; i < xs.length; i++) {
+        if (indexOf(xs[i], '\n') >= 0) {
+            return false;
+        }
+    }
+    return true;
+}
+
+function getIndent(opts, depth) {
+    var baseIndent;
+    if (opts.indent === '\t') {
+        baseIndent = '\t';
+    } else if (typeof opts.indent === 'number' && opts.indent > 0) {
+        baseIndent = $join.call(Array(opts.indent + 1), ' ');
+    } else {
+        return null;
+    }
+    return {
+        base: baseIndent,
+        prev: $join.call(Array(depth + 1), baseIndent)
+    };
+}
+
+function indentedJoin(xs, indent) {
+    if (xs.length === 0) { return ''; }
+    var lineJoiner = '\n' + indent.prev + indent.base;
+    return lineJoiner + $join.call(xs, ',' + lineJoiner) + '\n' + indent.prev;
+}
+
+function arrObjKeys(obj, inspect) {
+    var isArr = isArray(obj);
+    var xs = [];
+    if (isArr) {
+        xs.length = obj.length;
+        for (var i = 0; i < obj.length; i++) {
+            xs[i] = has(obj, i) ? inspect(obj[i], obj) : '';
+        }
+    }
+    var syms = typeof gOPS === 'function' ? gOPS(obj) : [];
+    var symMap;
+    if (hasShammedSymbols) {
+        symMap = {};
+        for (var k = 0; k < syms.length; k++) {
+            symMap['$' + syms[k]] = syms[k];
+        }
+    }
+
+    for (var key in obj) { // eslint-disable-line no-restricted-syntax
+        if (!has(obj, key)) { continue; } // eslint-disable-line no-restricted-syntax, no-continue
+        if (isArr && String(Number(key)) === key && key < obj.length) { continue; } // eslint-disable-line no-restricted-syntax, no-continue
+        if (hasShammedSymbols && symMap['$' + key] instanceof Symbol) {
+            // this is to prevent shammed Symbols, which are stored as strings, from being included in the string key section
+            continue; // eslint-disable-line no-restricted-syntax, no-continue
+        } else if ($test.call(/[^\w$]/, key)) {
+            xs.push(inspect(key, obj) + ': ' + inspect(obj[key], obj));
+        } else {
+            xs.push(key + ': ' + inspect(obj[key], obj));
+        }
+    }
+    if (typeof gOPS === 'function') {
+        for (var j = 0; j < syms.length; j++) {
+            if (isEnumerable.call(obj, syms[j])) {
+                xs.push('[' + inspect(syms[j]) + ']: ' + inspect(obj[syms[j]], obj));
+            }
+        }
+    }
+    return xs;
+}
+
+
+/***/ }),
+
 /***/ "./node_modules/object-is/implementation.js":
 /*!**************************************************!*\
   !*** ./node_modules/object-is/implementation.js ***!
@@ -68254,180 +68776,922 @@ module.exports = function xor (a, b) {
 
 /***/ }),
 
-/***/ "./node_modules/querystring/decode.js":
-/*!********************************************!*\
-  !*** ./node_modules/querystring/decode.js ***!
-  \********************************************/
+/***/ "./node_modules/qs/lib/formats.js":
+/*!****************************************!*\
+  !*** ./node_modules/qs/lib/formats.js ***!
+  \****************************************/
 /***/ ((module) => {
 
-// Copyright Joyent, Inc. and other Node contributors.
-//
-// Permission is hereby granted, free of charge, to any person obtaining a
-// copy of this software and associated documentation files (the
-// "Software"), to deal in the Software without restriction, including
-// without limitation the rights to use, copy, modify, merge, publish,
-// distribute, sublicense, and/or sell copies of the Software, and to permit
-// persons to whom the Software is furnished to do so, subject to the
-// following conditions:
-//
-// The above copyright notice and this permission notice shall be included
-// in all copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
-// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
-// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
-// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
-// USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+var replace = String.prototype.replace;
+var percentTwenties = /%20/g;
+
+var Format = {
+    RFC1738: 'RFC1738',
+    RFC3986: 'RFC3986'
+};
+
+module.exports = {
+    'default': Format.RFC3986,
+    formatters: {
+        RFC1738: function (value) {
+            return replace.call(value, percentTwenties, '+');
+        },
+        RFC3986: function (value) {
+            return String(value);
+        }
+    },
+    RFC1738: Format.RFC1738,
+    RFC3986: Format.RFC3986
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/qs/lib/index.js":
+/*!**************************************!*\
+  !*** ./node_modules/qs/lib/index.js ***!
+  \**************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 
 
-// If obj.hasOwnProperty has been overridden, then calling
-// obj.hasOwnProperty(prop) will break.
-// See: https://github.com/joyent/node/issues/1707
-function hasOwnProperty(obj, prop) {
-  return Object.prototype.hasOwnProperty.call(obj, prop);
-}
+var stringify = __webpack_require__(/*! ./stringify */ "./node_modules/qs/lib/stringify.js");
+var parse = __webpack_require__(/*! ./parse */ "./node_modules/qs/lib/parse.js");
+var formats = __webpack_require__(/*! ./formats */ "./node_modules/qs/lib/formats.js");
 
-module.exports = function(qs, sep, eq, options) {
-  sep = sep || '&';
-  eq = eq || '=';
-  var obj = {};
+module.exports = {
+    formats: formats,
+    parse: parse,
+    stringify: stringify
+};
 
-  if (typeof qs !== 'string' || qs.length === 0) {
+
+/***/ }),
+
+/***/ "./node_modules/qs/lib/parse.js":
+/*!**************************************!*\
+  !*** ./node_modules/qs/lib/parse.js ***!
+  \**************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+
+
+var utils = __webpack_require__(/*! ./utils */ "./node_modules/qs/lib/utils.js");
+
+var has = Object.prototype.hasOwnProperty;
+var isArray = Array.isArray;
+
+var defaults = {
+    allowDots: false,
+    allowPrototypes: false,
+    allowSparse: false,
+    arrayLimit: 20,
+    charset: 'utf-8',
+    charsetSentinel: false,
+    comma: false,
+    decoder: utils.decode,
+    delimiter: '&',
+    depth: 5,
+    ignoreQueryPrefix: false,
+    interpretNumericEntities: false,
+    parameterLimit: 1000,
+    parseArrays: true,
+    plainObjects: false,
+    strictNullHandling: false
+};
+
+var interpretNumericEntities = function (str) {
+    return str.replace(/&#(\d+);/g, function ($0, numberStr) {
+        return String.fromCharCode(parseInt(numberStr, 10));
+    });
+};
+
+var parseArrayValue = function (val, options) {
+    if (val && typeof val === 'string' && options.comma && val.indexOf(',') > -1) {
+        return val.split(',');
+    }
+
+    return val;
+};
+
+// This is what browsers will submit when the ✓ character occurs in an
+// application/x-www-form-urlencoded body and the encoding of the page containing
+// the form is iso-8859-1, or when the submitted form has an accept-charset
+// attribute of iso-8859-1. Presumably also with other charsets that do not contain
+// the ✓ character, such as us-ascii.
+var isoSentinel = 'utf8=%26%2310003%3B'; // encodeURIComponent('&#10003;')
+
+// These are the percent-encoded utf-8 octets representing a checkmark, indicating that the request actually is utf-8 encoded.
+var charsetSentinel = 'utf8=%E2%9C%93'; // encodeURIComponent('✓')
+
+var parseValues = function parseQueryStringValues(str, options) {
+    var obj = { __proto__: null };
+
+    var cleanStr = options.ignoreQueryPrefix ? str.replace(/^\?/, '') : str;
+    var limit = options.parameterLimit === Infinity ? undefined : options.parameterLimit;
+    var parts = cleanStr.split(options.delimiter, limit);
+    var skipIndex = -1; // Keep track of where the utf8 sentinel was found
+    var i;
+
+    var charset = options.charset;
+    if (options.charsetSentinel) {
+        for (i = 0; i < parts.length; ++i) {
+            if (parts[i].indexOf('utf8=') === 0) {
+                if (parts[i] === charsetSentinel) {
+                    charset = 'utf-8';
+                } else if (parts[i] === isoSentinel) {
+                    charset = 'iso-8859-1';
+                }
+                skipIndex = i;
+                i = parts.length; // The eslint settings do not allow break;
+            }
+        }
+    }
+
+    for (i = 0; i < parts.length; ++i) {
+        if (i === skipIndex) {
+            continue;
+        }
+        var part = parts[i];
+
+        var bracketEqualsPos = part.indexOf(']=');
+        var pos = bracketEqualsPos === -1 ? part.indexOf('=') : bracketEqualsPos + 1;
+
+        var key, val;
+        if (pos === -1) {
+            key = options.decoder(part, defaults.decoder, charset, 'key');
+            val = options.strictNullHandling ? null : '';
+        } else {
+            key = options.decoder(part.slice(0, pos), defaults.decoder, charset, 'key');
+            val = utils.maybeMap(
+                parseArrayValue(part.slice(pos + 1), options),
+                function (encodedVal) {
+                    return options.decoder(encodedVal, defaults.decoder, charset, 'value');
+                }
+            );
+        }
+
+        if (val && options.interpretNumericEntities && charset === 'iso-8859-1') {
+            val = interpretNumericEntities(val);
+        }
+
+        if (part.indexOf('[]=') > -1) {
+            val = isArray(val) ? [val] : val;
+        }
+
+        if (has.call(obj, key)) {
+            obj[key] = utils.combine(obj[key], val);
+        } else {
+            obj[key] = val;
+        }
+    }
+
     return obj;
-  }
+};
 
-  var regexp = /\+/g;
-  qs = qs.split(sep);
+var parseObject = function (chain, val, options, valuesParsed) {
+    var leaf = valuesParsed ? val : parseArrayValue(val, options);
 
-  var maxKeys = 1000;
-  if (options && typeof options.maxKeys === 'number') {
-    maxKeys = options.maxKeys;
-  }
+    for (var i = chain.length - 1; i >= 0; --i) {
+        var obj;
+        var root = chain[i];
 
-  var len = qs.length;
-  // maxKeys <= 0 means that we should not limit keys count
-  if (maxKeys > 0 && len > maxKeys) {
-    len = maxKeys;
-  }
+        if (root === '[]' && options.parseArrays) {
+            obj = [].concat(leaf);
+        } else {
+            obj = options.plainObjects ? Object.create(null) : {};
+            var cleanRoot = root.charAt(0) === '[' && root.charAt(root.length - 1) === ']' ? root.slice(1, -1) : root;
+            var index = parseInt(cleanRoot, 10);
+            if (!options.parseArrays && cleanRoot === '') {
+                obj = { 0: leaf };
+            } else if (
+                !isNaN(index)
+                && root !== cleanRoot
+                && String(index) === cleanRoot
+                && index >= 0
+                && (options.parseArrays && index <= options.arrayLimit)
+            ) {
+                obj = [];
+                obj[index] = leaf;
+            } else if (cleanRoot !== '__proto__') {
+                obj[cleanRoot] = leaf;
+            }
+        }
 
-  for (var i = 0; i < len; ++i) {
-    var x = qs[i].replace(regexp, '%20'),
-        idx = x.indexOf(eq),
-        kstr, vstr, k, v;
-
-    if (idx >= 0) {
-      kstr = x.substr(0, idx);
-      vstr = x.substr(idx + 1);
-    } else {
-      kstr = x;
-      vstr = '';
+        leaf = obj;
     }
 
-    k = decodeURIComponent(kstr);
-    v = decodeURIComponent(vstr);
+    return leaf;
+};
 
-    if (!hasOwnProperty(obj, k)) {
-      obj[k] = v;
-    } else if (Array.isArray(obj[k])) {
-      obj[k].push(v);
-    } else {
-      obj[k] = [obj[k], v];
+var parseKeys = function parseQueryStringKeys(givenKey, val, options, valuesParsed) {
+    if (!givenKey) {
+        return;
     }
-  }
 
-  return obj;
+    // Transform dot notation to bracket notation
+    var key = options.allowDots ? givenKey.replace(/\.([^.[]+)/g, '[$1]') : givenKey;
+
+    // The regex chunks
+
+    var brackets = /(\[[^[\]]*])/;
+    var child = /(\[[^[\]]*])/g;
+
+    // Get the parent
+
+    var segment = options.depth > 0 && brackets.exec(key);
+    var parent = segment ? key.slice(0, segment.index) : key;
+
+    // Stash the parent if it exists
+
+    var keys = [];
+    if (parent) {
+        // If we aren't using plain objects, optionally prefix keys that would overwrite object prototype properties
+        if (!options.plainObjects && has.call(Object.prototype, parent)) {
+            if (!options.allowPrototypes) {
+                return;
+            }
+        }
+
+        keys.push(parent);
+    }
+
+    // Loop through children appending to the array until we hit depth
+
+    var i = 0;
+    while (options.depth > 0 && (segment = child.exec(key)) !== null && i < options.depth) {
+        i += 1;
+        if (!options.plainObjects && has.call(Object.prototype, segment[1].slice(1, -1))) {
+            if (!options.allowPrototypes) {
+                return;
+            }
+        }
+        keys.push(segment[1]);
+    }
+
+    // If there's a remainder, just add whatever is left
+
+    if (segment) {
+        keys.push('[' + key.slice(segment.index) + ']');
+    }
+
+    return parseObject(keys, val, options, valuesParsed);
+};
+
+var normalizeParseOptions = function normalizeParseOptions(opts) {
+    if (!opts) {
+        return defaults;
+    }
+
+    if (opts.decoder !== null && opts.decoder !== undefined && typeof opts.decoder !== 'function') {
+        throw new TypeError('Decoder has to be a function.');
+    }
+
+    if (typeof opts.charset !== 'undefined' && opts.charset !== 'utf-8' && opts.charset !== 'iso-8859-1') {
+        throw new TypeError('The charset option must be either utf-8, iso-8859-1, or undefined');
+    }
+    var charset = typeof opts.charset === 'undefined' ? defaults.charset : opts.charset;
+
+    return {
+        allowDots: typeof opts.allowDots === 'undefined' ? defaults.allowDots : !!opts.allowDots,
+        allowPrototypes: typeof opts.allowPrototypes === 'boolean' ? opts.allowPrototypes : defaults.allowPrototypes,
+        allowSparse: typeof opts.allowSparse === 'boolean' ? opts.allowSparse : defaults.allowSparse,
+        arrayLimit: typeof opts.arrayLimit === 'number' ? opts.arrayLimit : defaults.arrayLimit,
+        charset: charset,
+        charsetSentinel: typeof opts.charsetSentinel === 'boolean' ? opts.charsetSentinel : defaults.charsetSentinel,
+        comma: typeof opts.comma === 'boolean' ? opts.comma : defaults.comma,
+        decoder: typeof opts.decoder === 'function' ? opts.decoder : defaults.decoder,
+        delimiter: typeof opts.delimiter === 'string' || utils.isRegExp(opts.delimiter) ? opts.delimiter : defaults.delimiter,
+        // eslint-disable-next-line no-implicit-coercion, no-extra-parens
+        depth: (typeof opts.depth === 'number' || opts.depth === false) ? +opts.depth : defaults.depth,
+        ignoreQueryPrefix: opts.ignoreQueryPrefix === true,
+        interpretNumericEntities: typeof opts.interpretNumericEntities === 'boolean' ? opts.interpretNumericEntities : defaults.interpretNumericEntities,
+        parameterLimit: typeof opts.parameterLimit === 'number' ? opts.parameterLimit : defaults.parameterLimit,
+        parseArrays: opts.parseArrays !== false,
+        plainObjects: typeof opts.plainObjects === 'boolean' ? opts.plainObjects : defaults.plainObjects,
+        strictNullHandling: typeof opts.strictNullHandling === 'boolean' ? opts.strictNullHandling : defaults.strictNullHandling
+    };
+};
+
+module.exports = function (str, opts) {
+    var options = normalizeParseOptions(opts);
+
+    if (str === '' || str === null || typeof str === 'undefined') {
+        return options.plainObjects ? Object.create(null) : {};
+    }
+
+    var tempObj = typeof str === 'string' ? parseValues(str, options) : str;
+    var obj = options.plainObjects ? Object.create(null) : {};
+
+    // Iterate over the keys and setup the new object
+
+    var keys = Object.keys(tempObj);
+    for (var i = 0; i < keys.length; ++i) {
+        var key = keys[i];
+        var newObj = parseKeys(key, tempObj[key], options, typeof str === 'string');
+        obj = utils.merge(obj, newObj, options);
+    }
+
+    if (options.allowSparse === true) {
+        return obj;
+    }
+
+    return utils.compact(obj);
 };
 
 
 /***/ }),
 
-/***/ "./node_modules/querystring/encode.js":
-/*!********************************************!*\
-  !*** ./node_modules/querystring/encode.js ***!
-  \********************************************/
-/***/ ((module) => {
-
-// Copyright Joyent, Inc. and other Node contributors.
-//
-// Permission is hereby granted, free of charge, to any person obtaining a
-// copy of this software and associated documentation files (the
-// "Software"), to deal in the Software without restriction, including
-// without limitation the rights to use, copy, modify, merge, publish,
-// distribute, sublicense, and/or sell copies of the Software, and to permit
-// persons to whom the Software is furnished to do so, subject to the
-// following conditions:
-//
-// The above copyright notice and this permission notice shall be included
-// in all copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
-// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
-// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
-// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
-// USE OR OTHER DEALINGS IN THE SOFTWARE.
+/***/ "./node_modules/qs/lib/stringify.js":
+/*!******************************************!*\
+  !*** ./node_modules/qs/lib/stringify.js ***!
+  \******************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 
 
-var stringifyPrimitive = function(v) {
-  switch (typeof v) {
-    case 'string':
-      return v;
+var getSideChannel = __webpack_require__(/*! side-channel */ "./node_modules/side-channel/index.js");
+var utils = __webpack_require__(/*! ./utils */ "./node_modules/qs/lib/utils.js");
+var formats = __webpack_require__(/*! ./formats */ "./node_modules/qs/lib/formats.js");
+var has = Object.prototype.hasOwnProperty;
 
-    case 'boolean':
-      return v ? 'true' : 'false';
-
-    case 'number':
-      return isFinite(v) ? v : '';
-
-    default:
-      return '';
-  }
+var arrayPrefixGenerators = {
+    brackets: function brackets(prefix) {
+        return prefix + '[]';
+    },
+    comma: 'comma',
+    indices: function indices(prefix, key) {
+        return prefix + '[' + key + ']';
+    },
+    repeat: function repeat(prefix) {
+        return prefix;
+    }
 };
 
-module.exports = function(obj, sep, eq, name) {
-  sep = sep || '&';
-  eq = eq || '=';
-  if (obj === null) {
-    obj = undefined;
-  }
+var isArray = Array.isArray;
+var push = Array.prototype.push;
+var pushToArray = function (arr, valueOrArray) {
+    push.apply(arr, isArray(valueOrArray) ? valueOrArray : [valueOrArray]);
+};
 
-  if (typeof obj === 'object') {
-    return Object.keys(obj).map(function(k) {
-      var ks = encodeURIComponent(stringifyPrimitive(k)) + eq;
-      if (Array.isArray(obj[k])) {
-        return obj[k].map(function(v) {
-          return ks + encodeURIComponent(stringifyPrimitive(v));
-        }).join(sep);
-      } else {
-        return ks + encodeURIComponent(stringifyPrimitive(obj[k]));
-      }
-    }).join(sep);
+var toISO = Date.prototype.toISOString;
 
-  }
+var defaultFormat = formats['default'];
+var defaults = {
+    addQueryPrefix: false,
+    allowDots: false,
+    charset: 'utf-8',
+    charsetSentinel: false,
+    delimiter: '&',
+    encode: true,
+    encoder: utils.encode,
+    encodeValuesOnly: false,
+    format: defaultFormat,
+    formatter: formats.formatters[defaultFormat],
+    // deprecated
+    indices: false,
+    serializeDate: function serializeDate(date) {
+        return toISO.call(date);
+    },
+    skipNulls: false,
+    strictNullHandling: false
+};
 
-  if (!name) return '';
-  return encodeURIComponent(stringifyPrimitive(name)) + eq +
-         encodeURIComponent(stringifyPrimitive(obj));
+var isNonNullishPrimitive = function isNonNullishPrimitive(v) {
+    return typeof v === 'string'
+        || typeof v === 'number'
+        || typeof v === 'boolean'
+        || typeof v === 'symbol'
+        || typeof v === 'bigint';
+};
+
+var sentinel = {};
+
+var stringify = function stringify(
+    object,
+    prefix,
+    generateArrayPrefix,
+    commaRoundTrip,
+    strictNullHandling,
+    skipNulls,
+    encoder,
+    filter,
+    sort,
+    allowDots,
+    serializeDate,
+    format,
+    formatter,
+    encodeValuesOnly,
+    charset,
+    sideChannel
+) {
+    var obj = object;
+
+    var tmpSc = sideChannel;
+    var step = 0;
+    var findFlag = false;
+    while ((tmpSc = tmpSc.get(sentinel)) !== void undefined && !findFlag) {
+        // Where object last appeared in the ref tree
+        var pos = tmpSc.get(object);
+        step += 1;
+        if (typeof pos !== 'undefined') {
+            if (pos === step) {
+                throw new RangeError('Cyclic object value');
+            } else {
+                findFlag = true; // Break while
+            }
+        }
+        if (typeof tmpSc.get(sentinel) === 'undefined') {
+            step = 0;
+        }
+    }
+
+    if (typeof filter === 'function') {
+        obj = filter(prefix, obj);
+    } else if (obj instanceof Date) {
+        obj = serializeDate(obj);
+    } else if (generateArrayPrefix === 'comma' && isArray(obj)) {
+        obj = utils.maybeMap(obj, function (value) {
+            if (value instanceof Date) {
+                return serializeDate(value);
+            }
+            return value;
+        });
+    }
+
+    if (obj === null) {
+        if (strictNullHandling) {
+            return encoder && !encodeValuesOnly ? encoder(prefix, defaults.encoder, charset, 'key', format) : prefix;
+        }
+
+        obj = '';
+    }
+
+    if (isNonNullishPrimitive(obj) || utils.isBuffer(obj)) {
+        if (encoder) {
+            var keyValue = encodeValuesOnly ? prefix : encoder(prefix, defaults.encoder, charset, 'key', format);
+            return [formatter(keyValue) + '=' + formatter(encoder(obj, defaults.encoder, charset, 'value', format))];
+        }
+        return [formatter(prefix) + '=' + formatter(String(obj))];
+    }
+
+    var values = [];
+
+    if (typeof obj === 'undefined') {
+        return values;
+    }
+
+    var objKeys;
+    if (generateArrayPrefix === 'comma' && isArray(obj)) {
+        // we need to join elements in
+        if (encodeValuesOnly && encoder) {
+            obj = utils.maybeMap(obj, encoder);
+        }
+        objKeys = [{ value: obj.length > 0 ? obj.join(',') || null : void undefined }];
+    } else if (isArray(filter)) {
+        objKeys = filter;
+    } else {
+        var keys = Object.keys(obj);
+        objKeys = sort ? keys.sort(sort) : keys;
+    }
+
+    var adjustedPrefix = commaRoundTrip && isArray(obj) && obj.length === 1 ? prefix + '[]' : prefix;
+
+    for (var j = 0; j < objKeys.length; ++j) {
+        var key = objKeys[j];
+        var value = typeof key === 'object' && typeof key.value !== 'undefined' ? key.value : obj[key];
+
+        if (skipNulls && value === null) {
+            continue;
+        }
+
+        var keyPrefix = isArray(obj)
+            ? typeof generateArrayPrefix === 'function' ? generateArrayPrefix(adjustedPrefix, key) : adjustedPrefix
+            : adjustedPrefix + (allowDots ? '.' + key : '[' + key + ']');
+
+        sideChannel.set(object, step);
+        var valueSideChannel = getSideChannel();
+        valueSideChannel.set(sentinel, sideChannel);
+        pushToArray(values, stringify(
+            value,
+            keyPrefix,
+            generateArrayPrefix,
+            commaRoundTrip,
+            strictNullHandling,
+            skipNulls,
+            generateArrayPrefix === 'comma' && encodeValuesOnly && isArray(obj) ? null : encoder,
+            filter,
+            sort,
+            allowDots,
+            serializeDate,
+            format,
+            formatter,
+            encodeValuesOnly,
+            charset,
+            valueSideChannel
+        ));
+    }
+
+    return values;
+};
+
+var normalizeStringifyOptions = function normalizeStringifyOptions(opts) {
+    if (!opts) {
+        return defaults;
+    }
+
+    if (opts.encoder !== null && typeof opts.encoder !== 'undefined' && typeof opts.encoder !== 'function') {
+        throw new TypeError('Encoder has to be a function.');
+    }
+
+    var charset = opts.charset || defaults.charset;
+    if (typeof opts.charset !== 'undefined' && opts.charset !== 'utf-8' && opts.charset !== 'iso-8859-1') {
+        throw new TypeError('The charset option must be either utf-8, iso-8859-1, or undefined');
+    }
+
+    var format = formats['default'];
+    if (typeof opts.format !== 'undefined') {
+        if (!has.call(formats.formatters, opts.format)) {
+            throw new TypeError('Unknown format option provided.');
+        }
+        format = opts.format;
+    }
+    var formatter = formats.formatters[format];
+
+    var filter = defaults.filter;
+    if (typeof opts.filter === 'function' || isArray(opts.filter)) {
+        filter = opts.filter;
+    }
+
+    return {
+        addQueryPrefix: typeof opts.addQueryPrefix === 'boolean' ? opts.addQueryPrefix : defaults.addQueryPrefix,
+        allowDots: typeof opts.allowDots === 'undefined' ? defaults.allowDots : !!opts.allowDots,
+        charset: charset,
+        charsetSentinel: typeof opts.charsetSentinel === 'boolean' ? opts.charsetSentinel : defaults.charsetSentinel,
+        delimiter: typeof opts.delimiter === 'undefined' ? defaults.delimiter : opts.delimiter,
+        encode: typeof opts.encode === 'boolean' ? opts.encode : defaults.encode,
+        encoder: typeof opts.encoder === 'function' ? opts.encoder : defaults.encoder,
+        encodeValuesOnly: typeof opts.encodeValuesOnly === 'boolean' ? opts.encodeValuesOnly : defaults.encodeValuesOnly,
+        filter: filter,
+        format: format,
+        formatter: formatter,
+        serializeDate: typeof opts.serializeDate === 'function' ? opts.serializeDate : defaults.serializeDate,
+        skipNulls: typeof opts.skipNulls === 'boolean' ? opts.skipNulls : defaults.skipNulls,
+        sort: typeof opts.sort === 'function' ? opts.sort : null,
+        strictNullHandling: typeof opts.strictNullHandling === 'boolean' ? opts.strictNullHandling : defaults.strictNullHandling
+    };
+};
+
+module.exports = function (object, opts) {
+    var obj = object;
+    var options = normalizeStringifyOptions(opts);
+
+    var objKeys;
+    var filter;
+
+    if (typeof options.filter === 'function') {
+        filter = options.filter;
+        obj = filter('', obj);
+    } else if (isArray(options.filter)) {
+        filter = options.filter;
+        objKeys = filter;
+    }
+
+    var keys = [];
+
+    if (typeof obj !== 'object' || obj === null) {
+        return '';
+    }
+
+    var arrayFormat;
+    if (opts && opts.arrayFormat in arrayPrefixGenerators) {
+        arrayFormat = opts.arrayFormat;
+    } else if (opts && 'indices' in opts) {
+        arrayFormat = opts.indices ? 'indices' : 'repeat';
+    } else {
+        arrayFormat = 'indices';
+    }
+
+    var generateArrayPrefix = arrayPrefixGenerators[arrayFormat];
+    if (opts && 'commaRoundTrip' in opts && typeof opts.commaRoundTrip !== 'boolean') {
+        throw new TypeError('`commaRoundTrip` must be a boolean, or absent');
+    }
+    var commaRoundTrip = generateArrayPrefix === 'comma' && opts && opts.commaRoundTrip;
+
+    if (!objKeys) {
+        objKeys = Object.keys(obj);
+    }
+
+    if (options.sort) {
+        objKeys.sort(options.sort);
+    }
+
+    var sideChannel = getSideChannel();
+    for (var i = 0; i < objKeys.length; ++i) {
+        var key = objKeys[i];
+
+        if (options.skipNulls && obj[key] === null) {
+            continue;
+        }
+        pushToArray(keys, stringify(
+            obj[key],
+            key,
+            generateArrayPrefix,
+            commaRoundTrip,
+            options.strictNullHandling,
+            options.skipNulls,
+            options.encode ? options.encoder : null,
+            options.filter,
+            options.sort,
+            options.allowDots,
+            options.serializeDate,
+            options.format,
+            options.formatter,
+            options.encodeValuesOnly,
+            options.charset,
+            sideChannel
+        ));
+    }
+
+    var joined = keys.join(options.delimiter);
+    var prefix = options.addQueryPrefix === true ? '?' : '';
+
+    if (options.charsetSentinel) {
+        if (options.charset === 'iso-8859-1') {
+            // encodeURIComponent('&#10003;'), the "numeric entity" representation of a checkmark
+            prefix += 'utf8=%26%2310003%3B&';
+        } else {
+            // encodeURIComponent('✓')
+            prefix += 'utf8=%E2%9C%93&';
+        }
+    }
+
+    return joined.length > 0 ? prefix + joined : '';
 };
 
 
 /***/ }),
 
-/***/ "./node_modules/querystring/index.js":
-/*!*******************************************!*\
-  !*** ./node_modules/querystring/index.js ***!
-  \*******************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+/***/ "./node_modules/qs/lib/utils.js":
+/*!**************************************!*\
+  !*** ./node_modules/qs/lib/utils.js ***!
+  \**************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 
 
-exports.decode = exports.parse = __webpack_require__(/*! ./decode */ "./node_modules/querystring/decode.js");
-exports.encode = exports.stringify = __webpack_require__(/*! ./encode */ "./node_modules/querystring/encode.js");
+var formats = __webpack_require__(/*! ./formats */ "./node_modules/qs/lib/formats.js");
+
+var has = Object.prototype.hasOwnProperty;
+var isArray = Array.isArray;
+
+var hexTable = (function () {
+    var array = [];
+    for (var i = 0; i < 256; ++i) {
+        array.push('%' + ((i < 16 ? '0' : '') + i.toString(16)).toUpperCase());
+    }
+
+    return array;
+}());
+
+var compactQueue = function compactQueue(queue) {
+    while (queue.length > 1) {
+        var item = queue.pop();
+        var obj = item.obj[item.prop];
+
+        if (isArray(obj)) {
+            var compacted = [];
+
+            for (var j = 0; j < obj.length; ++j) {
+                if (typeof obj[j] !== 'undefined') {
+                    compacted.push(obj[j]);
+                }
+            }
+
+            item.obj[item.prop] = compacted;
+        }
+    }
+};
+
+var arrayToObject = function arrayToObject(source, options) {
+    var obj = options && options.plainObjects ? Object.create(null) : {};
+    for (var i = 0; i < source.length; ++i) {
+        if (typeof source[i] !== 'undefined') {
+            obj[i] = source[i];
+        }
+    }
+
+    return obj;
+};
+
+var merge = function merge(target, source, options) {
+    /* eslint no-param-reassign: 0 */
+    if (!source) {
+        return target;
+    }
+
+    if (typeof source !== 'object') {
+        if (isArray(target)) {
+            target.push(source);
+        } else if (target && typeof target === 'object') {
+            if ((options && (options.plainObjects || options.allowPrototypes)) || !has.call(Object.prototype, source)) {
+                target[source] = true;
+            }
+        } else {
+            return [target, source];
+        }
+
+        return target;
+    }
+
+    if (!target || typeof target !== 'object') {
+        return [target].concat(source);
+    }
+
+    var mergeTarget = target;
+    if (isArray(target) && !isArray(source)) {
+        mergeTarget = arrayToObject(target, options);
+    }
+
+    if (isArray(target) && isArray(source)) {
+        source.forEach(function (item, i) {
+            if (has.call(target, i)) {
+                var targetItem = target[i];
+                if (targetItem && typeof targetItem === 'object' && item && typeof item === 'object') {
+                    target[i] = merge(targetItem, item, options);
+                } else {
+                    target.push(item);
+                }
+            } else {
+                target[i] = item;
+            }
+        });
+        return target;
+    }
+
+    return Object.keys(source).reduce(function (acc, key) {
+        var value = source[key];
+
+        if (has.call(acc, key)) {
+            acc[key] = merge(acc[key], value, options);
+        } else {
+            acc[key] = value;
+        }
+        return acc;
+    }, mergeTarget);
+};
+
+var assign = function assignSingleSource(target, source) {
+    return Object.keys(source).reduce(function (acc, key) {
+        acc[key] = source[key];
+        return acc;
+    }, target);
+};
+
+var decode = function (str, decoder, charset) {
+    var strWithoutPlus = str.replace(/\+/g, ' ');
+    if (charset === 'iso-8859-1') {
+        // unescape never throws, no try...catch needed:
+        return strWithoutPlus.replace(/%[0-9a-f]{2}/gi, unescape);
+    }
+    // utf-8
+    try {
+        return decodeURIComponent(strWithoutPlus);
+    } catch (e) {
+        return strWithoutPlus;
+    }
+};
+
+var encode = function encode(str, defaultEncoder, charset, kind, format) {
+    // This code was originally written by Brian White (mscdex) for the io.js core querystring library.
+    // It has been adapted here for stricter adherence to RFC 3986
+    if (str.length === 0) {
+        return str;
+    }
+
+    var string = str;
+    if (typeof str === 'symbol') {
+        string = Symbol.prototype.toString.call(str);
+    } else if (typeof str !== 'string') {
+        string = String(str);
+    }
+
+    if (charset === 'iso-8859-1') {
+        return escape(string).replace(/%u[0-9a-f]{4}/gi, function ($0) {
+            return '%26%23' + parseInt($0.slice(2), 16) + '%3B';
+        });
+    }
+
+    var out = '';
+    for (var i = 0; i < string.length; ++i) {
+        var c = string.charCodeAt(i);
+
+        if (
+            c === 0x2D // -
+            || c === 0x2E // .
+            || c === 0x5F // _
+            || c === 0x7E // ~
+            || (c >= 0x30 && c <= 0x39) // 0-9
+            || (c >= 0x41 && c <= 0x5A) // a-z
+            || (c >= 0x61 && c <= 0x7A) // A-Z
+            || (format === formats.RFC1738 && (c === 0x28 || c === 0x29)) // ( )
+        ) {
+            out += string.charAt(i);
+            continue;
+        }
+
+        if (c < 0x80) {
+            out = out + hexTable[c];
+            continue;
+        }
+
+        if (c < 0x800) {
+            out = out + (hexTable[0xC0 | (c >> 6)] + hexTable[0x80 | (c & 0x3F)]);
+            continue;
+        }
+
+        if (c < 0xD800 || c >= 0xE000) {
+            out = out + (hexTable[0xE0 | (c >> 12)] + hexTable[0x80 | ((c >> 6) & 0x3F)] + hexTable[0x80 | (c & 0x3F)]);
+            continue;
+        }
+
+        i += 1;
+        c = 0x10000 + (((c & 0x3FF) << 10) | (string.charCodeAt(i) & 0x3FF));
+        /* eslint operator-linebreak: [2, "before"] */
+        out += hexTable[0xF0 | (c >> 18)]
+            + hexTable[0x80 | ((c >> 12) & 0x3F)]
+            + hexTable[0x80 | ((c >> 6) & 0x3F)]
+            + hexTable[0x80 | (c & 0x3F)];
+    }
+
+    return out;
+};
+
+var compact = function compact(value) {
+    var queue = [{ obj: { o: value }, prop: 'o' }];
+    var refs = [];
+
+    for (var i = 0; i < queue.length; ++i) {
+        var item = queue[i];
+        var obj = item.obj[item.prop];
+
+        var keys = Object.keys(obj);
+        for (var j = 0; j < keys.length; ++j) {
+            var key = keys[j];
+            var val = obj[key];
+            if (typeof val === 'object' && val !== null && refs.indexOf(val) === -1) {
+                queue.push({ obj: obj, prop: key });
+                refs.push(val);
+            }
+        }
+    }
+
+    compactQueue(queue);
+
+    return value;
+};
+
+var isRegExp = function isRegExp(obj) {
+    return Object.prototype.toString.call(obj) === '[object RegExp]';
+};
+
+var isBuffer = function isBuffer(obj) {
+    if (!obj || typeof obj !== 'object') {
+        return false;
+    }
+
+    return !!(obj.constructor && obj.constructor.isBuffer && obj.constructor.isBuffer(obj));
+};
+
+var combine = function combine(a, b) {
+    return [].concat(a, b);
+};
+
+var maybeMap = function maybeMap(val, fn) {
+    if (isArray(val)) {
+        var mapped = [];
+        for (var i = 0; i < val.length; i += 1) {
+            mapped.push(fn(val[i]));
+        }
+        return mapped;
+    }
+    return fn(val);
+};
+
+module.exports = {
+    arrayToObject: arrayToObject,
+    assign: assign,
+    combine: combine,
+    compact: compact,
+    decode: decode,
+    encode: encode,
+    isBuffer: isBuffer,
+    isRegExp: isRegExp,
+    maybeMap: maybeMap,
+    merge: merge
+};
 
 
 /***/ }),
@@ -73093,6 +74357,140 @@ module.exports = Sha512
 
 /***/ }),
 
+/***/ "./node_modules/side-channel/index.js":
+/*!********************************************!*\
+  !*** ./node_modules/side-channel/index.js ***!
+  \********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+
+
+var GetIntrinsic = __webpack_require__(/*! get-intrinsic */ "./node_modules/get-intrinsic/index.js");
+var callBound = __webpack_require__(/*! call-bind/callBound */ "./node_modules/call-bind/callBound.js");
+var inspect = __webpack_require__(/*! object-inspect */ "./node_modules/object-inspect/index.js");
+
+var $TypeError = GetIntrinsic('%TypeError%');
+var $WeakMap = GetIntrinsic('%WeakMap%', true);
+var $Map = GetIntrinsic('%Map%', true);
+
+var $weakMapGet = callBound('WeakMap.prototype.get', true);
+var $weakMapSet = callBound('WeakMap.prototype.set', true);
+var $weakMapHas = callBound('WeakMap.prototype.has', true);
+var $mapGet = callBound('Map.prototype.get', true);
+var $mapSet = callBound('Map.prototype.set', true);
+var $mapHas = callBound('Map.prototype.has', true);
+
+/*
+ * This function traverses the list returning the node corresponding to the
+ * given key.
+ *
+ * That node is also moved to the head of the list, so that if it's accessed
+ * again we don't need to traverse the whole list. By doing so, all the recently
+ * used nodes can be accessed relatively quickly.
+ */
+var listGetNode = function (list, key) { // eslint-disable-line consistent-return
+	for (var prev = list, curr; (curr = prev.next) !== null; prev = curr) {
+		if (curr.key === key) {
+			prev.next = curr.next;
+			curr.next = list.next;
+			list.next = curr; // eslint-disable-line no-param-reassign
+			return curr;
+		}
+	}
+};
+
+var listGet = function (objects, key) {
+	var node = listGetNode(objects, key);
+	return node && node.value;
+};
+var listSet = function (objects, key, value) {
+	var node = listGetNode(objects, key);
+	if (node) {
+		node.value = value;
+	} else {
+		// Prepend the new node to the beginning of the list
+		objects.next = { // eslint-disable-line no-param-reassign
+			key: key,
+			next: objects.next,
+			value: value
+		};
+	}
+};
+var listHas = function (objects, key) {
+	return !!listGetNode(objects, key);
+};
+
+module.exports = function getSideChannel() {
+	var $wm;
+	var $m;
+	var $o;
+	var channel = {
+		assert: function (key) {
+			if (!channel.has(key)) {
+				throw new $TypeError('Side channel does not contain ' + inspect(key));
+			}
+		},
+		get: function (key) { // eslint-disable-line consistent-return
+			if ($WeakMap && key && (typeof key === 'object' || typeof key === 'function')) {
+				if ($wm) {
+					return $weakMapGet($wm, key);
+				}
+			} else if ($Map) {
+				if ($m) {
+					return $mapGet($m, key);
+				}
+			} else {
+				if ($o) { // eslint-disable-line no-lonely-if
+					return listGet($o, key);
+				}
+			}
+		},
+		has: function (key) {
+			if ($WeakMap && key && (typeof key === 'object' || typeof key === 'function')) {
+				if ($wm) {
+					return $weakMapHas($wm, key);
+				}
+			} else if ($Map) {
+				if ($m) {
+					return $mapHas($m, key);
+				}
+			} else {
+				if ($o) { // eslint-disable-line no-lonely-if
+					return listHas($o, key);
+				}
+			}
+			return false;
+		},
+		set: function (key, value) {
+			if ($WeakMap && key && (typeof key === 'object' || typeof key === 'function')) {
+				if (!$wm) {
+					$wm = new $WeakMap();
+				}
+				$weakMapSet($wm, key, value);
+			} else if ($Map) {
+				if (!$m) {
+					$m = new $Map();
+				}
+				$mapSet($m, key, value);
+			} else {
+				if (!$o) {
+					/*
+					 * Initialize the linked list as an empty node, so that we don't have
+					 * to special-case handling of the first node: we can always refer to
+					 * it as (previous node).next, instead of something like (list).head
+					 */
+					$o = { key: {}, next: null };
+				}
+				listSet($o, key, value);
+			}
+		}
+	};
+	return channel;
+};
+
+
+/***/ }),
+
 /***/ "./node_modules/stream-browserify/index.js":
 /*!*************************************************!*\
   !*** ./node_modules/stream-browserify/index.js ***!
@@ -76436,7 +77834,7 @@ UChar.udata={
 /***/ (function(module, exports, __webpack_require__) {
 
 /* module decorator */ module = __webpack_require__.nmd(module);
-var __WEBPACK_AMD_DEFINE_RESULT__;/*! https://mths.be/punycode v1.3.2 by @mathias */
+var __WEBPACK_AMD_DEFINE_RESULT__;/*! https://mths.be/punycode v1.4.1 by @mathias */
 ;(function(root) {
 
 	/** Detect free variables */
@@ -76502,7 +77900,7 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/*! https://mths.be/punycode v1.3.2 by @mathia
 	 * @returns {Error} Throws a `RangeError` with the applicable error message.
 	 */
 	function error(type) {
-		throw RangeError(errors[type]);
+		throw new RangeError(errors[type]);
 	}
 
 	/**
@@ -76649,7 +78047,7 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/*! https://mths.be/punycode v1.3.2 by @mathia
 
 	/**
 	 * Bias adaptation function as per section 3.4 of RFC 3492.
-	 * http://tools.ietf.org/html/rfc3492#section-3.4
+	 * https://tools.ietf.org/html/rfc3492#section-3.4
 	 * @private
 	 */
 	function adapt(delta, numPoints, firstTime) {
@@ -76924,7 +78322,7 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/*! https://mths.be/punycode v1.3.2 by @mathia
 		 * @memberOf punycode
 		 * @type String
 		 */
-		'version': '1.3.2',
+		'version': '1.4.1',
 		/**
 		 * An object of methods to convert from JavaScript's internal character
 		 * representation (UCS-2) to Unicode code points, and back.
@@ -76965,38 +78363,32 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/*! https://mths.be/punycode v1.3.2 by @mathia
   \*********************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
-// Copyright Joyent, Inc. and other Node contributors.
-//
-// Permission is hereby granted, free of charge, to any person obtaining a
-// copy of this software and associated documentation files (the
-// "Software"), to deal in the Software without restriction, including
-// without limitation the rights to use, copy, modify, merge, publish,
-// distribute, sublicense, and/or sell copies of the Software, and to permit
-// persons to whom the Software is furnished to do so, subject to the
-// following conditions:
-//
-// The above copyright notice and this permission notice shall be included
-// in all copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
-// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
-// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
-// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
-// USE OR OTHER DEALINGS IN THE SOFTWARE.
+/*
+ * Copyright Joyent, Inc. and other Node contributors.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a
+ * copy of this software and associated documentation files (the
+ * "Software"), to deal in the Software without restriction, including
+ * without limitation the rights to use, copy, modify, merge, publish,
+ * distribute, sublicense, and/or sell copies of the Software, and to permit
+ * persons to whom the Software is furnished to do so, subject to the
+ * following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included
+ * in all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+ * OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+ * NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+ * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+ * USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
 
 
 
 var punycode = __webpack_require__(/*! punycode */ "./node_modules/url/node_modules/punycode/punycode.js");
-var util = __webpack_require__(/*! ./util */ "./node_modules/url/util.js");
-
-exports.parse = urlParse;
-exports.resolve = urlResolve;
-exports.resolveObject = urlResolveObject;
-exports.format = urlFormat;
-
-exports.Url = Url;
 
 function Url() {
   this.protocol = null;
@@ -77015,85 +78407,102 @@ function Url() {
 
 // Reference: RFC 3986, RFC 1808, RFC 2396
 
-// define these here so at least they only have to be
-// compiled once on the first module load.
+/*
+ * define these here so at least they only have to be
+ * compiled once on the first module load.
+ */
 var protocolPattern = /^([a-z0-9.+-]+:)/i,
-    portPattern = /:[0-9]*$/,
+  portPattern = /:[0-9]*$/,
 
-    // Special case for a simple path URL
-    simplePathPattern = /^(\/\/?(?!\/)[^\?\s]*)(\?[^\s]*)?$/,
+  // Special case for a simple path URL
+  simplePathPattern = /^(\/\/?(?!\/)[^?\s]*)(\?[^\s]*)?$/,
 
-    // RFC 2396: characters reserved for delimiting URLs.
-    // We actually just auto-escape these.
-    delims = ['<', '>', '"', '`', ' ', '\r', '\n', '\t'],
+  /*
+   * RFC 2396: characters reserved for delimiting URLs.
+   * We actually just auto-escape these.
+   */
+  delims = [
+    '<', '>', '"', '`', ' ', '\r', '\n', '\t'
+  ],
 
-    // RFC 2396: characters not allowed for various reasons.
-    unwise = ['{', '}', '|', '\\', '^', '`'].concat(delims),
+  // RFC 2396: characters not allowed for various reasons.
+  unwise = [
+    '{', '}', '|', '\\', '^', '`'
+  ].concat(delims),
 
-    // Allowed by RFCs, but cause of XSS attacks.  Always escape these.
-    autoEscape = ['\''].concat(unwise),
-    // Characters that are never ever allowed in a hostname.
-    // Note that any invalid chars are also handled, but these
-    // are the ones that are *expected* to be seen, so we fast-path
-    // them.
-    nonHostChars = ['%', '/', '?', ';', '#'].concat(autoEscape),
-    hostEndingChars = ['/', '?', '#'],
-    hostnameMaxLen = 255,
-    hostnamePartPattern = /^[+a-z0-9A-Z_-]{0,63}$/,
-    hostnamePartStart = /^([+a-z0-9A-Z_-]{0,63})(.*)$/,
-    // protocols that can allow "unsafe" and "unwise" chars.
-    unsafeProtocol = {
-      'javascript': true,
-      'javascript:': true
-    },
-    // protocols that never have a hostname.
-    hostlessProtocol = {
-      'javascript': true,
-      'javascript:': true
-    },
-    // protocols that always contain a // bit.
-    slashedProtocol = {
-      'http': true,
-      'https': true,
-      'ftp': true,
-      'gopher': true,
-      'file': true,
-      'http:': true,
-      'https:': true,
-      'ftp:': true,
-      'gopher:': true,
-      'file:': true
-    },
-    querystring = __webpack_require__(/*! querystring */ "./node_modules/querystring/index.js");
+  // Allowed by RFCs, but cause of XSS attacks.  Always escape these.
+  autoEscape = ['\''].concat(unwise),
+  /*
+   * Characters that are never ever allowed in a hostname.
+   * Note that any invalid chars are also handled, but these
+   * are the ones that are *expected* to be seen, so we fast-path
+   * them.
+   */
+  nonHostChars = [
+    '%', '/', '?', ';', '#'
+  ].concat(autoEscape),
+  hostEndingChars = [
+    '/', '?', '#'
+  ],
+  hostnameMaxLen = 255,
+  hostnamePartPattern = /^[+a-z0-9A-Z_-]{0,63}$/,
+  hostnamePartStart = /^([+a-z0-9A-Z_-]{0,63})(.*)$/,
+  // protocols that can allow "unsafe" and "unwise" chars.
+  unsafeProtocol = {
+    javascript: true,
+    'javascript:': true
+  },
+  // protocols that never have a hostname.
+  hostlessProtocol = {
+    javascript: true,
+    'javascript:': true
+  },
+  // protocols that always contain a // bit.
+  slashedProtocol = {
+    http: true,
+    https: true,
+    ftp: true,
+    gopher: true,
+    file: true,
+    'http:': true,
+    'https:': true,
+    'ftp:': true,
+    'gopher:': true,
+    'file:': true
+  },
+  querystring = __webpack_require__(/*! qs */ "./node_modules/qs/lib/index.js");
 
 function urlParse(url, parseQueryString, slashesDenoteHost) {
-  if (url && util.isObject(url) && url instanceof Url) return url;
+  if (url && typeof url === 'object' && url instanceof Url) { return url; }
 
-  var u = new Url;
+  var u = new Url();
   u.parse(url, parseQueryString, slashesDenoteHost);
   return u;
 }
 
-Url.prototype.parse = function(url, parseQueryString, slashesDenoteHost) {
-  if (!util.isString(url)) {
+Url.prototype.parse = function (url, parseQueryString, slashesDenoteHost) {
+  if (typeof url !== 'string') {
     throw new TypeError("Parameter 'url' must be a string, not " + typeof url);
   }
 
-  // Copy chrome, IE, opera backslash-handling behavior.
-  // Back slashes before the query string get converted to forward slashes
-  // See: https://code.google.com/p/chromium/issues/detail?id=25916
+  /*
+   * Copy chrome, IE, opera backslash-handling behavior.
+   * Back slashes before the query string get converted to forward slashes
+   * See: https://code.google.com/p/chromium/issues/detail?id=25916
+   */
   var queryIndex = url.indexOf('?'),
-      splitter =
-          (queryIndex !== -1 && queryIndex < url.indexOf('#')) ? '?' : '#',
-      uSplit = url.split(splitter),
-      slashRegex = /\\/g;
+    splitter = queryIndex !== -1 && queryIndex < url.indexOf('#') ? '?' : '#',
+    uSplit = url.split(splitter),
+    slashRegex = /\\/g;
   uSplit[0] = uSplit[0].replace(slashRegex, '/');
   url = uSplit.join(splitter);
 
   var rest = url;
 
-  // trim before proceeding.
-  // This is to support parse stuff like "  http://foo.com  \n"
+  /*
+   * trim before proceeding.
+   * This is to support parse stuff like "  http://foo.com  \n"
+   */
   rest = rest.trim();
 
   if (!slashesDenoteHost && url.split('#').length === 1) {
@@ -77126,11 +78535,13 @@ Url.prototype.parse = function(url, parseQueryString, slashesDenoteHost) {
     rest = rest.substr(proto.length);
   }
 
-  // figure out if it's got a host
-  // user@server is *always* interpreted as a hostname, and url
-  // resolution will treat //foo/bar as host=foo,path=bar because that's
-  // how the browser resolves relative URLs.
-  if (slashesDenoteHost || proto || rest.match(/^\/\/[^@\/]+@[^@\/]+/)) {
+  /*
+   * figure out if it's got a host
+   * user@server is *always* interpreted as a hostname, and url
+   * resolution will treat //foo/bar as host=foo,path=bar because that's
+   * how the browser resolves relative URLs.
+   */
+  if (slashesDenoteHost || proto || rest.match(/^\/\/[^@/]+@[^@/]+/)) {
     var slashes = rest.substr(0, 2) === '//';
     if (slashes && !(proto && hostlessProtocol[proto])) {
       rest = rest.substr(2);
@@ -77138,46 +78549,54 @@ Url.prototype.parse = function(url, parseQueryString, slashesDenoteHost) {
     }
   }
 
-  if (!hostlessProtocol[proto] &&
-      (slashes || (proto && !slashedProtocol[proto]))) {
+  if (!hostlessProtocol[proto] && (slashes || (proto && !slashedProtocol[proto]))) {
 
-    // there's a hostname.
-    // the first instance of /, ?, ;, or # ends the host.
-    //
-    // If there is an @ in the hostname, then non-host chars *are* allowed
-    // to the left of the last @ sign, unless some host-ending character
-    // comes *before* the @-sign.
-    // URLs are obnoxious.
-    //
-    // ex:
-    // http://a@b@c/ => user:a@b host:c
-    // http://a@b?@c => user:a host:c path:/?@c
+    /*
+     * there's a hostname.
+     * the first instance of /, ?, ;, or # ends the host.
+     *
+     * If there is an @ in the hostname, then non-host chars *are* allowed
+     * to the left of the last @ sign, unless some host-ending character
+     * comes *before* the @-sign.
+     * URLs are obnoxious.
+     *
+     * ex:
+     * http://a@b@c/ => user:a@b host:c
+     * http://a@b?@c => user:a host:c path:/?@c
+     */
 
-    // v0.12 TODO(isaacs): This is not quite how Chrome does things.
-    // Review our test case against browsers more comprehensively.
+    /*
+     * v0.12 TODO(isaacs): This is not quite how Chrome does things.
+     * Review our test case against browsers more comprehensively.
+     */
 
     // find the first instance of any hostEndingChars
     var hostEnd = -1;
     for (var i = 0; i < hostEndingChars.length; i++) {
       var hec = rest.indexOf(hostEndingChars[i]);
-      if (hec !== -1 && (hostEnd === -1 || hec < hostEnd))
-        hostEnd = hec;
+      if (hec !== -1 && (hostEnd === -1 || hec < hostEnd)) { hostEnd = hec; }
     }
 
-    // at this point, either we have an explicit point where the
-    // auth portion cannot go past, or the last @ char is the decider.
+    /*
+     * at this point, either we have an explicit point where the
+     * auth portion cannot go past, or the last @ char is the decider.
+     */
     var auth, atSign;
     if (hostEnd === -1) {
       // atSign can be anywhere.
       atSign = rest.lastIndexOf('@');
     } else {
-      // atSign must be in auth portion.
-      // http://a@b/c@d => host:b auth:a path:/c@d
+      /*
+       * atSign must be in auth portion.
+       * http://a@b/c@d => host:b auth:a path:/c@d
+       */
       atSign = rest.lastIndexOf('@', hostEnd);
     }
 
-    // Now we have a portion which is definitely the auth.
-    // Pull that off.
+    /*
+     * Now we have a portion which is definitely the auth.
+     * Pull that off.
+     */
     if (atSign !== -1) {
       auth = rest.slice(0, atSign);
       rest = rest.slice(atSign + 1);
@@ -77188,12 +78607,10 @@ Url.prototype.parse = function(url, parseQueryString, slashesDenoteHost) {
     hostEnd = -1;
     for (var i = 0; i < nonHostChars.length; i++) {
       var hec = rest.indexOf(nonHostChars[i]);
-      if (hec !== -1 && (hostEnd === -1 || hec < hostEnd))
-        hostEnd = hec;
+      if (hec !== -1 && (hostEnd === -1 || hec < hostEnd)) { hostEnd = hec; }
     }
     // if we still have not hit it, then the entire thing is a host.
-    if (hostEnd === -1)
-      hostEnd = rest.length;
+    if (hostEnd === -1) { hostEnd = rest.length; }
 
     this.host = rest.slice(0, hostEnd);
     rest = rest.slice(hostEnd);
@@ -77201,28 +78618,33 @@ Url.prototype.parse = function(url, parseQueryString, slashesDenoteHost) {
     // pull out port.
     this.parseHost();
 
-    // we've indicated that there is a hostname,
-    // so even if it's empty, it has to be present.
+    /*
+     * we've indicated that there is a hostname,
+     * so even if it's empty, it has to be present.
+     */
     this.hostname = this.hostname || '';
 
-    // if hostname begins with [ and ends with ]
-    // assume that it's an IPv6 address.
-    var ipv6Hostname = this.hostname[0] === '[' &&
-        this.hostname[this.hostname.length - 1] === ']';
+    /*
+     * if hostname begins with [ and ends with ]
+     * assume that it's an IPv6 address.
+     */
+    var ipv6Hostname = this.hostname[0] === '[' && this.hostname[this.hostname.length - 1] === ']';
 
     // validate a little.
     if (!ipv6Hostname) {
       var hostparts = this.hostname.split(/\./);
       for (var i = 0, l = hostparts.length; i < l; i++) {
         var part = hostparts[i];
-        if (!part) continue;
+        if (!part) { continue; }
         if (!part.match(hostnamePartPattern)) {
           var newpart = '';
           for (var j = 0, k = part.length; j < k; j++) {
             if (part.charCodeAt(j) > 127) {
-              // we replace non-ASCII char with a temporary placeholder
-              // we need this to make sure size of hostname is not
-              // broken by replacing non-ASCII by nothing
+              /*
+               * we replace non-ASCII char with a temporary placeholder
+               * we need this to make sure size of hostname is not
+               * broken by replacing non-ASCII by nothing
+               */
               newpart += 'x';
             } else {
               newpart += part[j];
@@ -77255,10 +78677,12 @@ Url.prototype.parse = function(url, parseQueryString, slashesDenoteHost) {
     }
 
     if (!ipv6Hostname) {
-      // IDNA Support: Returns a punycoded representation of "domain".
-      // It only converts parts of the domain name that
-      // have non-ASCII characters, i.e. it doesn't matter if
-      // you call it with a domain that already is ASCII-only.
+      /*
+       * IDNA Support: Returns a punycoded representation of "domain".
+       * It only converts parts of the domain name that
+       * have non-ASCII characters, i.e. it doesn't matter if
+       * you call it with a domain that already is ASCII-only.
+       */
       this.hostname = punycode.toASCII(this.hostname);
     }
 
@@ -77267,8 +78691,10 @@ Url.prototype.parse = function(url, parseQueryString, slashesDenoteHost) {
     this.host = h + p;
     this.href += this.host;
 
-    // strip [ and ] from the hostname
-    // the host field still retains them, though
+    /*
+     * strip [ and ] from the hostname
+     * the host field still retains them, though
+     */
     if (ipv6Hostname) {
       this.hostname = this.hostname.substr(1, this.hostname.length - 2);
       if (rest[0] !== '/') {
@@ -77277,17 +78703,20 @@ Url.prototype.parse = function(url, parseQueryString, slashesDenoteHost) {
     }
   }
 
-  // now rest is set to the post-host stuff.
-  // chop off any delim chars.
+  /*
+   * now rest is set to the post-host stuff.
+   * chop off any delim chars.
+   */
   if (!unsafeProtocol[lowerProto]) {
 
-    // First, make 100% sure that any "autoEscape" chars get
-    // escaped, even if encodeURIComponent doesn't think they
-    // need to be.
+    /*
+     * First, make 100% sure that any "autoEscape" chars get
+     * escaped, even if encodeURIComponent doesn't think they
+     * need to be.
+     */
     for (var i = 0, l = autoEscape.length; i < l; i++) {
       var ae = autoEscape[i];
-      if (rest.indexOf(ae) === -1)
-        continue;
+      if (rest.indexOf(ae) === -1) { continue; }
       var esc = encodeURIComponent(ae);
       if (esc === ae) {
         esc = escape(ae);
@@ -77295,7 +78724,6 @@ Url.prototype.parse = function(url, parseQueryString, slashesDenoteHost) {
       rest = rest.split(ae).join(esc);
     }
   }
-
 
   // chop off from the tail first.
   var hash = rest.indexOf('#');
@@ -77317,13 +78745,12 @@ Url.prototype.parse = function(url, parseQueryString, slashesDenoteHost) {
     this.search = '';
     this.query = {};
   }
-  if (rest) this.pathname = rest;
-  if (slashedProtocol[lowerProto] &&
-      this.hostname && !this.pathname) {
+  if (rest) { this.pathname = rest; }
+  if (slashedProtocol[lowerProto] && this.hostname && !this.pathname) {
     this.pathname = '/';
   }
 
-  //to support http.request
+  // to support http.request
   if (this.pathname || this.search) {
     var p = this.pathname || '';
     var s = this.search || '';
@@ -77337,16 +78764,18 @@ Url.prototype.parse = function(url, parseQueryString, slashesDenoteHost) {
 
 // format a parsed object into a url string
 function urlFormat(obj) {
-  // ensure it's an object, and not a string url.
-  // If it's an obj, this is a no-op.
-  // this way, you can call url_format() on strings
-  // to clean up potentially wonky urls.
-  if (util.isString(obj)) obj = urlParse(obj);
-  if (!(obj instanceof Url)) return Url.prototype.format.call(obj);
+  /*
+   * ensure it's an object, and not a string url.
+   * If it's an obj, this is a no-op.
+   * this way, you can call url_format() on strings
+   * to clean up potentially wonky urls.
+   */
+  if (typeof obj === 'string') { obj = urlParse(obj); }
+  if (!(obj instanceof Url)) { return Url.prototype.format.call(obj); }
   return obj.format();
 }
 
-Url.prototype.format = function() {
+Url.prototype.format = function () {
   var auth = this.auth || '';
   if (auth) {
     auth = encodeURIComponent(auth);
@@ -77355,46 +78784,43 @@ Url.prototype.format = function() {
   }
 
   var protocol = this.protocol || '',
-      pathname = this.pathname || '',
-      hash = this.hash || '',
-      host = false,
-      query = '';
+    pathname = this.pathname || '',
+    hash = this.hash || '',
+    host = false,
+    query = '';
 
   if (this.host) {
     host = auth + this.host;
   } else if (this.hostname) {
-    host = auth + (this.hostname.indexOf(':') === -1 ?
-        this.hostname :
-        '[' + this.hostname + ']');
+    host = auth + (this.hostname.indexOf(':') === -1 ? this.hostname : '[' + this.hostname + ']');
     if (this.port) {
       host += ':' + this.port;
     }
   }
 
-  if (this.query &&
-      util.isObject(this.query) &&
-      Object.keys(this.query).length) {
+  if (this.query && typeof this.query === 'object' && Object.keys(this.query).length) {
     query = querystring.stringify(this.query);
   }
 
   var search = this.search || (query && ('?' + query)) || '';
 
-  if (protocol && protocol.substr(-1) !== ':') protocol += ':';
+  if (protocol && protocol.substr(-1) !== ':') { protocol += ':'; }
 
-  // only the slashedProtocols get the //.  Not mailto:, xmpp:, etc.
-  // unless they had them to begin with.
-  if (this.slashes ||
-      (!protocol || slashedProtocol[protocol]) && host !== false) {
+  /*
+   * only the slashedProtocols get the //.  Not mailto:, xmpp:, etc.
+   * unless they had them to begin with.
+   */
+  if (this.slashes || (!protocol || slashedProtocol[protocol]) && host !== false) {
     host = '//' + (host || '');
-    if (pathname && pathname.charAt(0) !== '/') pathname = '/' + pathname;
+    if (pathname && pathname.charAt(0) !== '/') { pathname = '/' + pathname; }
   } else if (!host) {
     host = '';
   }
 
-  if (hash && hash.charAt(0) !== '#') hash = '#' + hash;
-  if (search && search.charAt(0) !== '?') search = '?' + search;
+  if (hash && hash.charAt(0) !== '#') { hash = '#' + hash; }
+  if (search && search.charAt(0) !== '?') { search = '?' + search; }
 
-  pathname = pathname.replace(/[?#]/g, function(match) {
+  pathname = pathname.replace(/[?#]/g, function (match) {
     return encodeURIComponent(match);
   });
   search = search.replace('#', '%23');
@@ -77406,17 +78832,17 @@ function urlResolve(source, relative) {
   return urlParse(source, false, true).resolve(relative);
 }
 
-Url.prototype.resolve = function(relative) {
+Url.prototype.resolve = function (relative) {
   return this.resolveObject(urlParse(relative, false, true)).format();
 };
 
 function urlResolveObject(source, relative) {
-  if (!source) return relative;
+  if (!source) { return relative; }
   return urlParse(source, false, true).resolveObject(relative);
 }
 
-Url.prototype.resolveObject = function(relative) {
-  if (util.isString(relative)) {
+Url.prototype.resolveObject = function (relative) {
+  if (typeof relative === 'string') {
     var rel = new Url();
     rel.parse(relative, false, true);
     relative = rel;
@@ -77429,8 +78855,10 @@ Url.prototype.resolveObject = function(relative) {
     result[tkey] = this[tkey];
   }
 
-  // hash is always overridden, no matter what.
-  // even href="" will remove it.
+  /*
+   * hash is always overridden, no matter what.
+   * even href="" will remove it.
+   */
   result.hash = relative.hash;
 
   // if the relative url is empty, then there's nothing left to do here.
@@ -77445,14 +78873,13 @@ Url.prototype.resolveObject = function(relative) {
     var rkeys = Object.keys(relative);
     for (var rk = 0; rk < rkeys.length; rk++) {
       var rkey = rkeys[rk];
-      if (rkey !== 'protocol')
-        result[rkey] = relative[rkey];
+      if (rkey !== 'protocol') { result[rkey] = relative[rkey]; }
     }
 
-    //urlParse appends trailing / to urls like http://www.example.com
-    if (slashedProtocol[result.protocol] &&
-        result.hostname && !result.pathname) {
-      result.path = result.pathname = '/';
+    // urlParse appends trailing / to urls like http://www.example.com
+    if (slashedProtocol[result.protocol] && result.hostname && !result.pathname) {
+      result.pathname = '/';
+      result.path = result.pathname;
     }
 
     result.href = result.format();
@@ -77460,14 +78887,16 @@ Url.prototype.resolveObject = function(relative) {
   }
 
   if (relative.protocol && relative.protocol !== result.protocol) {
-    // if it's a known url protocol, then changing
-    // the protocol does weird things
-    // first, if it's not file:, then we MUST have a host,
-    // and if there was a path
-    // to begin with, then we MUST have a path.
-    // if it is file:, then the host is dropped,
-    // because that's known to be hostless.
-    // anything else is assumed to be absolute.
+    /*
+     * if it's a known url protocol, then changing
+     * the protocol does weird things
+     * first, if it's not file:, then we MUST have a host,
+     * and if there was a path
+     * to begin with, then we MUST have a path.
+     * if it is file:, then the host is dropped,
+     * because that's known to be hostless.
+     * anything else is assumed to be absolute.
+     */
     if (!slashedProtocol[relative.protocol]) {
       var keys = Object.keys(relative);
       for (var v = 0; v < keys.length; v++) {
@@ -77481,11 +78910,11 @@ Url.prototype.resolveObject = function(relative) {
     result.protocol = relative.protocol;
     if (!relative.host && !hostlessProtocol[relative.protocol]) {
       var relPath = (relative.pathname || '').split('/');
-      while (relPath.length && !(relative.host = relPath.shift()));
-      if (!relative.host) relative.host = '';
-      if (!relative.hostname) relative.hostname = '';
-      if (relPath[0] !== '') relPath.unshift('');
-      if (relPath.length < 2) relPath.unshift('');
+      while (relPath.length && !(relative.host = relPath.shift())) { }
+      if (!relative.host) { relative.host = ''; }
+      if (!relative.hostname) { relative.hostname = ''; }
+      if (relPath[0] !== '') { relPath.unshift(''); }
+      if (relPath.length < 2) { relPath.unshift(''); }
       result.pathname = relPath.join('/');
     } else {
       result.pathname = relative.pathname;
@@ -77507,37 +78936,33 @@ Url.prototype.resolveObject = function(relative) {
     return result;
   }
 
-  var isSourceAbs = (result.pathname && result.pathname.charAt(0) === '/'),
-      isRelAbs = (
-          relative.host ||
-          relative.pathname && relative.pathname.charAt(0) === '/'
-      ),
-      mustEndAbs = (isRelAbs || isSourceAbs ||
-                    (result.host && relative.pathname)),
-      removeAllDots = mustEndAbs,
-      srcPath = result.pathname && result.pathname.split('/') || [],
-      relPath = relative.pathname && relative.pathname.split('/') || [],
-      psychotic = result.protocol && !slashedProtocol[result.protocol];
+  var isSourceAbs = result.pathname && result.pathname.charAt(0) === '/',
+    isRelAbs = relative.host || relative.pathname && relative.pathname.charAt(0) === '/',
+    mustEndAbs = isRelAbs || isSourceAbs || (result.host && relative.pathname),
+    removeAllDots = mustEndAbs,
+    srcPath = result.pathname && result.pathname.split('/') || [],
+    relPath = relative.pathname && relative.pathname.split('/') || [],
+    psychotic = result.protocol && !slashedProtocol[result.protocol];
 
-  // if the url is a non-slashed url, then relative
-  // links like ../.. should be able
-  // to crawl up to the hostname, as well.  This is strange.
-  // result.protocol has already been set by now.
-  // Later on, put the first path part into the host field.
+  /*
+   * if the url is a non-slashed url, then relative
+   * links like ../.. should be able
+   * to crawl up to the hostname, as well.  This is strange.
+   * result.protocol has already been set by now.
+   * Later on, put the first path part into the host field.
+   */
   if (psychotic) {
     result.hostname = '';
     result.port = null;
     if (result.host) {
-      if (srcPath[0] === '') srcPath[0] = result.host;
-      else srcPath.unshift(result.host);
+      if (srcPath[0] === '') { srcPath[0] = result.host; } else { srcPath.unshift(result.host); }
     }
     result.host = '';
     if (relative.protocol) {
       relative.hostname = null;
       relative.port = null;
       if (relative.host) {
-        if (relPath[0] === '') relPath[0] = relative.host;
-        else relPath.unshift(relative.host);
+        if (relPath[0] === '') { relPath[0] = relative.host; } else { relPath.unshift(relative.host); }
       }
       relative.host = null;
     }
@@ -77546,54 +78971,60 @@ Url.prototype.resolveObject = function(relative) {
 
   if (isRelAbs) {
     // it's absolute.
-    result.host = (relative.host || relative.host === '') ?
-                  relative.host : result.host;
-    result.hostname = (relative.hostname || relative.hostname === '') ?
-                      relative.hostname : result.hostname;
+    result.host = relative.host || relative.host === '' ? relative.host : result.host;
+    result.hostname = relative.hostname || relative.hostname === '' ? relative.hostname : result.hostname;
     result.search = relative.search;
     result.query = relative.query;
     srcPath = relPath;
     // fall through to the dot-handling below.
   } else if (relPath.length) {
-    // it's relative
-    // throw away the existing file, and take the new path instead.
-    if (!srcPath) srcPath = [];
+    /*
+     * it's relative
+     * throw away the existing file, and take the new path instead.
+     */
+    if (!srcPath) { srcPath = []; }
     srcPath.pop();
     srcPath = srcPath.concat(relPath);
     result.search = relative.search;
     result.query = relative.query;
-  } else if (!util.isNullOrUndefined(relative.search)) {
-    // just pull out the search.
-    // like href='?foo'.
-    // Put this after the other two cases because it simplifies the booleans
+  } else if (relative.search != null) {
+    /*
+     * just pull out the search.
+     * like href='?foo'.
+     * Put this after the other two cases because it simplifies the booleans
+     */
     if (psychotic) {
-      result.hostname = result.host = srcPath.shift();
-      //occationaly the auth can get stuck only in host
-      //this especially happens in cases like
-      //url.resolveObject('mailto:local1@domain1', 'local2@domain2')
-      var authInHost = result.host && result.host.indexOf('@') > 0 ?
-                       result.host.split('@') : false;
+      result.host = srcPath.shift();
+      result.hostname = result.host;
+      /*
+       * occationaly the auth can get stuck only in host
+       * this especially happens in cases like
+       * url.resolveObject('mailto:local1@domain1', 'local2@domain2')
+       */
+      var authInHost = result.host && result.host.indexOf('@') > 0 ? result.host.split('@') : false;
       if (authInHost) {
         result.auth = authInHost.shift();
-        result.host = result.hostname = authInHost.shift();
+        result.hostname = authInHost.shift();
+        result.host = result.hostname;
       }
     }
     result.search = relative.search;
     result.query = relative.query;
-    //to support http.request
-    if (!util.isNull(result.pathname) || !util.isNull(result.search)) {
-      result.path = (result.pathname ? result.pathname : '') +
-                    (result.search ? result.search : '');
+    // to support http.request
+    if (result.pathname !== null || result.search !== null) {
+      result.path = (result.pathname ? result.pathname : '') + (result.search ? result.search : '');
     }
     result.href = result.format();
     return result;
   }
 
   if (!srcPath.length) {
-    // no path at all.  easy.
-    // we've already handled the other stuff above.
+    /*
+     * no path at all.  easy.
+     * we've already handled the other stuff above.
+     */
     result.pathname = null;
-    //to support http.request
+    // to support http.request
     if (result.search) {
       result.path = '/' + result.search;
     } else {
@@ -77603,16 +79034,18 @@ Url.prototype.resolveObject = function(relative) {
     return result;
   }
 
-  // if a url ENDs in . or .., then it must get a trailing slash.
-  // however, if it ends in anything else non-slashy,
-  // then it must NOT get a trailing slash.
+  /*
+   * if a url ENDs in . or .., then it must get a trailing slash.
+   * however, if it ends in anything else non-slashy,
+   * then it must NOT get a trailing slash.
+   */
   var last = srcPath.slice(-1)[0];
-  var hasTrailingSlash = (
-      (result.host || relative.host || srcPath.length > 1) &&
-      (last === '.' || last === '..') || last === '');
+  var hasTrailingSlash = (result.host || relative.host || srcPath.length > 1) && (last === '.' || last === '..') || last === '';
 
-  // strip single dots, resolve double dots to parent dir
-  // if the path tries to go above the root, `up` ends up > 0
+  /*
+   * strip single dots, resolve double dots to parent dir
+   * if the path tries to go above the root, `up` ends up > 0
+   */
   var up = 0;
   for (var i = srcPath.length; i >= 0; i--) {
     last = srcPath[i];
@@ -77634,8 +79067,7 @@ Url.prototype.resolveObject = function(relative) {
     }
   }
 
-  if (mustEndAbs && srcPath[0] !== '' &&
-      (!srcPath[0] || srcPath[0].charAt(0) !== '/')) {
+  if (mustEndAbs && srcPath[0] !== '' && (!srcPath[0] || srcPath[0].charAt(0) !== '/')) {
     srcPath.unshift('');
   }
 
@@ -77643,21 +79075,22 @@ Url.prototype.resolveObject = function(relative) {
     srcPath.push('');
   }
 
-  var isAbsolute = srcPath[0] === '' ||
-      (srcPath[0] && srcPath[0].charAt(0) === '/');
+  var isAbsolute = srcPath[0] === '' || (srcPath[0] && srcPath[0].charAt(0) === '/');
 
   // put the host back
   if (psychotic) {
-    result.hostname = result.host = isAbsolute ? '' :
-                                    srcPath.length ? srcPath.shift() : '';
-    //occationaly the auth can get stuck only in host
-    //this especially happens in cases like
-    //url.resolveObject('mailto:local1@domain1', 'local2@domain2')
-    var authInHost = result.host && result.host.indexOf('@') > 0 ?
-                     result.host.split('@') : false;
+    result.hostname = isAbsolute ? '' : srcPath.length ? srcPath.shift() : '';
+    result.host = result.hostname;
+    /*
+     * occationaly the auth can get stuck only in host
+     * this especially happens in cases like
+     * url.resolveObject('mailto:local1@domain1', 'local2@domain2')
+     */
+    var authInHost = result.host && result.host.indexOf('@') > 0 ? result.host.split('@') : false;
     if (authInHost) {
       result.auth = authInHost.shift();
-      result.host = result.hostname = authInHost.shift();
+      result.hostname = authInHost.shift();
+      result.host = result.hostname;
     }
   }
 
@@ -77667,17 +79100,16 @@ Url.prototype.resolveObject = function(relative) {
     srcPath.unshift('');
   }
 
-  if (!srcPath.length) {
+  if (srcPath.length > 0) {
+    result.pathname = srcPath.join('/');
+  } else {
     result.pathname = null;
     result.path = null;
-  } else {
-    result.pathname = srcPath.join('/');
   }
 
-  //to support request.http
-  if (!util.isNull(result.pathname) || !util.isNull(result.search)) {
-    result.path = (result.pathname ? result.pathname : '') +
-                  (result.search ? result.search : '');
+  // to support request.http
+  if (result.pathname !== null || result.search !== null) {
+    result.path = (result.pathname ? result.pathname : '') + (result.search ? result.search : '');
   }
   result.auth = relative.auth || result.auth;
   result.slashes = result.slashes || relative.slashes;
@@ -77685,7 +79117,7 @@ Url.prototype.resolveObject = function(relative) {
   return result;
 };
 
-Url.prototype.parseHost = function() {
+Url.prototype.parseHost = function () {
   var host = this.host;
   var port = portPattern.exec(host);
   if (port) {
@@ -77695,34 +79127,15 @@ Url.prototype.parseHost = function() {
     }
     host = host.substr(0, host.length - port.length);
   }
-  if (host) this.hostname = host;
+  if (host) { this.hostname = host; }
 };
 
+exports.parse = urlParse;
+exports.resolve = urlResolve;
+exports.resolveObject = urlResolveObject;
+exports.format = urlFormat;
 
-/***/ }),
-
-/***/ "./node_modules/url/util.js":
-/*!**********************************!*\
-  !*** ./node_modules/url/util.js ***!
-  \**********************************/
-/***/ ((module) => {
-
-
-
-module.exports = {
-  isString: function(arg) {
-    return typeof(arg) === 'string';
-  },
-  isObject: function(arg) {
-    return typeof(arg) === 'object' && arg !== null;
-  },
-  isNull: function(arg) {
-    return arg === null;
-  },
-  isNullOrUndefined: function(arg) {
-    return arg == null;
-  }
-};
+exports.Url = Url;
 
 
 /***/ }),
@@ -79041,6 +80454,16 @@ module.exports = function whichTypedArray(value) {
 
 /***/ }),
 
+/***/ "?4f7e":
+/*!********************************!*\
+  !*** ./util.inspect (ignored) ***!
+  \********************************/
+/***/ (() => {
+
+/* (ignored) */
+
+/***/ }),
+
 /***/ "?ed1b":
 /*!**********************!*\
   !*** util (ignored) ***!
@@ -79141,13 +80564,13 @@ module.exports = $gOPD;
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "bool": () => (/* binding */ bool),
-/* harmony export */   "bytes": () => (/* binding */ bytes),
+/* harmony export */   bool: () => (/* binding */ bool),
+/* harmony export */   bytes: () => (/* binding */ bytes),
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
-/* harmony export */   "exists": () => (/* binding */ exists),
-/* harmony export */   "hash": () => (/* binding */ hash),
-/* harmony export */   "number": () => (/* binding */ number),
-/* harmony export */   "output": () => (/* binding */ output)
+/* harmony export */   exists: () => (/* binding */ exists),
+/* harmony export */   hash: () => (/* binding */ hash),
+/* harmony export */   number: () => (/* binding */ number),
+/* harmony export */   output: () => (/* binding */ output)
 /* harmony export */ });
 function number(n) {
     if (!Number.isSafeInteger(n) || n < 0)
@@ -79159,9 +80582,9 @@ function bool(b) {
 }
 function bytes(b, ...lengths) {
     if (!(b instanceof Uint8Array))
-        throw new TypeError('Expected Uint8Array');
+        throw new Error('Expected Uint8Array');
     if (lengths.length > 0 && !lengths.includes(b.length))
-        throw new TypeError(`Expected Uint8Array of length ${lengths}, not of length=${b.length}`);
+        throw new Error(`Expected Uint8Array of length ${lengths}, not of length=${b.length}`);
 }
 function hash(hash) {
     if (typeof hash !== 'function' || typeof hash.create !== 'function')
@@ -79203,7 +80626,7 @@ const assert = {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "SHA2": () => (/* binding */ SHA2)
+/* harmony export */   SHA2: () => (/* binding */ SHA2)
 /* harmony export */ });
 /* harmony import */ var _assert_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./_assert.js */ "./node_modules/@noble/hashes/esm/_assert.js");
 /* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./utils.js */ "./node_modules/@noble/hashes/esm/utils.js");
@@ -79332,11 +80755,11 @@ class SHA2 extends _utils_js__WEBPACK_IMPORTED_MODULE_1__.Hash {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "add": () => (/* binding */ add),
+/* harmony export */   add: () => (/* binding */ add),
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
-/* harmony export */   "fromBig": () => (/* binding */ fromBig),
-/* harmony export */   "split": () => (/* binding */ split),
-/* harmony export */   "toBig": () => (/* binding */ toBig)
+/* harmony export */   fromBig: () => (/* binding */ fromBig),
+/* harmony export */   split: () => (/* binding */ split),
+/* harmony export */   toBig: () => (/* binding */ toBig)
 /* harmony export */ });
 const U32_MASK64 = BigInt(2 ** 32 - 1);
 const _32n = BigInt(32);
@@ -79410,7 +80833,7 @@ const u64 = {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "crypto": () => (/* binding */ crypto)
+/* harmony export */   crypto: () => (/* binding */ crypto)
 /* harmony export */ });
 const crypto = typeof globalThis === 'object' && 'crypto' in globalThis ? globalThis.crypto : undefined;
 //# sourceMappingURL=crypto.js.map
@@ -79425,9 +80848,9 @@ const crypto = typeof globalThis === 'object' && 'crypto' in globalThis ? global
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "expand": () => (/* binding */ expand),
-/* harmony export */   "extract": () => (/* binding */ extract),
-/* harmony export */   "hkdf": () => (/* binding */ hkdf)
+/* harmony export */   expand: () => (/* binding */ expand),
+/* harmony export */   extract: () => (/* binding */ extract),
+/* harmony export */   hkdf: () => (/* binding */ hkdf)
 /* harmony export */ });
 /* harmony import */ var _assert_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./_assert.js */ "./node_modules/@noble/hashes/esm/_assert.js");
 /* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./utils.js */ "./node_modules/@noble/hashes/esm/utils.js");
@@ -79515,7 +80938,8 @@ const hkdf = (hash, ikm, salt, info, length) => expand(hash, extract(hash, ikm, 
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "hmac": () => (/* binding */ hmac)
+/* harmony export */   HMAC: () => (/* binding */ HMAC),
+/* harmony export */   hmac: () => (/* binding */ hmac)
 /* harmony export */ });
 /* harmony import */ var _assert_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./_assert.js */ "./node_modules/@noble/hashes/esm/_assert.js");
 /* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./utils.js */ "./node_modules/@noble/hashes/esm/utils.js");
@@ -79531,7 +80955,7 @@ class HMAC extends _utils_js__WEBPACK_IMPORTED_MODULE_1__.Hash {
         const key = (0,_utils_js__WEBPACK_IMPORTED_MODULE_1__.toBytes)(_key);
         this.iHash = hash.create();
         if (typeof this.iHash.update !== 'function')
-            throw new TypeError('Expected instance of class which extends utils.Hash');
+            throw new Error('Expected instance of class which extends utils.Hash');
         this.blockLen = this.iHash.blockLen;
         this.outputLen = this.iHash.outputLen;
         const blockLen = this.blockLen;
@@ -79607,8 +81031,8 @@ hmac.create = (hash, key) => new HMAC(hash, key);
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "sha224": () => (/* binding */ sha224),
-/* harmony export */   "sha256": () => (/* binding */ sha256)
+/* harmony export */   sha224: () => (/* binding */ sha224),
+/* harmony export */   sha256: () => (/* binding */ sha256)
 /* harmony export */ });
 /* harmony import */ var _sha2_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./_sha2.js */ "./node_modules/@noble/hashes/esm/_sha2.js");
 /* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./utils.js */ "./node_modules/@noble/hashes/esm/utils.js");
@@ -79747,18 +81171,18 @@ const sha224 = (0,_utils_js__WEBPACK_IMPORTED_MODULE_1__.wrapConstructor)(() => 
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "Keccak": () => (/* binding */ Keccak),
-/* harmony export */   "keccakP": () => (/* binding */ keccakP),
-/* harmony export */   "keccak_224": () => (/* binding */ keccak_224),
-/* harmony export */   "keccak_256": () => (/* binding */ keccak_256),
-/* harmony export */   "keccak_384": () => (/* binding */ keccak_384),
-/* harmony export */   "keccak_512": () => (/* binding */ keccak_512),
-/* harmony export */   "sha3_224": () => (/* binding */ sha3_224),
-/* harmony export */   "sha3_256": () => (/* binding */ sha3_256),
-/* harmony export */   "sha3_384": () => (/* binding */ sha3_384),
-/* harmony export */   "sha3_512": () => (/* binding */ sha3_512),
-/* harmony export */   "shake128": () => (/* binding */ shake128),
-/* harmony export */   "shake256": () => (/* binding */ shake256)
+/* harmony export */   Keccak: () => (/* binding */ Keccak),
+/* harmony export */   keccakP: () => (/* binding */ keccakP),
+/* harmony export */   keccak_224: () => (/* binding */ keccak_224),
+/* harmony export */   keccak_256: () => (/* binding */ keccak_256),
+/* harmony export */   keccak_384: () => (/* binding */ keccak_384),
+/* harmony export */   keccak_512: () => (/* binding */ keccak_512),
+/* harmony export */   sha3_224: () => (/* binding */ sha3_224),
+/* harmony export */   sha3_256: () => (/* binding */ sha3_256),
+/* harmony export */   sha3_384: () => (/* binding */ sha3_384),
+/* harmony export */   sha3_512: () => (/* binding */ sha3_512),
+/* harmony export */   shake128: () => (/* binding */ shake128),
+/* harmony export */   shake256: () => (/* binding */ shake256)
 /* harmony export */ });
 /* harmony import */ var _assert_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./_assert.js */ "./node_modules/@noble/hashes/esm/_assert.js");
 /* harmony import */ var _u64_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./_u64.js */ "./node_modules/@noble/hashes/esm/_u64.js");
@@ -79965,7 +81389,7 @@ const keccak_224 = gen(0x01, 144, 224 / 8);
 const keccak_256 = gen(0x01, 136, 256 / 8);
 const keccak_384 = gen(0x01, 104, 384 / 8);
 const keccak_512 = gen(0x01, 72, 512 / 8);
-const genShake = (suffix, blockLen, outputLen) => (0,_utils_js__WEBPACK_IMPORTED_MODULE_2__.wrapConstructorWithOpts)((opts = {}) => new Keccak(blockLen, suffix, opts.dkLen === undefined ? outputLen : opts.dkLen, true));
+const genShake = (suffix, blockLen, outputLen) => (0,_utils_js__WEBPACK_IMPORTED_MODULE_2__.wrapXOFConstructorWithOpts)((opts = {}) => new Keccak(blockLen, suffix, opts.dkLen === undefined ? outputLen : opts.dkLen, true));
 const shake128 = genShake(0x1f, 168, 128 / 8);
 const shake256 = genShake(0x1f, 136, 256 / 8);
 //# sourceMappingURL=sha3.js.map
@@ -79980,32 +81404,35 @@ const shake256 = genShake(0x1f, 136, 256 / 8);
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "Hash": () => (/* binding */ Hash),
-/* harmony export */   "asyncLoop": () => (/* binding */ asyncLoop),
-/* harmony export */   "bytesToHex": () => (/* binding */ bytesToHex),
-/* harmony export */   "checkOpts": () => (/* binding */ checkOpts),
-/* harmony export */   "concatBytes": () => (/* binding */ concatBytes),
-/* harmony export */   "createView": () => (/* binding */ createView),
-/* harmony export */   "hexToBytes": () => (/* binding */ hexToBytes),
-/* harmony export */   "isLE": () => (/* binding */ isLE),
-/* harmony export */   "nextTick": () => (/* binding */ nextTick),
-/* harmony export */   "randomBytes": () => (/* binding */ randomBytes),
-/* harmony export */   "rotr": () => (/* binding */ rotr),
-/* harmony export */   "toBytes": () => (/* binding */ toBytes),
-/* harmony export */   "u32": () => (/* binding */ u32),
-/* harmony export */   "u8": () => (/* binding */ u8),
-/* harmony export */   "utf8ToBytes": () => (/* binding */ utf8ToBytes),
-/* harmony export */   "wrapConstructor": () => (/* binding */ wrapConstructor),
-/* harmony export */   "wrapConstructorWithOpts": () => (/* binding */ wrapConstructorWithOpts)
+/* harmony export */   Hash: () => (/* binding */ Hash),
+/* harmony export */   asyncLoop: () => (/* binding */ asyncLoop),
+/* harmony export */   bytesToHex: () => (/* binding */ bytesToHex),
+/* harmony export */   checkOpts: () => (/* binding */ checkOpts),
+/* harmony export */   concatBytes: () => (/* binding */ concatBytes),
+/* harmony export */   createView: () => (/* binding */ createView),
+/* harmony export */   hexToBytes: () => (/* binding */ hexToBytes),
+/* harmony export */   isLE: () => (/* binding */ isLE),
+/* harmony export */   nextTick: () => (/* binding */ nextTick),
+/* harmony export */   randomBytes: () => (/* binding */ randomBytes),
+/* harmony export */   rotr: () => (/* binding */ rotr),
+/* harmony export */   toBytes: () => (/* binding */ toBytes),
+/* harmony export */   u32: () => (/* binding */ u32),
+/* harmony export */   u8: () => (/* binding */ u8),
+/* harmony export */   utf8ToBytes: () => (/* binding */ utf8ToBytes),
+/* harmony export */   wrapConstructor: () => (/* binding */ wrapConstructor),
+/* harmony export */   wrapConstructorWithOpts: () => (/* binding */ wrapConstructorWithOpts),
+/* harmony export */   wrapXOFConstructorWithOpts: () => (/* binding */ wrapXOFConstructorWithOpts)
 /* harmony export */ });
 /* harmony import */ var _noble_hashes_crypto__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @noble/hashes/crypto */ "./node_modules/@noble/hashes/esm/crypto.js");
 /*! noble-hashes - MIT License (c) 2022 Paul Miller (paulmillr.com) */
-// We use `globalThis.crypto`, but node.js versions earlier than v19 don't
-// declare it in global scope. For node.js, package.json#exports field mapping
-// rewrites import from `crypto` to `cryptoNode`, which imports native module.
+// We use WebCrypto aka globalThis.crypto, which exists in browsers and node.js 16+.
+// node.js versions earlier than v19 don't declare it in global scope.
+// For node.js, package.json#exports field mapping rewrites import
+// from `crypto` to `cryptoNode`, which imports native module.
 // Makes the utils un-importable in browsers without a bundler.
 // Once node.js 18 is deprecated, we can just drop the import.
 
+const u8a = (a) => a instanceof Uint8Array;
 // Cast array to different type
 const u8 = (arr) => new Uint8Array(arr.buffer, arr.byteOffset, arr.byteLength);
 const u32 = (arr) => new Uint32Array(arr.buffer, arr.byteOffset, Math.floor(arr.byteLength / 4));
@@ -80020,28 +81447,28 @@ if (!isLE)
     throw new Error('Non little-endian hardware is not supported');
 const hexes = Array.from({ length: 256 }, (v, i) => i.toString(16).padStart(2, '0'));
 /**
- * @example bytesToHex(Uint8Array.from([0xde, 0xad, 0xbe, 0xef])) // 'deadbeef'
+ * @example bytesToHex(Uint8Array.from([0xca, 0xfe, 0x01, 0x23])) // 'cafe0123'
  */
-function bytesToHex(uint8a) {
-    // pre-caching improves the speed 6x
-    if (!(uint8a instanceof Uint8Array))
+function bytesToHex(bytes) {
+    if (!u8a(bytes))
         throw new Error('Uint8Array expected');
+    // pre-caching improves the speed 6x
     let hex = '';
-    for (let i = 0; i < uint8a.length; i++) {
-        hex += hexes[uint8a[i]];
+    for (let i = 0; i < bytes.length; i++) {
+        hex += hexes[bytes[i]];
     }
     return hex;
 }
 /**
- * @example hexToBytes('deadbeef') // Uint8Array.from([0xde, 0xad, 0xbe, 0xef])
+ * @example hexToBytes('cafe0123') // Uint8Array.from([0xca, 0xfe, 0x01, 0x23])
  */
 function hexToBytes(hex) {
-    if (typeof hex !== 'string') {
-        throw new TypeError('hexToBytes: expected string, got ' + typeof hex);
-    }
-    if (hex.length % 2)
-        throw new Error('hexToBytes: received invalid unpadded hex');
-    const array = new Uint8Array(hex.length / 2);
+    if (typeof hex !== 'string')
+        throw new Error('hex string expected, got ' + typeof hex);
+    const len = hex.length;
+    if (len % 2)
+        throw new Error('padded hex string expected, got unpadded hex of length ' + len);
+    const array = new Uint8Array(len / 2);
     for (let i = 0; i < array.length; i++) {
         const j = i * 2;
         const hexByte = hex.slice(j, j + 2);
@@ -80069,36 +81496,39 @@ async function asyncLoop(iters, tick, cb) {
         ts += diff;
     }
 }
+/**
+ * @example utf8ToBytes('abc') // new Uint8Array([97, 98, 99])
+ */
 function utf8ToBytes(str) {
-    if (typeof str !== 'string') {
-        throw new TypeError(`utf8ToBytes expected string, got ${typeof str}`);
-    }
-    return new TextEncoder().encode(str);
+    if (typeof str !== 'string')
+        throw new Error(`utf8ToBytes expected string, got ${typeof str}`);
+    return new Uint8Array(new TextEncoder().encode(str)); // https://bugzil.la/1681809
 }
+/**
+ * Normalizes (non-hex) string or Uint8Array to Uint8Array.
+ * Warning: when Uint8Array is passed, it would NOT get copied.
+ * Keep in mind for future mutable operations.
+ */
 function toBytes(data) {
     if (typeof data === 'string')
         data = utf8ToBytes(data);
-    if (!(data instanceof Uint8Array))
-        throw new TypeError(`Expected input type is Uint8Array (got ${typeof data})`);
+    if (!u8a(data))
+        throw new Error(`expected Uint8Array, got ${typeof data}`);
     return data;
 }
 /**
- * Concats Uint8Array-s into one; like `Buffer.concat([buf1, buf2])`
- * @example concatBytes(buf1, buf2)
+ * Copies several Uint8Arrays into one.
  */
 function concatBytes(...arrays) {
-    if (!arrays.every((a) => a instanceof Uint8Array))
-        throw new Error('Uint8Array list expected');
-    if (arrays.length === 1)
-        return arrays[0];
-    const length = arrays.reduce((a, arr) => a + arr.length, 0);
-    const result = new Uint8Array(length);
-    for (let i = 0, pad = 0; i < arrays.length; i++) {
-        const arr = arrays[i];
-        result.set(arr, pad);
-        pad += arr.length;
-    }
-    return result;
+    const r = new Uint8Array(arrays.reduce((sum, a) => sum + a.length, 0));
+    let pad = 0; // walk through each item, ensure they have proper type
+    arrays.forEach((a) => {
+        if (!u8a(a))
+            throw new Error('Uint8Array expected');
+        r.set(a, pad);
+        pad += a.length;
+    });
+    return r;
 }
 // For runtime check if class implements interface
 class Hash {
@@ -80111,16 +81541,16 @@ class Hash {
 const isPlainObject = (obj) => Object.prototype.toString.call(obj) === '[object Object]' && obj.constructor === Object;
 function checkOpts(defaults, opts) {
     if (opts !== undefined && (typeof opts !== 'object' || !isPlainObject(opts)))
-        throw new TypeError('Options should be object or undefined');
+        throw new Error('Options should be object or undefined');
     const merged = Object.assign(defaults, opts);
     return merged;
 }
-function wrapConstructor(hashConstructor) {
-    const hashC = (message) => hashConstructor().update(toBytes(message)).digest();
-    const tmp = hashConstructor();
+function wrapConstructor(hashCons) {
+    const hashC = (msg) => hashCons().update(toBytes(msg)).digest();
+    const tmp = hashCons();
     hashC.outputLen = tmp.outputLen;
     hashC.blockLen = tmp.blockLen;
-    hashC.create = () => hashConstructor();
+    hashC.create = () => hashCons();
     return hashC;
 }
 function wrapConstructorWithOpts(hashCons) {
@@ -80131,8 +81561,16 @@ function wrapConstructorWithOpts(hashCons) {
     hashC.create = (opts) => hashCons(opts);
     return hashC;
 }
+function wrapXOFConstructorWithOpts(hashCons) {
+    const hashC = (msg, opts) => hashCons(opts).update(toBytes(msg)).digest();
+    const tmp = hashCons({});
+    hashC.outputLen = tmp.outputLen;
+    hashC.blockLen = tmp.blockLen;
+    hashC.create = (opts) => hashCons(opts);
+    return hashC;
+}
 /**
- * Secure PRNG. Uses `globalThis.crypto` or node.js crypto module.
+ * Secure PRNG. Uses `crypto.getRandomValues`, which defers to OS.
  */
 function randomBytes(bytesLength = 32) {
     if (_noble_hashes_crypto__WEBPACK_IMPORTED_MODULE_0__.crypto && typeof _noble_hashes_crypto__WEBPACK_IMPORTED_MODULE_0__.crypto.getRandomValues === 'function') {
@@ -80180,6 +81618,13 @@ const check = (byteSize, value, isSigned) => {
 	return value;
 };
 
+const isNonNegative = value => {
+	if ('bigint' === typeof value)
+		return 0n <= value;
+
+	return 0 <= value;
+};
+
 /**
  * Represents a base integer.
  */
@@ -80187,12 +81632,26 @@ class BaseValue {
 	/**
 	 * Creates a base value.
 	 * @param {number} size Size of the integer.
-	 * @param {number|BigInt} value Value.
-	 * @param {boolean} isSigned Should the value be treated as signed.
+	 * @param {number|bigint} value Value.
+	 * @param {boolean} isSigned \c true if the value should be treated as signed.
 	 */
 	constructor(size, value, isSigned = false) {
+		/**
+		 * Size of the integer.
+		 * @type number
+		 */
 		this.size = size;
+
+		/**
+		 * \c true if the value should be treated as signed.
+		 * @type boolean
+		 */
 		this.isSigned = isSigned;
+
+		/**
+		 * Value.
+		 * @type number|bigint
+		 */
 		this.value = check(size, value, isSigned);
 	}
 
@@ -80202,11 +81661,11 @@ class BaseValue {
 	 */
 	toString() {
 		let unsignedValue;
-		if (!this.isSigned || 0 <= this.value) {
+		if (!this.isSigned || isNonNegative(this.value)) {
 			unsignedValue = this.value;
 		} else {
-			const upperBoundPlusOne = (8 === this.size ? 0x1_00000000_00000000n : bitmask(this.size * 8) + 1);
-			unsignedValue = this.value + upperBoundPlusOne;
+			const upperBoundPlusOne = (8 === this.size ? 0x1_00000000_00000000n : BigInt(bitmask(this.size * 8) + 1));
+			unsignedValue = BigInt(this.value) + upperBoundPlusOne;
 		}
 
 		return `0x${unsignedValue.toString(16).toUpperCase().padStart(this.size * 2, '0')}`;
@@ -80224,7 +81683,8 @@ class BaseValue {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ Bip32)
+/* harmony export */   Bip32: () => (/* binding */ Bip32),
+/* harmony export */   Bip32Node: () => (/* binding */ Bip32Node)
 /* harmony export */ });
 /* harmony import */ var _CryptoTypes_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CryptoTypes.js */ "./src/CryptoTypes.js");
 /* harmony import */ var bitcore_mnemonic__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! bitcore-mnemonic */ "./node_modules/bitcore-mnemonic/index.js");
@@ -80240,7 +81700,7 @@ __webpack_require__.r(__webpack_exports__);
 class Bip32Node {
 	/**
 	 * Creates a BIP32 node around a key and data.
-	 * @param {string} hmacKey BIP32 HMAC key.
+	 * @param {Uint8Array} hmacKey BIP32 HMAC key.
 	 * @param {Uint8Array} data BIP32 seed.
 	 */
 	constructor(hmacKey, data) {
@@ -80248,7 +81708,16 @@ class Bip32Node {
 		hmac.update(data);
 		const hmacResult = hmac.digest();
 
+		/**
+		 * Private key associated with this node.
+		 * @type PrivateKey
+		 */
 		this.privateKey = new _CryptoTypes_js__WEBPACK_IMPORTED_MODULE_0__.PrivateKey(hmacResult.subarray(0, _CryptoTypes_js__WEBPACK_IMPORTED_MODULE_0__.PrivateKey.SIZE));
+
+		/**
+		 * Chain code associated with this node.
+		 * @type Uint8Array
+		 */
 		this.chainCode = hmacResult.subarray(_CryptoTypes_js__WEBPACK_IMPORTED_MODULE_0__.PrivateKey.SIZE);
 	}
 
@@ -80273,10 +81742,11 @@ class Bip32Node {
 
 	/**
 	 * Derives a descendent node with specified path.
-	 * @param {array<number>} path BIP32 path.
+	 * @param {Array<number>} path BIP32 path.
 	 * @returns {Bip32Node} BIP32 node at the end of the path.
 	 */
 	derivePath(path) {
+		/** @type Bip32Node */
 		let nextNode = this;
 		path.forEach(identifier => {
 			nextNode = nextNode.deriveOne(identifier);
@@ -80296,8 +81766,15 @@ class Bip32 {
 	 * @param {string} mnemonicLanguage Language of constructed mnemonics.
 	 */
 	constructor(curveName = 'ed25519', mnemonicLanguage = 'english') {
-		this.rootHmacKey = Buffer.from(`${curveName} seed`);
-		this.mnemonicLanguage = mnemonicLanguage;
+		/**
+		 * @private
+		 */
+		this._rootHmacKey = Buffer.from(`${curveName} seed`);
+
+		/**
+		 * @private
+		 */
+		this._mnemonicLanguage = mnemonicLanguage;
 	}
 
 	/**
@@ -80306,7 +81783,7 @@ class Bip32 {
 	 * @returns {Bip32Node} BIP32 root node.
 	 */
 	fromSeed(seed) {
-		return new Bip32Node(this.rootHmacKey, seed);
+		return new Bip32Node(this._rootHmacKey, seed);
 	}
 
 	/**
@@ -80316,7 +81793,7 @@ class Bip32 {
 	 * @returns {Bip32Node} BIP32 root node.
 	 */
 	fromMnemonic(mnemonic, password) {
-		const wordlist = bitcore_mnemonic__WEBPACK_IMPORTED_MODULE_1__.Words[this.mnemonicLanguage.toUpperCase()];
+		const wordlist = bitcore_mnemonic__WEBPACK_IMPORTED_MODULE_1__.Words[this._mnemonicLanguage.toUpperCase()];
 		return this.fromSeed(new bitcore_mnemonic__WEBPACK_IMPORTED_MODULE_1__(mnemonic, wordlist).toSeed(password));
 	}
 
@@ -80326,7 +81803,7 @@ class Bip32 {
 	 * @returns {string} Random mnemonic created with the specified entropy.
 	 */
 	random(seedLength = 32) {
-		const wordlist = bitcore_mnemonic__WEBPACK_IMPORTED_MODULE_1__.Words[this.mnemonicLanguage.toUpperCase()];
+		const wordlist = bitcore_mnemonic__WEBPACK_IMPORTED_MODULE_1__.Words[this._mnemonicLanguage.toUpperCase()];
 		return new bitcore_mnemonic__WEBPACK_IMPORTED_MODULE_1__(seedLength * 8, wordlist).phrase;
 	}
 }
@@ -80364,6 +81841,10 @@ class ByteArray {
 		if (fixedSize !== rawBytes.length)
 			throw RangeError(`bytes was size ${rawBytes.length} but must be ${fixedSize}`);
 
+		/**
+		 * Underlying bytes.
+		 * @type Uint8Array
+		 */
 		this.bytes = new Uint8Array(rawBytes);
 	}
 
@@ -80387,10 +81868,14 @@ class ByteArray {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "AesCbcCipher": () => (/* binding */ AesCbcCipher),
-/* harmony export */   "AesGcmCipher": () => (/* binding */ AesGcmCipher)
+/* harmony export */   AesCbcCipher: () => (/* binding */ AesCbcCipher),
+/* harmony export */   AesGcmCipher: () => (/* binding */ AesGcmCipher)
 /* harmony export */ });
-/* harmony import */ var crypto__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! crypto */ "./node_modules/crypto-browserify/index.js");
+/* harmony import */ var _CryptoTypes_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CryptoTypes.js */ "./src/CryptoTypes.js");
+/* harmony import */ var crypto__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! crypto */ "./node_modules/crypto-browserify/index.js");
+/* eslint-disable no-unused-vars */
+
+/* eslint-enable no-unused-vars */
 
 
 const concatArrays = (lhs, rhs) => {
@@ -80408,10 +81893,13 @@ const concatArrays = (lhs, rhs) => {
 class AesCbcCipher {
 	/**
 	 * Creates a cipher around an aes shared key.
-	 * @param {SharedKey} aesKey AES shared key.
+	 * @param {SharedKey256} aesKey AES shared key.
 	 */
 	constructor(aesKey) {
-		this.key = aesKey;
+		/**
+		 * @private
+		 */
+		this._key = aesKey;
 	}
 
 	/**
@@ -80421,7 +81909,7 @@ class AesCbcCipher {
 	 * @returns {Uint8Array} Cipher text.
 	 */
 	encrypt(clearText, iv) {
-		const cipher = crypto__WEBPACK_IMPORTED_MODULE_0__.createCipheriv('aes-256-cbc', this.key.bytes, iv);
+		const cipher = crypto__WEBPACK_IMPORTED_MODULE_1__.createCipheriv('aes-256-cbc', this._key.bytes, iv);
 
 		const cipherText = cipher.update(clearText);
 		const padding = cipher.final();
@@ -80436,7 +81924,7 @@ class AesCbcCipher {
 	 * @returns {Uint8Array} Clear text.
 	 */
 	decrypt(cipherText, iv) {
-		const decipher = crypto__WEBPACK_IMPORTED_MODULE_0__.createDecipheriv('aes-256-cbc', this.key.bytes, iv);
+		const decipher = crypto__WEBPACK_IMPORTED_MODULE_1__.createDecipheriv('aes-256-cbc', this._key.bytes, iv);
 
 		const clearText = decipher.update(cipherText);
 		const padding = decipher.final();
@@ -80453,14 +81941,21 @@ class AesCbcCipher {
  * Performs AES GCM encryption and decryption with a given key.
  */
 class AesGcmCipher {
+	/**
+	 * Byte size of GCM tag.
+	 * @type number
+	 */
 	static TAG_SIZE = 16;
 
 	/**
 	 * Creates a cipher around an aes shared key.
-	 * @param {SharedKey} aesKey AES shared key.
+	 * @param {SharedKey256} aesKey AES shared key.
 	 */
 	constructor(aesKey) {
-		this.key = aesKey;
+		/**
+		 * @private
+		 */
+		this._key = aesKey;
 	}
 
 	/**
@@ -80470,7 +81965,7 @@ class AesGcmCipher {
 	 * @returns {Uint8Array} Cipher text with appended tag.
 	 */
 	encrypt(clearText, iv) {
-		const cipher = crypto__WEBPACK_IMPORTED_MODULE_0__.createCipheriv('aes-256-gcm', this.key.bytes, iv);
+		const cipher = crypto__WEBPACK_IMPORTED_MODULE_1__.createCipheriv('aes-256-gcm', this._key.bytes, iv);
 
 		const cipherText = cipher.update(clearText);
 		cipher.final(); // no padding for GCM
@@ -80487,7 +81982,7 @@ class AesGcmCipher {
 	 * @returns {Uint8Array} Clear text.
 	 */
 	decrypt(cipherText, iv) {
-		const decipher = crypto__WEBPACK_IMPORTED_MODULE_0__.createDecipheriv('aes-256-gcm', this.key.bytes, iv);
+		const decipher = crypto__WEBPACK_IMPORTED_MODULE_1__.createDecipheriv('aes-256-gcm', this._key.bytes, iv);
 
 		const tagStartOffset = cipherText.length - AesGcmCipher.TAG_SIZE;
 		decipher.setAuthTag(cipherText.subarray(tagStartOffset));
@@ -80511,11 +82006,11 @@ class AesGcmCipher {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "Hash256": () => (/* binding */ Hash256),
-/* harmony export */   "PrivateKey": () => (/* binding */ PrivateKey),
-/* harmony export */   "PublicKey": () => (/* binding */ PublicKey),
-/* harmony export */   "SharedKey256": () => (/* binding */ SharedKey256),
-/* harmony export */   "Signature": () => (/* binding */ Signature)
+/* harmony export */   Hash256: () => (/* binding */ Hash256),
+/* harmony export */   PrivateKey: () => (/* binding */ PrivateKey),
+/* harmony export */   PublicKey: () => (/* binding */ PublicKey),
+/* harmony export */   SharedKey256: () => (/* binding */ SharedKey256),
+/* harmony export */   Signature: () => (/* binding */ Signature)
 /* harmony export */ });
 /* harmony import */ var _ByteArray_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ByteArray.js */ "./src/ByteArray.js");
 /* harmony import */ var crypto__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! crypto */ "./node_modules/crypto-browserify/index.js");
@@ -80523,9 +82018,13 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /**
- *  Represents a 256-bit hash.
+ * Represents a 256-bit hash.
  */
 class Hash256 extends _ByteArray_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
+	/**
+	 * Byte size of raw hash.
+	 * @type number
+	 */
 	static SIZE = 32;
 
 	/**
@@ -80546,9 +82045,13 @@ class Hash256 extends _ByteArray_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
 }
 
 /**
- *  Represents a private key.
+ * Represents a private key.
  */
 class PrivateKey extends _ByteArray_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
+	/**
+	 * Byte size of raw private key.
+	 * @type number
+	 */
 	static SIZE = 32;
 
 	/**
@@ -80569,14 +82072,18 @@ class PrivateKey extends _ByteArray_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
 }
 
 /**
- *  Represents a public key.
+ * Represents a public key.
  */
 class PublicKey extends _ByteArray_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
+	/**
+	 * Byte size of raw public key.
+	 * @type number
+	 */
 	static SIZE = 32;
 
 	/**
 	 * Creates a public key from bytes or a hex string.
-	 * @param {Uint8Array|string} publicKey Input string, byte array or public key.
+	 * @param {Uint8Array|string|PublicKey} publicKey Input string, byte array or public key.
 	 */
 	constructor(publicKey) {
 		super(PublicKey.SIZE, publicKey instanceof PublicKey ? publicKey.bytes : publicKey);
@@ -80584,13 +82091,17 @@ class PublicKey extends _ByteArray_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
 }
 
 /**
- *  Represents a 256-bit symmetric encryption key.
+ * Represents a 256-bit symmetric encryption key.
  */
 class SharedKey256 extends _ByteArray_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
+	/**
+	 * Byte size of raw shared key.
+	 * @type number
+	 */
 	static SIZE = 32;
 
 	/**
-	 * Creates a key from bytes or a hex string.
+	 * Creates a shared key from bytes or a hex string.
 	 * @param {Uint8Array|string} sharedKey Input string or byte array.
 	 */
 	constructor(sharedKey) {
@@ -80599,9 +82110,13 @@ class SharedKey256 extends _ByteArray_js__WEBPACK_IMPORTED_MODULE_0__["default"]
 }
 
 /**
- *  Represents a signature.
+ * Represents a signature.
  */
 class Signature extends _ByteArray_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
+	/**
+	 * Byte size of raw signature.
+	 * @type number
+	 */
 	static SIZE = 64;
 
 	/**
@@ -80632,17 +82147,25 @@ class Signature extends _ByteArray_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "Network": () => (/* binding */ Network),
-/* harmony export */   "NetworkLocator": () => (/* binding */ NetworkLocator)
+/* harmony export */   Network: () => (/* binding */ Network),
+/* harmony export */   NetworkLocator: () => (/* binding */ NetworkLocator)
 /* harmony export */ });
-/* harmony import */ var ripemd160__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ripemd160 */ "./node_modules/ripemd160/index.js");
+/* harmony import */ var _CryptoTypes_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CryptoTypes.js */ "./src/CryptoTypes.js");
+/* harmony import */ var _NetworkTimestamp_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./NetworkTimestamp.js */ "./src/NetworkTimestamp.js");
+/* harmony import */ var ripemd160__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ripemd160 */ "./node_modules/ripemd160/index.js");
 /* provided dependency */ var Buffer = __webpack_require__(/*! buffer */ "./node_modules/buffer/index.js")["Buffer"];
+/* eslint-disable no-unused-vars */
+
+
+/* eslint-enable no-unused-vars */
 
 
 const BASE32_RFC4648_ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567';
 
 /**
  * Represents a network.
+ * @template {{bytes: Uint8Array}} TAddress
+ * @template {NetworkTimestamp} TNetworkTimestamp
  */
 class Network {
 	/**
@@ -80652,48 +82175,77 @@ class Network {
 	 * @param {NetworkTimestampDatetimeConverter} datetimeConverter Network timestamp datetime converter associated with this network.
 	 * @param {function} addressHasher Gets the primary hasher to use in the public key to address conversion.
 	 * @param {function} createAddress Creates an encoded address from an address without checksum and checksum bytes.
-	 * @param {class} AddressClass Address class associated with this network.
-	 * @param {class} NetworkTimestampClass Network timestamp class associated with this network.
+	 * @param {AddressConstructable} AddressClass Address class associated with this network.
+	 * @param {Constructable} NetworkTimestampClass Network timestamp class associated with this network.
 	 */
 	constructor(name, identifier, datetimeConverter, addressHasher, createAddress, AddressClass, NetworkTimestampClass) {
+		/**
+		 * Network name.
+		 * @type string
+		 */
 		this.name = name;
-		this.identifier = identifier;
-		this.datetimeConverter = datetimeConverter;
-		this.addressHasher = addressHasher;
-		this.createAddress = createAddress;
 
-		this.AddressClass = AddressClass;
-		this.NetworkTimestampClass = NetworkTimestampClass;
+		/**
+		 * Network identifier byte.
+		 * @type number
+		 */
+		this.identifier = identifier;
+
+		/**
+		 * Network timestamp datetime converter associated with this network.
+		 * @type NetworkTimestampDatetimeConverter
+		 */
+		this.datetimeConverter = datetimeConverter;
+
+		/**
+		 * @private
+		 */
+		this._addressHasher = addressHasher;
+
+		/**
+		 * @private
+		 */
+		this._createAddress = createAddress;
+
+		/**
+		 * @private
+		 */
+		this._AddressClass = AddressClass;
+
+		/**
+		 * @private
+		 */
+		this._NetworkTimestampClass = NetworkTimestampClass;
 	}
 
 	/**
 	 * Converts a public key to an address.
 	 * @param {PublicKey} publicKey Public key to convert.
-	 * @returns {Address} Address corresponding to the public key input.
+	 * @returns {TAddress} Address corresponding to the public key input.
 	 */
 	publicKeyToAddress(publicKey) {
-		const partOneHashBuilder = this.addressHasher();
+		const partOneHashBuilder = this._addressHasher();
 		partOneHashBuilder.update(publicKey.bytes);
 		const partOneHash = partOneHashBuilder.digest();
 
-		const partTwoHash = new ripemd160__WEBPACK_IMPORTED_MODULE_0__().update(Buffer.from(partOneHash)).digest();
+		const partTwoHash = new ripemd160__WEBPACK_IMPORTED_MODULE_2__().update(Buffer.from(partOneHash)).digest();
 
 		const version = new Uint8Array([this.identifier, ...partTwoHash]);
 
-		const partThreeHashBuilder = this.addressHasher();
+		const partThreeHashBuilder = this._addressHasher();
 		partThreeHashBuilder.update(version);
 		const checksum = partThreeHashBuilder.digest().subarray(0, 4);
 
-		return this.createAddress(version, checksum);
+		return this._createAddress(version, checksum);
 	}
 
 	/**
 	 * Checks if an address string is valid and belongs to this network.
 	 * @param {string} addressString Address to check.
-	 * @returns {boolean} True if address is valid and belongs to this network.
+	 * @returns {boolean} \c true if address is valid and belongs to this network.
 	 */
 	isValidAddressString(addressString) {
-		if (this.AddressClass.ENCODED_SIZE !== addressString.length)
+		if (this._AddressClass.ENCODED_SIZE !== addressString.length)
 			return false;
 
 		for (let i = 0; i < addressString.length; ++i) {
@@ -80701,19 +82253,19 @@ class Network {
 				return false;
 		}
 
-		return this.isValidAddress(new this.AddressClass(addressString));
+		return this.isValidAddress(new this._AddressClass(addressString));
 	}
 
 	/**
 	 * Checks if an address is valid and belongs to this network.
-	 * @param {Address} address Address to check.
-	 * @returns {boolean} True if address is valid and belongs to this network.
+	 * @param {TAddress} address Address to check.
+	 * @returns {boolean} \c true if address is valid and belongs to this network.
 	 */
 	isValidAddress(address) {
 		if (address.bytes[0] !== this.identifier)
 			return false;
 
-		const hashBuilder = this.addressHasher();
+		const hashBuilder = this._addressHasher();
 		hashBuilder.update(address.bytes.subarray(0, 1 + 20));
 
 		const checkSumFromAddress = address.bytes.subarray(1 + 20);
@@ -80729,20 +82281,20 @@ class Network {
 
 	/**
 	 * Converts a network timestamp to a datetime.
-	 * @param {NetworkTimestamp} referenceNetworkTimestamp Reference network timestamp to convert.
+	 * @param {TNetworkTimestamp} referenceNetworkTimestamp Reference network timestamp to convert.
 	 * @returns {Date} Datetime representation of the reference network timestamp.
 	 */
 	toDatetime(referenceNetworkTimestamp) {
-		return this.datetimeConverter.toDatetime(referenceNetworkTimestamp.timestamp);
+		return this.datetimeConverter.toDatetime(Number(referenceNetworkTimestamp.timestamp));
 	}
 
 	/**
 	 * Converts a datetime to a network timestamp.
 	 * @param {Date} referenceDatetime Reference datetime to convert.
-	 * @returns {NetworkTimestamp} Network timestamp representation of the reference datetime.
+	 * @returns {TNetworkTimestamp} Network timestamp representation of the reference datetime.
 	 */
 	fromDatetime(referenceDatetime) {
-		return new this.NetworkTimestampClass(this.datetimeConverter.toDifference(referenceDatetime));
+		return new this._NetworkTimestampClass(this.datetimeConverter.toDifference(referenceDatetime));
 	}
 
 	/**
@@ -80757,29 +82309,31 @@ class Network {
 /**
  * Provides utility functions for finding a network.
  */
-const NetworkLocator = {
+class NetworkLocator {
 	/**
 	 * Finds a network with a specified name within a list of networks.
-	 * @param {array<Network>} networks List of networks to search.
-	 * @param {array<string>|string} singleOrMultipleNames Names for which to search.
-	 * @returns {Network} First network with a name in the supplied list.
+	 * @template {Network<any, any>} TNetwork
+	 * @param {Array<TNetwork>} networks List of networks to search.
+	 * @param {Array<string>|string} singleOrMultipleNames Names for which to search.
+	 * @returns {TNetwork} First network with a name in the supplied list.
 	 */
-	findByName: (networks, singleOrMultipleNames) => {
+	static findByName(networks, singleOrMultipleNames) {
 		const names = Array.isArray(singleOrMultipleNames) ? singleOrMultipleNames : [singleOrMultipleNames];
 		const matchingNetwork = networks.find(network => names.some(name => name === network.name));
 		if (undefined === matchingNetwork)
 			throw RangeError(`no network found with name '${names.join(', ')}'`);
 
 		return matchingNetwork;
-	},
+	}
 
 	/**
 	 * Finds a network with a specified identifier within a list of networks.
-	 * @param {array<Network>} networks List of networks to search.
-	 * @param {array<number>|number} singleOrMultipleIdentifiers Identifiers for which to search.
-	 * @returns {Network} First network with an identifier in the supplied list.
+	 * @template {Network<any, any>} TNetwork
+	 * @param {Array<TNetwork>} networks List of networks to search.
+	 * @param {Array<number>|number} singleOrMultipleIdentifiers Identifiers for which to search.
+	 * @returns {TNetwork} First network with an identifier in the supplied list.
 	 */
-	findByIdentifier: (networks, singleOrMultipleIdentifiers) => {
+	static findByIdentifier(networks, singleOrMultipleIdentifiers) {
 		const identifiers = Array.isArray(singleOrMultipleIdentifiers) ? singleOrMultipleIdentifiers : [singleOrMultipleIdentifiers];
 		const matchingNetwork = networks.find(network => identifiers.some(identifier => identifier === network.identifier));
 		if (undefined === matchingNetwork)
@@ -80787,7 +82341,23 @@ const NetworkLocator = {
 
 		return matchingNetwork;
 	}
-};
+}
+
+// region type declarations
+
+/**
+ * Constructable class type.
+ * @class
+ * @typedef {{new(...args: any[]): object}} Constructable
+ */
+
+/**
+ * Address class type.
+ * @class
+ * @typedef {{new(...args: any[]): object, ENCODED_SIZE: number}} AddressConstructable
+ */
+
+// endregion
 
 
 /***/ }),
@@ -80800,8 +82370,8 @@ const NetworkLocator = {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "NetworkTimestamp": () => (/* binding */ NetworkTimestamp),
-/* harmony export */   "NetworkTimestampDatetimeConverter": () => (/* binding */ NetworkTimestampDatetimeConverter)
+/* harmony export */   NetworkTimestamp: () => (/* binding */ NetworkTimestamp),
+/* harmony export */   NetworkTimestampDatetimeConverter: () => (/* binding */ NetworkTimestampDatetimeConverter)
 /* harmony export */ });
 /**
  * Represents a network timestamp.
@@ -80809,9 +82379,13 @@ __webpack_require__.r(__webpack_exports__);
 class NetworkTimestamp {
 	/**
 	 * Creates a timestamp.
-	 * @param {number} timestamp Raw network timestamp.
+	 * @param {number|bigint} timestamp Raw network timestamp.
 	 */
 	constructor(timestamp) {
+		/**
+		 * Underlying timestamp.
+		 * @type bigint
+		 */
 		this.timestamp = BigInt(timestamp);
 	}
 
@@ -80825,16 +82399,16 @@ class NetworkTimestamp {
 	/**
 	 * Adds a specified number of seconds to this timestamp.
 	 * @abstract
-	 * @param {number} count Number of seconds to add.
+	 * @param {number|bigint} count Number of seconds to add.
 	 * @returns {NetworkTimestamp} New timestamp that is the specified number of seconds past this timestamp.
 	 */
-	addSeconds() { // eslint-disable-line class-methods-use-this
-		throw new Error('`addSeconds` be implemented by concrete class');
+	addSeconds(count) { // eslint-disable-line class-methods-use-this, no-unused-vars
+		throw new Error('`addSeconds` must be implemented by concrete class');
 	}
 
 	/**
 	 * Adds a specified number of minutes to this timestamp.
-	 * @param {number} count Number of minutes to add.
+	 * @param {number|bigint} count Number of minutes to add.
 	 * @returns {NetworkTimestamp} New timestamp that is the specified number of minutes past this timestamp.
 	 */
 	addMinutes(count) {
@@ -80843,7 +82417,7 @@ class NetworkTimestamp {
 
 	/**
 	 * Adds a specified number of hours to this timestamp.
-	 * @param {number} count Number of hours to add.
+	 * @param {number|bigint} count Number of hours to add.
 	 * @returns {NetworkTimestamp} New timestamp that is the specified number of hours past this timestamp.
 	 */
 	addHours(count) {
@@ -80869,7 +82443,16 @@ class NetworkTimestampDatetimeConverter {
 	 * @param {string} timeUnits Time unit the network uses for progressing.
 	 */
 	constructor(epoch, timeUnits) {
+		/**
+		 * Date at which network started
+		 * @type Date
+		 */
 		this.epoch = epoch;
+
+		/**
+		 * Number of milliseconds per time unit.
+		 * @type number
+		 */
 		this.timeUnits = {
 			hours: 60 * 60 * 1000,
 			minutes: 60 * 1000,
@@ -80896,7 +82479,8 @@ class NetworkTimestampDatetimeConverter {
 		if (referenceDatetime < this.epoch)
 			throw RangeError('timestamp cannot be before epoch');
 
-		return (referenceDatetime - this.epoch) / this.timeUnits;
+		const subtractDates = (lhs, rhs) => (lhs - rhs);
+		return subtractDates(referenceDatetime, this.epoch) / this.timeUnits;
 	}
 }
 
@@ -80932,6 +82516,7 @@ const nameToEnumValue = (mapping, enumType, enumValueName) => {
 };
 
 const buildTypeHintsMap = structValue => {
+	/** @type {{[key: string]: string}} */
 	const typeHints = {};
 	const rawTypeHints = structValue.constructor.TYPE_HINTS || {};
 	Object.getOwnPropertyNames(rawTypeHints).forEach(key => {
@@ -80973,33 +82558,59 @@ const autoEncodeStrings = entity => {
 
 /**
  * Rule based transaction factory.
+ * @note This class is not intended to be used directly.
  */
 class RuleBasedTransactionFactory {
 	/**
 	 * Creates a rule based transaction factory for use with catbuffer generated code.
 	 * @param {object} module Catbuffer generated module.
-	 * @param {function} typeConverter Type converter.
-	 * @param {Map} typeRuleOverrides Type rule overrides.
+	 * @param {function|undefined} typeConverter Type converter.
+	 * @param {Map<string, function>|undefined} typeRuleOverrides Type rule overrides.
 	 */
 	constructor(module, typeConverter = undefined, typeRuleOverrides = undefined) {
-		this.module = module;
-		this.typeConverter = value => typeConverterFactory(this.module, typeConverter, value);
-		this.typeRuleOverrides = typeRuleOverrides || new Map();
+		/**
+		 * @private
+		 */
+		this._module = module;
+
+		/**
+		 * Tries to coerce a value to a more appropriate type.
+		 * @param {object} value Original value.
+		 * @returns {object} Type converted value.
+		 * @private
+		 */
+		this._typeConverter = value => typeConverterFactory(this._module, typeConverter, value);
+
+		/**
+		 * @private
+		 */
+		this._typeRuleOverrides = typeRuleOverrides || new Map();
+
+		/**
+		 * Map of rule names to transform functions.
+		 * @type Map<string, function>
+		 */
 		this.rules = new Map();
 	}
 
+	/**
+	 * Looks up a class in the wrapped module.
+	 * @param {string} name Class name.
+	 * @returns {Constructable} Class type.
+	 * @private
+	 */
 	_getModuleClass(name) {
-		return this.module[name];
+		return this._module[name];
 	}
 
 	/**
 	 * Creates wrapper for SDK POD types.
 	 * @param {string} name Class name.
-	 * @param {type} PodClass Class type.
+	 * @param {Constructable} PodClass Class type.
 	 */
 	addPodParser(name, PodClass) {
-		if (this.typeRuleOverrides.has(PodClass)) {
-			this.rules.set(name, this.typeRuleOverrides.get(PodClass));
+		if (this._typeRuleOverrides.has(PodClass)) {
+			this.rules.set(name, this._typeRuleOverrides.get(PodClass));
 			return;
 		}
 
@@ -81071,8 +82682,10 @@ class RuleBasedTransactionFactory {
 	 */
 	addArrayParser(name) {
 		const elementRule = this.rules.get(name);
-		const elementName = name.replace(/^struct:/, '');
+		if (!elementRule)
+			throw Error(`cannot create array type parser because element rule "${name}" is unknown`);
 
+		const elementName = name.replace(/^struct:/, '');
 		this.rules.set(`array[${elementName}]`, values => values.map(value => elementRule(value)));
 	}
 
@@ -81080,8 +82693,8 @@ class RuleBasedTransactionFactory {
 	 * Autodetects rules using reflection.
 	 */
 	autodetect() {
-		Object.getOwnPropertyNames(this.module).forEach(key => {
-			const cls = this.module[key];
+		Object.getOwnPropertyNames(this._module).forEach(key => {
+			const cls = this._module[key];
 			if (Object.prototype.isPrototypeOf.call(_BaseValue_js__WEBPACK_IMPORTED_MODULE_0__["default"].prototype, cls.prototype))
 				this.addPodParser(key, cls);
 		});
@@ -81106,10 +82719,26 @@ class RuleBasedTransactionFactory {
 		return entity;
 	}
 
+	/**
+	 * Creates a transaction descriptor processor around a descriptor.
+	 * @param {object} descriptor Transaction descriptor.
+	 * @returns {TransactionDescriptorProcessor} Transaction descriptor processor.
+	 * @private
+	 */
 	_createProcessor(descriptor) {
-		return new _TransactionDescriptorProcessor_js__WEBPACK_IMPORTED_MODULE_2__["default"](descriptor, this.rules, this.typeConverter);
+		return new _TransactionDescriptorProcessor_js__WEBPACK_IMPORTED_MODULE_2__["default"](descriptor, this.rules, this._typeConverter);
 	}
 }
+
+// region type declarations
+
+/**
+ * Constructable class type.
+ * @class
+ * @typedef {{new(...args: any[]): object}} Constructable
+ */
+
+// endregion
 
 
 /***/ }),
@@ -81122,22 +82751,25 @@ class RuleBasedTransactionFactory {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "deriveSharedKeyFactory": () => (/* binding */ deriveSharedKeyFactory),
-/* harmony export */   "deriveSharedSecretFactory": () => (/* binding */ deriveSharedSecretFactory)
+/* harmony export */   deriveSharedKeyFactory: () => (/* binding */ deriveSharedKeyFactory),
+/* harmony export */   deriveSharedSecretFactory: () => (/* binding */ deriveSharedSecretFactory)
 /* harmony export */ });
 /* harmony import */ var _CryptoTypes_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CryptoTypes.js */ "./src/CryptoTypes.js");
 /* harmony import */ var _noble_hashes_hkdf__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @noble/hashes/hkdf */ "./node_modules/@noble/hashes/esm/hkdf.js");
 /* harmony import */ var _noble_hashes_sha256__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @noble/hashes/sha256 */ "./node_modules/@noble/hashes/esm/sha256.js");
 /* harmony import */ var tweetnacl__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! tweetnacl */ "./node_modules/tweetnacl/nacl-fast.js");
+// this file contains implementation details and is not intended to be used directly
+
 
 
 
 
 
 // order matches order of exported methods
+const tweetnacl_lowlevel = tweetnacl__WEBPACK_IMPORTED_MODULE_3__.lowlevel;
 const {
 	crypto_verify_32, gf, pack25519, unpack25519, pow2523, set25519
-} = tweetnacl__WEBPACK_IMPORTED_MODULE_3__.lowlevel;
+} = tweetnacl_lowlevel;
 
 // region curve operations - unfortunatelly tweetnacl.lowlevel does not expose those functions, so needed to copy them here
 
@@ -81156,7 +82788,7 @@ const par25519 = a => {
 };
 
 const inv25519 = (o, i) => {
-	const { M, S } = tweetnacl__WEBPACK_IMPORTED_MODULE_3__.lowlevel;
+	const { M, S } = tweetnacl_lowlevel;
 
 	const c = gf();
 	for (let a = 0; 16 > a; a++)
@@ -81172,7 +82804,7 @@ const inv25519 = (o, i) => {
 };
 
 const pack = (r, p) => {
-	const { M } = tweetnacl__WEBPACK_IMPORTED_MODULE_3__.lowlevel;
+	const { M } = tweetnacl_lowlevel;
 	const tx = gf();
 	const ty = gf();
 	const zi = gf();
@@ -81188,7 +82820,7 @@ const pack = (r, p) => {
 const unpackNeg = (r, p) => {
 	const {
 		D, M, A, S, Z
-	} = tweetnacl__WEBPACK_IMPORTED_MODULE_3__.lowlevel;
+	} = tweetnacl_lowlevel;
 
 	const gf0 = gf();
 	const gf1 = gf([1]);
@@ -81258,7 +82890,7 @@ const isCanonicalKey = publicKey => {
 };
 
 const isInMainSubgroup = point => {
-	const { scalarmult, L } = tweetnacl__WEBPACK_IMPORTED_MODULE_3__.lowlevel;
+	const { scalarmult, L } = tweetnacl_lowlevel;
 	const result = [gf(), gf(), gf(), gf()];
 	// multiply by group order
 	scalarmult(result, point, L);
@@ -81272,8 +82904,13 @@ const isInMainSubgroup = point => {
 	return 0 === (areEqual | isZero);
 };
 
+/**
+ * Creates a shared secret factory given a hash function.
+ * @param {function} cryptoHash Hash function to use.
+ * @returns {function(Uint8Array, PublicKey): Uint8Array} Creates a shared secret from a raw private key and public key.
+ */
 const deriveSharedSecretFactory = cryptoHash => (privateKeyBytes, otherPublicKey) => {
-	const { scalarmult, Z } = tweetnacl__WEBPACK_IMPORTED_MODULE_3__.lowlevel;
+	const { scalarmult, Z } = tweetnacl_lowlevel;
 	const point = [gf(), gf(), gf(), gf()];
 
 	if (!isCanonicalKey(otherPublicKey) || 0 !== unpackNeg(point, otherPublicKey.bytes) || !isInMainSubgroup(point))
@@ -81298,6 +82935,12 @@ const deriveSharedSecretFactory = cryptoHash => (privateKeyBytes, otherPublicKey
 	return sharedSecret;
 };
 
+/**
+ * Creates a shared key factory given a tag and a hash function.
+ * @param {string} info Tag used in HKDF algorithm.
+ * @param {function} cryptoHash Hash function to use.
+ * @returns {function(Uint8Array, PublicKey): SharedKey256} Creates a shared key from a raw private key and public key.
+ */
 const deriveSharedKeyFactory = (info, cryptoHash) => {
 	const deriveSharedSecret = deriveSharedSecretFactory(cryptoHash);
 	return (privateKeyBytes, otherPublicKey) => {
@@ -81305,6 +82948,8 @@ const deriveSharedKeyFactory = (info, cryptoHash) => {
 		return new _CryptoTypes_js__WEBPACK_IMPORTED_MODULE_0__.SharedKey256((0,_noble_hashes_hkdf__WEBPACK_IMPORTED_MODULE_1__.hkdf)(_noble_hashes_sha256__WEBPACK_IMPORTED_MODULE_2__.sha256, sharedSecret, undefined, info, 32));
 	};
 };
+
+
 
 
 /***/ }),
@@ -81321,29 +82966,55 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /**
  * Processes and looks up transaction descriptor properties.
+ * @note This class is not intended to be used directly.
  */
 class TransactionDescriptorProcessor {
 	/**
 	 * Creates a transaction descriptor processor.
 	 * @param {object} transactionDescriptor Transaction descriptor.
-	 * @param {Map} typeParsingRules Type-dependent parsing rules.
-	 * @param {function} typeConverter Converts a generated type to an sdk type (optional).
+	 * @param {Map<string, function>} typeParsingRules Type-dependent parsing rules.
+	 * @param {function|undefined} typeConverter Converts a generated type to an sdk type (optional).
 	 */
 	constructor(transactionDescriptor, typeParsingRules, typeConverter = undefined) {
-		this.transactionDescriptor = transactionDescriptor;
-		this.typeParsingRules = typeParsingRules;
-		this.typeConverter = typeConverter || (value => value);
-		this.typeHints = {};
+		/**
+		 * @private
+		 */
+		this._transactionDescriptor = transactionDescriptor;
+
+		/**
+		 * @private
+		 */
+		this._typeParsingRules = typeParsingRules;
+
+		/**
+		 * Tries to coerce a value to a more appropriate type.
+		 * @param {object} value Original value.
+		 * @returns {object} Type converted value.
+		 * @private
+		 */
+		this._typeConverter = typeConverter || (value => value);
+
+		/**
+		 * @private
+		 */
+		this._typeHints = {};
 	}
 
+	/**
+	 * Looks up value and applies type hints.
+	 * @param {string} key Key for which to retrieve value.
+	 * @returns {object} Value corresponding to key.
+	 * @private
+	 */
 	_lookupValueAndApplyTypeHints(key) {
-		if (undefined === this.transactionDescriptor[key])
+		if (undefined === this._transactionDescriptor[key])
 			throw RangeError(`transaction descriptor does not have attribute ${key}`);
 
-		let value = this.transactionDescriptor[key];
-		const typeHint = this.typeHints[key];
-		if (this.typeParsingRules.has(typeHint))
-			value = this.typeParsingRules.get(typeHint)(value);
+		let value = this._transactionDescriptor[key];
+		const typeHint = this._typeHints[key];
+		const rule = this._typeParsingRules.get(typeHint);
+		if (rule)
+			value = rule(value);
 
 		return value;
 	}
@@ -81356,17 +83027,17 @@ class TransactionDescriptorProcessor {
 	lookupValue(key) {
 		const value = this._lookupValueAndApplyTypeHints(key);
 		return Array.isArray(value)
-			? value.map(item => this.typeConverter(item))
-			: this.typeConverter(value);
+			? value.map(item => this._typeConverter(item))
+			: this._typeConverter(value);
 	}
 
 	/**
 	 * Copies all descriptor information to a transaction.
 	 * @param {object} transaction Transaction to which to copy keys.
-	 * @param {array<string>} ignoreKeys Keys of descriptor values not to copy (optional).
+	 * @param {Array<string>|undefined} ignoreKeys Keys of descriptor values not to copy (optional).
 	 */
 	copyTo(transaction, ignoreKeys = undefined) {
-		Object.getOwnPropertyNames(this.transactionDescriptor).forEach(key => {
+		Object.getOwnPropertyNames(this._transactionDescriptor).forEach(key => {
 			if (ignoreKeys && -1 !== ignoreKeys.indexOf(key))
 				return;
 
@@ -81383,12 +83054,22 @@ class TransactionDescriptorProcessor {
 
 	/**
 	 * Sets type hints.
-	 * @param {object} typeHints New type hints.
+	 * @param {TypeHintsMap|undefined} typeHints New type hints. // eslint-disable-line valid-jsdoc
 	 */
 	setTypeHints(typeHints) {
-		this.typeHints = typeHints || {};
+		this._typeHints = typeHints || {};
 	}
 }
+
+// region type declarations
+
+/**
+ * Type hints map.
+ * @class
+ * @typedef {{[key: string]: string}} TypeHintsMap
+ */
+
+// endregion
 
 
 /***/ }),
@@ -81404,85 +83085,124 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ NemFacade)
 /* harmony export */ });
-/* harmony import */ var _CryptoTypes_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../CryptoTypes.js */ "./src/CryptoTypes.js");
-/* harmony import */ var _Network_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Network.js */ "./src/Network.js");
-/* harmony import */ var _nem_KeyPair_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../nem/KeyPair.js */ "./src/nem/KeyPair.js");
-/* harmony import */ var _nem_Network_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../nem/Network.js */ "./src/nem/Network.js");
-/* harmony import */ var _nem_SharedKey_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../nem/SharedKey.js */ "./src/nem/SharedKey.js");
-/* harmony import */ var _nem_TransactionFactory_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../nem/TransactionFactory.js */ "./src/nem/TransactionFactory.js");
-/* harmony import */ var _noble_hashes_sha3__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @noble/hashes/sha3 */ "./node_modules/@noble/hashes/esm/sha3.js");
-var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_nem_KeyPair_js__WEBPACK_IMPORTED_MODULE_2__]);
-_nem_KeyPair_js__WEBPACK_IMPORTED_MODULE_2__ = (__webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__)[0];
+/* harmony import */ var _Bip32_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Bip32.js */ "./src/Bip32.js");
+/* harmony import */ var _CryptoTypes_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../CryptoTypes.js */ "./src/CryptoTypes.js");
+/* harmony import */ var _Network_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Network.js */ "./src/Network.js");
+/* harmony import */ var _nem_KeyPair_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../nem/KeyPair.js */ "./src/nem/KeyPair.js");
+/* harmony import */ var _nem_Network_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../nem/Network.js */ "./src/nem/Network.js");
+/* harmony import */ var _nem_SharedKey_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../nem/SharedKey.js */ "./src/nem/SharedKey.js");
+/* harmony import */ var _nem_TransactionFactory_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../nem/TransactionFactory.js */ "./src/nem/TransactionFactory.js");
+/* harmony import */ var _nem_models_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../nem/models.js */ "./src/nem/models.js");
+/* harmony import */ var _noble_hashes_sha3__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @noble/hashes/sha3 */ "./node_modules/@noble/hashes/esm/sha3.js");
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_nem_KeyPair_js__WEBPACK_IMPORTED_MODULE_3__, _nem_SharedKey_js__WEBPACK_IMPORTED_MODULE_5__]);
+([_nem_KeyPair_js__WEBPACK_IMPORTED_MODULE_3__, _nem_SharedKey_js__WEBPACK_IMPORTED_MODULE_5__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
+/* eslint-disable no-unused-vars */
+
+/* eslint-enable no-unused-vars */
 
 
 
 
 
 
+/* eslint-disable no-unused-vars */
+
+/* eslint-enable no-unused-vars */
 
 
 /**
  * Facade used to interact with NEM blockchain.
  */
 class NemFacade {
+	/**
+	 * BIP32 curve name.
+	 * @type {string}
+	 */
 	static BIP32_CURVE_NAME = 'ed25519-keccak';
 
-	static Address = _nem_Network_js__WEBPACK_IMPORTED_MODULE_3__.Address;
+	/**
+	 * Network address class type.
+	 * @type {typeof Address}
+	 */
+	static Address = _nem_Network_js__WEBPACK_IMPORTED_MODULE_4__.Address;
 
-	static KeyPair = _nem_KeyPair_js__WEBPACK_IMPORTED_MODULE_2__.KeyPair;
+	/**
+	 * Network key pair class type.
+	 * @type {typeof KeyPair}
+	 */
+	static KeyPair = _nem_KeyPair_js__WEBPACK_IMPORTED_MODULE_3__.KeyPair;
 
-	static Verifier = _nem_KeyPair_js__WEBPACK_IMPORTED_MODULE_2__.Verifier;
+	/**
+	 * Network verifier class type.
+	 * @type {typeof Verifier}
+	 */
+	static Verifier = _nem_KeyPair_js__WEBPACK_IMPORTED_MODULE_3__.Verifier;
 
-	static deriveSharedKey = _nem_SharedKey_js__WEBPACK_IMPORTED_MODULE_4__.deriveSharedKey;
+	/**
+	 * Derives shared key from key pair and other party's public key.
+	 * @param {KeyPair} keyPair Key pair.
+	 * @param {PublicKey} otherPublicKey Other party's public key.
+	 * @returns {SharedKey256} Shared encryption key.
+	 */
+	static deriveSharedKey = _nem_SharedKey_js__WEBPACK_IMPORTED_MODULE_5__.deriveSharedKey;
 
 	/**
 	 * Creates a NEM facade.
-	 * @param {string|Network} network NEM network or network name.
+	 * @param {string|NemNetwork} network NEM network or network name.
 	 */
 	constructor(network) {
-		this.network = 'string' === typeof network ? _Network_js__WEBPACK_IMPORTED_MODULE_1__.NetworkLocator.findByName(_nem_Network_js__WEBPACK_IMPORTED_MODULE_3__.Network.NETWORKS, network) : network;
-		this.transactionFactory = new _nem_TransactionFactory_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.network);
+		/**
+		 * Underlying network.
+		 * @type NemNetwork
+		 */
+		this.network = 'string' === typeof network ? _Network_js__WEBPACK_IMPORTED_MODULE_2__.NetworkLocator.findByName(_nem_Network_js__WEBPACK_IMPORTED_MODULE_4__.Network.NETWORKS, network) : network;
+
+		/**
+		 * Underlying transaction factory.
+		 * @type TransactionFactory
+		 */
+		this.transactionFactory = new _nem_TransactionFactory_js__WEBPACK_IMPORTED_MODULE_6__["default"](this.network);
 	}
 
 	// the following three functions are NOT static in order for NemFacade and SymbolFacade to conform to the same interface
 
 	/**
 	 * Hashes a NEM transaction.
-	 * @param {object} transaction Transaction object.
+	 * @param {nc.Transaction} transaction Transaction object.
 	 * @returns {Hash256} Transaction hash.
 	 */
 	hashTransaction(transaction) { // eslint-disable-line class-methods-use-this
-		const nonVerifiableTransaction = _nem_TransactionFactory_js__WEBPACK_IMPORTED_MODULE_5__["default"].toNonVerifiableTransaction(transaction);
-		return new _CryptoTypes_js__WEBPACK_IMPORTED_MODULE_0__.Hash256((0,_noble_hashes_sha3__WEBPACK_IMPORTED_MODULE_6__.keccak_256)(nonVerifiableTransaction.serialize()));
+		const nonVerifiableTransaction = _nem_TransactionFactory_js__WEBPACK_IMPORTED_MODULE_6__["default"].toNonVerifiableTransaction(transaction);
+		return new _CryptoTypes_js__WEBPACK_IMPORTED_MODULE_1__.Hash256((0,_noble_hashes_sha3__WEBPACK_IMPORTED_MODULE_8__.keccak_256)(nonVerifiableTransaction.serialize()));
 	}
 
 	/**
 	 * Signs a NEM transaction.
 	 * @param {KeyPair} keyPair Key pair.
-	 * @param {object} transaction Transaction object.
+	 * @param {nc.Transaction} transaction Transaction object.
 	 * @returns {Signature} Transaction signature.
 	 */
 	signTransaction(keyPair, transaction) { // eslint-disable-line class-methods-use-this
-		const nonVerifiableTransaction = _nem_TransactionFactory_js__WEBPACK_IMPORTED_MODULE_5__["default"].toNonVerifiableTransaction(transaction);
+		const nonVerifiableTransaction = _nem_TransactionFactory_js__WEBPACK_IMPORTED_MODULE_6__["default"].toNonVerifiableTransaction(transaction);
 		return keyPair.sign(nonVerifiableTransaction.serialize());
 	}
 
 	/**
 	 * Verifies a NEM transaction.
-	 * @param {object} transaction Transaction object.
+	 * @param {nc.Transaction} transaction Transaction object.
 	 * @param {Signature} signature Signature to verify.
-	 * @returns {boolean} true if transaction signature is verified.
+	 * @returns {boolean} \c true if transaction signature is verified.
 	 */
 	verifyTransaction(transaction, signature) { // eslint-disable-line class-methods-use-this
-		const nonVerifiableTransaction = _nem_TransactionFactory_js__WEBPACK_IMPORTED_MODULE_5__["default"].toNonVerifiableTransaction(transaction);
-		return new _nem_KeyPair_js__WEBPACK_IMPORTED_MODULE_2__.Verifier(transaction.signerPublicKey).verify(nonVerifiableTransaction.serialize(), signature);
+		const nonVerifiableTransaction = _nem_TransactionFactory_js__WEBPACK_IMPORTED_MODULE_6__["default"].toNonVerifiableTransaction(transaction);
+		return new _nem_KeyPair_js__WEBPACK_IMPORTED_MODULE_3__.Verifier(transaction.signerPublicKey).verify(nonVerifiableTransaction.serialize(), signature);
 	}
 
 	/**
 	 * Creates a network compatible BIP32 path for the specified account.
 	 *
-	 * @param {int} accountId Id of the account for which to generate a BIP32 path.
-	 * @returns {array<int>} BIP32 path for the specified account.
+	 * @param {number} accountId Id of the account for which to generate a BIP32 path.
+	 * @returns {Array<number>} BIP32 path for the specified account.
 	 */
 	bip32Path(accountId) {
 		return [44, 'mainnet' === this.network.name ? 43 : 1, accountId, 0, 0];
@@ -81498,7 +83218,7 @@ class NemFacade {
 		const reversedPrivateKeyBytes = new Uint8Array([...bip32Node.privateKey.bytes]);
 		reversedPrivateKeyBytes.reverse();
 
-		return new _nem_KeyPair_js__WEBPACK_IMPORTED_MODULE_2__.KeyPair(new _CryptoTypes_js__WEBPACK_IMPORTED_MODULE_0__.PrivateKey(reversedPrivateKeyBytes));
+		return new _nem_KeyPair_js__WEBPACK_IMPORTED_MODULE_3__.KeyPair(new _CryptoTypes_js__WEBPACK_IMPORTED_MODULE_1__.PrivateKey(reversedPrivateKeyBytes));
 	}
 }
 
@@ -81518,17 +83238,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ SymbolFacade)
 /* harmony export */ });
-/* harmony import */ var _CryptoTypes_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../CryptoTypes.js */ "./src/CryptoTypes.js");
-/* harmony import */ var _Network_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Network.js */ "./src/Network.js");
-/* harmony import */ var _symbol_KeyPair_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../symbol/KeyPair.js */ "./src/symbol/KeyPair.js");
-/* harmony import */ var _symbol_Network_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../symbol/Network.js */ "./src/symbol/Network.js");
-/* harmony import */ var _symbol_SharedKey_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../symbol/SharedKey.js */ "./src/symbol/SharedKey.js");
-/* harmony import */ var _symbol_TransactionFactory_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../symbol/TransactionFactory.js */ "./src/symbol/TransactionFactory.js");
-/* harmony import */ var _symbol_merkle_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../symbol/merkle.js */ "./src/symbol/merkle.js");
-/* harmony import */ var _symbol_models_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../symbol/models.js */ "./src/symbol/models.js");
-/* harmony import */ var _noble_hashes_sha3__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @noble/hashes/sha3 */ "./node_modules/@noble/hashes/esm/sha3.js");
-var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_symbol_KeyPair_js__WEBPACK_IMPORTED_MODULE_2__]);
-_symbol_KeyPair_js__WEBPACK_IMPORTED_MODULE_2__ = (__webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__)[0];
+/* harmony import */ var _Bip32_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Bip32.js */ "./src/Bip32.js");
+/* harmony import */ var _CryptoTypes_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../CryptoTypes.js */ "./src/CryptoTypes.js");
+/* harmony import */ var _Network_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Network.js */ "./src/Network.js");
+/* harmony import */ var _symbol_KeyPair_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../symbol/KeyPair.js */ "./src/symbol/KeyPair.js");
+/* harmony import */ var _symbol_Network_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../symbol/Network.js */ "./src/symbol/Network.js");
+/* harmony import */ var _symbol_SharedKey_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../symbol/SharedKey.js */ "./src/symbol/SharedKey.js");
+/* harmony import */ var _symbol_TransactionFactory_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../symbol/TransactionFactory.js */ "./src/symbol/TransactionFactory.js");
+/* harmony import */ var _symbol_merkle_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../symbol/merkle.js */ "./src/symbol/merkle.js");
+/* harmony import */ var _symbol_models_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../symbol/models.js */ "./src/symbol/models.js");
+/* harmony import */ var _noble_hashes_sha3__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @noble/hashes/sha3 */ "./node_modules/@noble/hashes/esm/sha3.js");
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_symbol_KeyPair_js__WEBPACK_IMPORTED_MODULE_3__, _symbol_SharedKey_js__WEBPACK_IMPORTED_MODULE_5__]);
+([_symbol_KeyPair_js__WEBPACK_IMPORTED_MODULE_3__, _symbol_SharedKey_js__WEBPACK_IMPORTED_MODULE_5__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
+/* eslint-disable no-unused-vars */
+
+/* eslint-enable no-unused-vars */
 
 
 
@@ -81542,8 +83266,8 @@ _symbol_KeyPair_js__WEBPACK_IMPORTED_MODULE_2__ = (__webpack_async_dependencies_
 const TRANSACTION_HEADER_SIZE = [
 	4, // size
 	4, // reserved1
-	_CryptoTypes_js__WEBPACK_IMPORTED_MODULE_0__.Signature.SIZE, // signature
-	_CryptoTypes_js__WEBPACK_IMPORTED_MODULE_0__.PublicKey.SIZE, // signer
+	_CryptoTypes_js__WEBPACK_IMPORTED_MODULE_1__.Signature.SIZE, // signature
+	_CryptoTypes_js__WEBPACK_IMPORTED_MODULE_1__.PublicKey.SIZE, // signer
 	4 // reserved2
 ].reduce((x, y) => x + y);
 
@@ -81551,13 +83275,13 @@ const AGGREGATE_HASHED_SIZE = [
 	4, // version, network, type
 	8, // maxFee
 	8, // deadline
-	_CryptoTypes_js__WEBPACK_IMPORTED_MODULE_0__.Hash256.SIZE // transactionsHash
+	_CryptoTypes_js__WEBPACK_IMPORTED_MODULE_1__.Hash256.SIZE // transactionsHash
 ].reduce((x, y) => x + y);
 
 const isAggregateTransaction = transactionBuffer => {
 	const transactionTypeOffset = TRANSACTION_HEADER_SIZE + 2; // skip version and network byte
 	const transactionType = (transactionBuffer[transactionTypeOffset + 1] << 8) + transactionBuffer[transactionTypeOffset];
-	const aggregateTypes = [_symbol_models_js__WEBPACK_IMPORTED_MODULE_7__.TransactionType.AGGREGATE_BONDED.value, _symbol_models_js__WEBPACK_IMPORTED_MODULE_7__.TransactionType.AGGREGATE_COMPLETE.value];
+	const aggregateTypes = [_symbol_models_js__WEBPACK_IMPORTED_MODULE_8__.TransactionType.AGGREGATE_BONDED.value, _symbol_models_js__WEBPACK_IMPORTED_MODULE_8__.TransactionType.AGGREGATE_COMPLETE.value];
 	return aggregateTypes.some(aggregateType => aggregateType === transactionType);
 };
 
@@ -81574,43 +83298,74 @@ const transactionDataBuffer = transactionBuffer => {
  * Facade used to interact with Symbol blockchain.
  */
 class SymbolFacade {
+	/**
+	 * BIP32 curve name.
+	 * @type {string}
+	 */
 	static BIP32_CURVE_NAME = 'ed25519';
 
-	static Address = _symbol_Network_js__WEBPACK_IMPORTED_MODULE_3__.Address;
+	/**
+	 * Network address class type.
+	 * @type {typeof Address}
+	 */
+	static Address = _symbol_Network_js__WEBPACK_IMPORTED_MODULE_4__.Address;
 
-	static KeyPair = _symbol_KeyPair_js__WEBPACK_IMPORTED_MODULE_2__.KeyPair;
+	/**
+	 * Network key pair class type.
+	 * @type {typeof KeyPair}
+	 */
+	static KeyPair = _symbol_KeyPair_js__WEBPACK_IMPORTED_MODULE_3__.KeyPair;
 
-	static Verifier = _symbol_KeyPair_js__WEBPACK_IMPORTED_MODULE_2__.Verifier;
+	/**
+	 * Network verifier class type.
+	 * @type {typeof Verifier}
+	 */
+	static Verifier = _symbol_KeyPair_js__WEBPACK_IMPORTED_MODULE_3__.Verifier;
 
-	static deriveSharedKey = _symbol_SharedKey_js__WEBPACK_IMPORTED_MODULE_4__.deriveSharedKey;
+	/**
+	 * Derives shared key from key pair and other party's public key.
+	 * @param {KeyPair} keyPair Key pair.
+	 * @param {PublicKey} otherPublicKey Other party's public key.
+	 * @returns {SharedKey256} Shared encryption key.
+	 */
+	static deriveSharedKey = _symbol_SharedKey_js__WEBPACK_IMPORTED_MODULE_5__.deriveSharedKey;
 
 	/**
 	 * Creates a Symbol facade.
-	 * @param {string|Network} network Symbol network or network name.
+	 * @param {string|SymbolNetwork} network Symbol network or network name.
 	 */
 	constructor(network) {
-		this.network = 'string' === typeof network ? _Network_js__WEBPACK_IMPORTED_MODULE_1__.NetworkLocator.findByName(_symbol_Network_js__WEBPACK_IMPORTED_MODULE_3__.Network.NETWORKS, network) : network;
-		this.transactionFactory = new _symbol_TransactionFactory_js__WEBPACK_IMPORTED_MODULE_5__["default"](this.network);
+		/**
+		 * Underlying network.
+		 * @type SymbolNetwork
+		 */
+		this.network = 'string' === typeof network ? _Network_js__WEBPACK_IMPORTED_MODULE_2__.NetworkLocator.findByName(_symbol_Network_js__WEBPACK_IMPORTED_MODULE_4__.Network.NETWORKS, network) : network;
+
+		/**
+		 * Underlying transaction factory.
+		 * @type TransactionFactory
+		 */
+		this.transactionFactory = new _symbol_TransactionFactory_js__WEBPACK_IMPORTED_MODULE_6__["default"](this.network);
 	}
 
 	/**
 	 * Hashes a Symbol transaction.
-	 * @param {object} transaction Transaction object.
+	 * @param {sc.Transaction} transaction Transaction object.
 	 * @returns {Hash256} Transaction hash.
 	 */
 	hashTransaction(transaction) {
-		const hasher = _noble_hashes_sha3__WEBPACK_IMPORTED_MODULE_8__.sha3_256.create();
+		const hasher = _noble_hashes_sha3__WEBPACK_IMPORTED_MODULE_9__.sha3_256.create();
 		hasher.update(transaction.signature.bytes);
 		hasher.update(transaction.signerPublicKey.bytes);
 		hasher.update(this.network.generationHashSeed.bytes);
 		hasher.update(transactionDataBuffer(transaction.serialize()));
-		return new _CryptoTypes_js__WEBPACK_IMPORTED_MODULE_0__.Hash256(hasher.digest());
+		return new _CryptoTypes_js__WEBPACK_IMPORTED_MODULE_1__.Hash256(hasher.digest());
 	}
 
 	/**
 	 * Signs a Symbol transaction.
 	 * @param {KeyPair} keyPair Key pair.
-	 * @param {object} transaction Transaction object.
+	 * @param {sc.Transaction} transaction Transaction object.
 	 * @returns {Signature} Transaction signature.
 	 */
 	signTransaction(keyPair, transaction) {
@@ -81622,48 +83377,56 @@ class SymbolFacade {
 
 	/**
 	 * Verifies a Symbol transaction.
-	 * @param {object} transaction Transaction object.
+	 * @param {sc.Transaction} transaction Transaction object.
 	 * @param {Signature} signature Signature to verify.
-	 * @returns {boolean} true if transaction signature is verified.
+	 * @returns {boolean} \c true if transaction signature is verified.
 	 */
 	verifyTransaction(transaction, signature) {
 		const verifyBuffer = new Uint8Array([
 			...this.network.generationHashSeed.bytes,
 			...transactionDataBuffer(transaction.serialize())
 		]);
-		return new _symbol_KeyPair_js__WEBPACK_IMPORTED_MODULE_2__.Verifier(transaction.signerPublicKey).verify(verifyBuffer, signature);
+		return new _symbol_KeyPair_js__WEBPACK_IMPORTED_MODULE_3__.Verifier(transaction.signerPublicKey).verify(verifyBuffer, signature);
 	}
 
 	/**
 	 * Cosigns a Symbol transaction.
 	 * @param {KeyPair} keyPair Key pair of the cosignatory.
-	 * @param {object} transaction Transaction object.
+	 * @param {sc.Transaction} transaction Transaction object.
 	 * @param {boolean} detached \c true if resulting cosignature is appropriate for network propagation.
 	 *                           \c false if resulting cosignature is appropriate for attaching to an aggregate.
-	 * @returns {Cosignature|DetachedCosignature} Signed cosignature.
+	 * @returns {sc.Cosignature|sc.DetachedCosignature} Signed cosignature.
 	 */
 	cosignTransaction(keyPair, transaction, detached = false) {
 		const transactionHash = this.hashTransaction(transaction);
 
-		const cosignature = detached ? new _symbol_models_js__WEBPACK_IMPORTED_MODULE_7__.DetachedCosignature() : new _symbol_models_js__WEBPACK_IMPORTED_MODULE_7__.Cosignature();
-		if (detached)
-			cosignature.parentHash = new _symbol_models_js__WEBPACK_IMPORTED_MODULE_7__.Hash256(transactionHash.bytes);
+		const initializeCosignature = cosignature => {
+			cosignature.version = 0n;
+			cosignature.signerPublicKey = new _symbol_models_js__WEBPACK_IMPORTED_MODULE_8__.PublicKey(keyPair.publicKey.bytes);
+			cosignature.signature = new _symbol_models_js__WEBPACK_IMPORTED_MODULE_8__.Signature(keyPair.sign(transactionHash.bytes).bytes);
+		};
 
-		cosignature.version = 0n;
-		cosignature.signerPublicKey = new _symbol_models_js__WEBPACK_IMPORTED_MODULE_7__.PublicKey(keyPair.publicKey.bytes);
-		cosignature.signature = new _symbol_models_js__WEBPACK_IMPORTED_MODULE_7__.Signature(keyPair.sign(transactionHash.bytes).bytes);
+		if (detached) {
+			const cosignature = new _symbol_models_js__WEBPACK_IMPORTED_MODULE_8__.DetachedCosignature();
+			cosignature.parentHash = new _symbol_models_js__WEBPACK_IMPORTED_MODULE_8__.Hash256(transactionHash.bytes);
+			initializeCosignature(cosignature);
+			return cosignature;
+		}
+
+		const cosignature = new _symbol_models_js__WEBPACK_IMPORTED_MODULE_8__.Cosignature();
+		initializeCosignature(cosignature);
 		return cosignature;
 	}
 
 	/**
-	 * Hashes embedded transactions of an aggregate."""
-	 * @param {array<object>} embeddedTransactions Embedded transactions to hash.
+	 * Hashes embedded transactions of an aggregate transaction.
+	 * @param {Array<sc.EmbeddedTransaction>} embeddedTransactions Embedded transactions to hash.
 	 * @returns {Hash256} Aggregate transactions hash.
 	 */
 	static hashEmbeddedTransactions(embeddedTransactions) {
-		const hashBuilder = new _symbol_merkle_js__WEBPACK_IMPORTED_MODULE_6__.MerkleHashBuilder();
+		const hashBuilder = new _symbol_merkle_js__WEBPACK_IMPORTED_MODULE_7__.MerkleHashBuilder();
 		embeddedTransactions.forEach(embeddedTransaction => {
-			hashBuilder.update(new _CryptoTypes_js__WEBPACK_IMPORTED_MODULE_0__.Hash256((0,_noble_hashes_sha3__WEBPACK_IMPORTED_MODULE_8__.sha3_256)(embeddedTransaction.serialize())));
+			hashBuilder.update(new _CryptoTypes_js__WEBPACK_IMPORTED_MODULE_1__.Hash256((0,_noble_hashes_sha3__WEBPACK_IMPORTED_MODULE_9__.sha3_256)(embeddedTransaction.serialize())));
 		});
 
 		return hashBuilder.final();
@@ -81672,8 +83435,8 @@ class SymbolFacade {
 	/**
 	 * Creates a network compatible BIP32 path for the specified account.
 	 *
-	 * @param {int} accountId Id of the account for which to generate a BIP32 path.
-	 * @returns {array<int>} BIP32 path for the specified account.
+	 * @param {number} accountId Id of the account for which to generate a BIP32 path.
+	 * @returns {Array<number>} BIP32 path for the specified account.
 	 */
 	bip32Path(accountId) {
 		return [44, 'mainnet' === this.network.name ? 4343 : 1, accountId, 0, 0];
@@ -81685,7 +83448,7 @@ class SymbolFacade {
 	 * @returns {KeyPair} Derived key pair.
 	 */
 	static bip32NodeToKeyPair(bip32Node) {
-		return new _symbol_KeyPair_js__WEBPACK_IMPORTED_MODULE_2__.KeyPair(new _CryptoTypes_js__WEBPACK_IMPORTED_MODULE_0__.PrivateKey(bip32Node.privateKey.bytes));
+		return new _symbol_KeyPair_js__WEBPACK_IMPORTED_MODULE_3__.KeyPair(new _CryptoTypes_js__WEBPACK_IMPORTED_MODULE_1__.PrivateKey(bip32Node.privateKey.bytes));
 	}
 }
 
@@ -81702,14 +83465,16 @@ __webpack_async_result__();
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "concatArrays": () => (/* binding */ concatArrays),
-/* harmony export */   "decodeAesCbc": () => (/* binding */ decodeAesCbc),
-/* harmony export */   "decodeAesGcm": () => (/* binding */ decodeAesGcm),
-/* harmony export */   "encodeAesCbc": () => (/* binding */ encodeAesCbc),
-/* harmony export */   "encodeAesGcm": () => (/* binding */ encodeAesGcm)
+/* harmony export */   concatArrays: () => (/* binding */ concatArrays),
+/* harmony export */   decodeAesCbc: () => (/* binding */ decodeAesCbc),
+/* harmony export */   decodeAesGcm: () => (/* binding */ decodeAesGcm),
+/* harmony export */   encodeAesCbc: () => (/* binding */ encodeAesCbc),
+/* harmony export */   encodeAesGcm: () => (/* binding */ encodeAesGcm)
 /* harmony export */ });
 /* harmony import */ var _Cipher_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Cipher.js */ "./src/Cipher.js");
 /* harmony import */ var crypto__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! crypto */ "./node_modules/crypto-browserify/index.js");
+// this file contains implementation details and is not intended to be used directly
+
 
 
 
@@ -81776,6 +83541,8 @@ const encodeAesCbc = (deriveSharedKey, keyPair, recipientPublicKey, message) => 
 };
 
 
+
+
 /***/ }),
 
 /***/ "./src/impl/ed25519.js":
@@ -81792,6 +83559,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var symbol_crypto_wasm_node__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! symbol-crypto-wasm-node */ "./_build/wasm/web_webpack/symbol_crypto_wasm_bg.js");
 var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([symbol_crypto_wasm_node__WEBPACK_IMPORTED_MODULE_0__]);
 symbol_crypto_wasm_node__WEBPACK_IMPORTED_MODULE_0__ = (__webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__)[0];
+// this file contains implementation details and is not intended to be used directly
+
 
 
 const CRYPTO_SIGN_BYTES = 64;
@@ -81845,13 +83614,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _symbol_MessageEncoder_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./symbol/MessageEncoder.js */ "./src/symbol/MessageEncoder.js");
 /* harmony import */ var _symbol_Network_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./symbol/Network.js */ "./src/symbol/Network.js");
 /* harmony import */ var _symbol_TransactionFactory_js__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./symbol/TransactionFactory.js */ "./src/symbol/TransactionFactory.js");
-/* harmony import */ var _symbol_idGenerator_js__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./symbol/idGenerator.js */ "./src/symbol/idGenerator.js");
-/* harmony import */ var _symbol_merkle_js__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./symbol/merkle.js */ "./src/symbol/merkle.js");
-/* harmony import */ var _symbol_metadata_js__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./symbol/metadata.js */ "./src/symbol/metadata.js");
-/* harmony import */ var _symbol_models_js__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./symbol/models.js */ "./src/symbol/models.js");
-/* harmony import */ var _utils_converter_js__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./utils/converter.js */ "./src/utils/converter.js");
-var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_facade_NemFacade_js__WEBPACK_IMPORTED_MODULE_5__, _facade_SymbolFacade_js__WEBPACK_IMPORTED_MODULE_6__, _nem_KeyPair_js__WEBPACK_IMPORTED_MODULE_7__, _symbol_KeyPair_js__WEBPACK_IMPORTED_MODULE_12__, _symbol_MessageEncoder_js__WEBPACK_IMPORTED_MODULE_13__]);
-([_facade_NemFacade_js__WEBPACK_IMPORTED_MODULE_5__, _facade_SymbolFacade_js__WEBPACK_IMPORTED_MODULE_6__, _nem_KeyPair_js__WEBPACK_IMPORTED_MODULE_7__, _symbol_KeyPair_js__WEBPACK_IMPORTED_MODULE_12__, _symbol_MessageEncoder_js__WEBPACK_IMPORTED_MODULE_13__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
+/* harmony import */ var _symbol_VotingKeysGenerator_js__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./symbol/VotingKeysGenerator.js */ "./src/symbol/VotingKeysGenerator.js");
+/* harmony import */ var _symbol_idGenerator_js__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./symbol/idGenerator.js */ "./src/symbol/idGenerator.js");
+/* harmony import */ var _symbol_merkle_js__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./symbol/merkle.js */ "./src/symbol/merkle.js");
+/* harmony import */ var _symbol_metadata_js__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./symbol/metadata.js */ "./src/symbol/metadata.js");
+/* harmony import */ var _symbol_models_js__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./symbol/models.js */ "./src/symbol/models.js");
+/* harmony import */ var _utils_converter_js__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./utils/converter.js */ "./src/utils/converter.js");
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_facade_NemFacade_js__WEBPACK_IMPORTED_MODULE_5__, _facade_SymbolFacade_js__WEBPACK_IMPORTED_MODULE_6__, _nem_KeyPair_js__WEBPACK_IMPORTED_MODULE_7__, _nem_MessageEncoder_js__WEBPACK_IMPORTED_MODULE_8__, _symbol_KeyPair_js__WEBPACK_IMPORTED_MODULE_12__, _symbol_MessageEncoder_js__WEBPACK_IMPORTED_MODULE_13__, _symbol_VotingKeysGenerator_js__WEBPACK_IMPORTED_MODULE_16__]);
+([_facade_NemFacade_js__WEBPACK_IMPORTED_MODULE_5__, _facade_SymbolFacade_js__WEBPACK_IMPORTED_MODULE_6__, _nem_KeyPair_js__WEBPACK_IMPORTED_MODULE_7__, _nem_MessageEncoder_js__WEBPACK_IMPORTED_MODULE_8__, _symbol_KeyPair_js__WEBPACK_IMPORTED_MODULE_12__, _symbol_MessageEncoder_js__WEBPACK_IMPORTED_MODULE_13__, _symbol_VotingKeysGenerator_js__WEBPACK_IMPORTED_MODULE_16__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
+
 
 
 
@@ -81875,42 +83646,211 @@ var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_fac
 
 
 const sdk = {
+	/**
+	 * Represents a base integer.
+	 * @type {typeof BaseValue}
+	 */
 	BaseValue: _BaseValue_js__WEBPACK_IMPORTED_MODULE_0__["default"],
-	Bip32: _Bip32_js__WEBPACK_IMPORTED_MODULE_1__["default"],
+
+	/**
+	 * Factory of BIP32 root nodes.
+	 * @type {typeof Bip32}
+	 */
+	Bip32: _Bip32_js__WEBPACK_IMPORTED_MODULE_1__.Bip32,
+
+	/**
+	 * Represents a fixed size byte array.
+	 * @type {typeof ByteArray}
+	 */
 	ByteArray: _ByteArray_js__WEBPACK_IMPORTED_MODULE_2__["default"],
-	..._CryptoTypes_js__WEBPACK_IMPORTED_MODULE_3__,
+
+	// region CryptoTypes
+
+	/**
+	 * Represents a 256-bit hash.
+	 * @type {typeof CryptoTypes.Hash256}
+	 */
+	Hash256: _CryptoTypes_js__WEBPACK_IMPORTED_MODULE_3__.Hash256,
+
+	/**
+	 * Represents a private key.
+	 * @type {typeof CryptoTypes.PrivateKey}
+	 */
+	PrivateKey: _CryptoTypes_js__WEBPACK_IMPORTED_MODULE_3__.PrivateKey,
+
+	/**
+	 * Represents a public key.
+	 * @type {typeof CryptoTypes.PublicKey}
+	 */
+	PublicKey: _CryptoTypes_js__WEBPACK_IMPORTED_MODULE_3__.PublicKey,
+
+	/**
+	 * Represents a 256-bit symmetric encryption key.
+	 * @type {typeof CryptoTypes.SharedKey256}
+	 */
+	SharedKey256: _CryptoTypes_js__WEBPACK_IMPORTED_MODULE_3__.SharedKey256,
+
+	/**
+	 * Represents a signature.
+	 * @type {typeof CryptoTypes.Signature}
+	 */
+	Signature: _CryptoTypes_js__WEBPACK_IMPORTED_MODULE_3__.Signature,
+
+	// endregion
+
+	/**
+	 * Provides utility functions for finding a network.
+	 * @type {typeof NetworkLocator}
+	 */
 	NetworkLocator: _Network_js__WEBPACK_IMPORTED_MODULE_4__.NetworkLocator,
 
+	// region facade
+
+	/**
+	 * Network facades.
+	 */
 	facade: {
+		/**
+		 * Facade used to interact with NEM blockchain.
+		 * @type {typeof NemFacade}
+		 */
 		NemFacade: _facade_NemFacade_js__WEBPACK_IMPORTED_MODULE_5__["default"],
+
+		/**
+		 * Facade used to interact with Symbol blockchain.
+		 * @type {typeof SymbolFacade}
+		 */
 		SymbolFacade: _facade_SymbolFacade_js__WEBPACK_IMPORTED_MODULE_6__["default"]
 	},
 
+	// endregion
+
+	/**
+	 * NEM blockchain accessors.
+	 */
 	nem: {
 		..._nem_models_js__WEBPACK_IMPORTED_MODULE_11__, // must be before Network to promote Address from Network
 
-		..._nem_KeyPair_js__WEBPACK_IMPORTED_MODULE_7__,
+		// region common
+
+		/**
+		 * Factory for creating NEM transactions.
+		 * @type {typeof NemTransactionFactory}
+		 */
+		NemTransactionFactory: _nem_TransactionFactory_js__WEBPACK_IMPORTED_MODULE_10__["default"],
+
+		/**
+		 * Represents a NEM network timestamp with second resolution.
+		 * @type {typeof NemNetwork.NetworkTimestamp}
+		 */
+		NetworkTimestamp: _nem_Network_js__WEBPACK_IMPORTED_MODULE_9__.NetworkTimestamp,
+
+		/**
+		 * Represents a NEM address.
+		 * @type {typeof NemNetwork.Address}
+		 */
+		Address: _nem_Network_js__WEBPACK_IMPORTED_MODULE_9__.Address,
+
+		/**
+		 * Represents a NEM network.
+		 * @type {typeof NemNetwork.Network}
+		 */
+		Network: _nem_Network_js__WEBPACK_IMPORTED_MODULE_9__.Network,
+
+		/**
+		 * Encrypts and encodes messages between two parties.
+		 * @type {typeof NemMessageEncoder}
+		 */
 		MessageEncoder: _nem_MessageEncoder_js__WEBPACK_IMPORTED_MODULE_8__["default"],
-		..._nem_Network_js__WEBPACK_IMPORTED_MODULE_9__,
-		NemTransactionFactory: _nem_TransactionFactory_js__WEBPACK_IMPORTED_MODULE_10__
+
+		/**
+		 * Encrypts and encodes messages between two parties.
+		 * @type {typeof NemKeyPair.KeyPair}
+		 */
+		KeyPair: _nem_KeyPair_js__WEBPACK_IMPORTED_MODULE_7__.KeyPair,
+
+		/**
+		 * Encrypts and encodes messages between two parties.
+		 * @type {typeof NemKeyPair.Verifier}
+		 */
+		Verifier: _nem_KeyPair_js__WEBPACK_IMPORTED_MODULE_7__.Verifier
+
+		// endregion
 	},
 
+	/**
+	 * Symbol blockchain accessors.
+	 */
 	symbol: {
-		..._symbol_models_js__WEBPACK_IMPORTED_MODULE_19__, // must be before Network to promote Address from Network
+		..._symbol_models_js__WEBPACK_IMPORTED_MODULE_20__, // must be before Network to promote Address from Network
 
-		..._symbol_KeyPair_js__WEBPACK_IMPORTED_MODULE_12__,
+		// region common
+
+		/**
+		 * Factory for creating Symbol transactions.
+		 * @type {typeof SymbolTransactionFactory}
+		 */
+		SymbolTransactionFactory: _symbol_TransactionFactory_js__WEBPACK_IMPORTED_MODULE_15__["default"],
+
+		/**
+		 * Represents a Symbol network timestamp with second resolution.
+		 * @type {typeof SymbolNetwork.NetworkTimestamp}
+		 */
+		NetworkTimestamp: _symbol_Network_js__WEBPACK_IMPORTED_MODULE_14__.NetworkTimestamp,
+
+		/**
+		 * Represents a Symbol address.
+		 * @type {typeof SymbolNetwork.Address}
+		 */
+		Address: _symbol_Network_js__WEBPACK_IMPORTED_MODULE_14__.Address,
+
+		/**
+		 * Represents a Symbol network.
+		 * @type {typeof SymbolNetwork.Network}
+		 */
+		Network: _symbol_Network_js__WEBPACK_IMPORTED_MODULE_14__.Network,
+
+		/**
+		 * Encrypts and encodes messages between two parties.
+		 * @type {typeof SymbolMessageEncoder}
+		 */
 		MessageEncoder: _symbol_MessageEncoder_js__WEBPACK_IMPORTED_MODULE_13__["default"],
-		..._symbol_Network_js__WEBPACK_IMPORTED_MODULE_14__,
-		SymbolTransactionFactory: _symbol_TransactionFactory_js__WEBPACK_IMPORTED_MODULE_15__,
 
-		..._symbol_idGenerator_js__WEBPACK_IMPORTED_MODULE_16__,
-		..._symbol_merkle_js__WEBPACK_IMPORTED_MODULE_17__,
-		..._symbol_metadata_js__WEBPACK_IMPORTED_MODULE_18__
+		/**
+		 * Encrypts and encodes messages between two parties.
+		 * @type {typeof SymbolKeyPair.KeyPair}
+		 */
+		KeyPair: _symbol_KeyPair_js__WEBPACK_IMPORTED_MODULE_12__.KeyPair,
+
+		/**
+		 * Encrypts and encodes messages between two parties.
+		 * @type {typeof SymbolKeyPair.Verifier}
+		 */
+		Verifier: _symbol_KeyPair_js__WEBPACK_IMPORTED_MODULE_12__.Verifier,
+
+		// endregion
+
+		// region Symbol extensions
+
+		..._symbol_idGenerator_js__WEBPACK_IMPORTED_MODULE_17__,
+		..._symbol_merkle_js__WEBPACK_IMPORTED_MODULE_18__,
+		..._symbol_metadata_js__WEBPACK_IMPORTED_MODULE_19__,
+
+		/**
+		 * Generates symbol voting keys.
+		 * @type {typeof VotingKeysGenerator}
+		 */
+		VotingKeysGenerator: _symbol_VotingKeysGenerator_js__WEBPACK_IMPORTED_MODULE_16__["default"]
+
+		// endregion
 	},
 
+	/**
+	 * Network independent utilities.
+	 */
 	utils: {
-		hexToUint8: _utils_converter_js__WEBPACK_IMPORTED_MODULE_20__.hexToUint8,
-		uint8ToHex: _utils_converter_js__WEBPACK_IMPORTED_MODULE_20__.uint8ToHex
+		hexToUint8: _utils_converter_js__WEBPACK_IMPORTED_MODULE_21__.hexToUint8,
+		uint8ToHex: _utils_converter_js__WEBPACK_IMPORTED_MODULE_21__.uint8ToHex
 	}
 };
 
@@ -81930,8 +83870,8 @@ __webpack_async_result__();
 __webpack_require__.a(__webpack_module__, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "KeyPair": () => (/* binding */ KeyPair),
-/* harmony export */   "Verifier": () => (/* binding */ Verifier)
+/* harmony export */   KeyPair: () => (/* binding */ KeyPair),
+/* harmony export */   Verifier: () => (/* binding */ Verifier)
 /* harmony export */ });
 /* harmony import */ var _CryptoTypes_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../CryptoTypes.js */ "./src/CryptoTypes.js");
 /* harmony import */ var _impl_ed25519_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../impl/ed25519.js */ "./src/impl/ed25519.js");
@@ -81953,10 +83893,17 @@ class KeyPair {
 	 * @param {PrivateKey} privateKey Private key.
 	 */
 	constructor(privateKey) {
+		/**
+		 * @private
+		 */
 		this._privateKey = privateKey;
 
 		const reversedPrivateKeyBytes = new Uint8Array([...privateKey.bytes]);
 		reversedPrivateKeyBytes.reverse();
+
+		/**
+		 * @private
+		 */
 		this._keyPair = _impl_ed25519_js__WEBPACK_IMPORTED_MODULE_1__["default"].keyPairFromSeed(HASH_MODE, reversedPrivateKeyBytes);
 	}
 
@@ -81998,6 +83945,10 @@ class Verifier {
 		if (0 === (0,_utils_arrayHelpers_js__WEBPACK_IMPORTED_MODULE_2__.deepCompare)(new Uint8Array(_CryptoTypes_js__WEBPACK_IMPORTED_MODULE_0__.PublicKey.SIZE), publicKey.bytes))
 			throw new Error('public key cannot be zero');
 
+		/**
+		 * Public key used for signature verification.
+		 * @type PublicKey
+		 */
 		this.publicKey = publicKey;
 	}
 
@@ -82021,17 +83972,28 @@ __webpack_async_result__();
 /*!***********************************!*\
   !*** ./src/nem/MessageEncoder.js ***!
   \***********************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+/***/ ((__webpack_module__, __webpack_exports__, __webpack_require__) => {
 
+__webpack_require__.a(__webpack_module__, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ MessageEncoder)
 /* harmony export */ });
-/* harmony import */ var _SharedKey_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SharedKey.js */ "./src/nem/SharedKey.js");
-/* harmony import */ var _models_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./models.js */ "./src/nem/models.js");
-/* harmony import */ var _impl_CipherHelpers_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../impl/CipherHelpers.js */ "./src/impl/CipherHelpers.js");
+/* harmony import */ var _KeyPair_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./KeyPair.js */ "./src/nem/KeyPair.js");
+/* harmony import */ var _SharedKey_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SharedKey.js */ "./src/nem/SharedKey.js");
+/* harmony import */ var _models_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./models.js */ "./src/nem/models.js");
+/* harmony import */ var _CryptoTypes_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../CryptoTypes.js */ "./src/CryptoTypes.js");
+/* harmony import */ var _impl_CipherHelpers_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../impl/CipherHelpers.js */ "./src/impl/CipherHelpers.js");
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_KeyPair_js__WEBPACK_IMPORTED_MODULE_0__, _SharedKey_js__WEBPACK_IMPORTED_MODULE_1__]);
+([_KeyPair_js__WEBPACK_IMPORTED_MODULE_0__, _SharedKey_js__WEBPACK_IMPORTED_MODULE_1__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
+/* eslint-disable no-unused-vars */
+
+/* eslint-enable no-unused-vars */
  // eslint-disable-line import/no-deprecated
 
+/* eslint-disable no-unused-vars */
+
+/* eslint-enable no-unused-vars */
 
 
 const filterExceptions = (statement, exceptions) => {
@@ -82055,31 +84017,40 @@ class MessageEncoder {
 	 * @param {KeyPair} keyPair Key pair.
 	 */
 	constructor(keyPair) {
-		this.keyPair = keyPair;
+		/**
+		 * @private
+		 */
+		this._keyPair = keyPair;
 	}
 
 	/**
-	 * Tries to decode encoded message, returns tuple:
-	 *  * true, message - if message has been decoded and decrypted
-	 *  * false, encodedMessage - otherwise
+	 * Public key used for message encoding.
+	 * @returns {PublicKey} Public key used for message encoding.
+	 */
+	get publicKey() {
+		return this._keyPair.publicKey;
+	}
+
+	/**
+	 * Tries to decode encoded message.
 	 * @param {PublicKey} recipientPublicKey Recipient public key.
-	 * @param {Uint8Array} encodedMessage Encoded message.
-	 * @returns {array} Tuple containing decoded status and message.
+	 * @param {Message} encodedMessage Encoded message.
+	 * @returns {TryDecodeResult} Tuple containing decoded status and message.
 	 */
 	tryDecode(recipientPublicKey, encodedMessage) {
-		if (_models_js__WEBPACK_IMPORTED_MODULE_1__.MessageType.ENCRYPTED !== encodedMessage.messageType)
+		if (_models_js__WEBPACK_IMPORTED_MODULE_2__.MessageType.ENCRYPTED !== encodedMessage.messageType)
 			throw new Error('invalid message format');
 
 		let [result, message] = filterExceptions(
-			() => (0,_impl_CipherHelpers_js__WEBPACK_IMPORTED_MODULE_2__.decodeAesGcm)(_SharedKey_js__WEBPACK_IMPORTED_MODULE_0__.deriveSharedKey, this.keyPair, recipientPublicKey, encodedMessage.message),
+			() => (0,_impl_CipherHelpers_js__WEBPACK_IMPORTED_MODULE_4__.decodeAesGcm)(_SharedKey_js__WEBPACK_IMPORTED_MODULE_1__.deriveSharedKey, this._keyPair, recipientPublicKey, encodedMessage.message),
 			['Unsupported state or unable to authenticate data']
 		);
 		if (result)
-			return [true, message];
+			return { isDecoded: true, message };
 
 		[result, message] = filterExceptions(
 			// eslint-disable-next-line import/no-deprecated
-			() => (0,_impl_CipherHelpers_js__WEBPACK_IMPORTED_MODULE_2__.decodeAesCbc)(_SharedKey_js__WEBPACK_IMPORTED_MODULE_0__.deriveSharedKeyDeprecated, this.keyPair, recipientPublicKey, encodedMessage.message),
+			() => (0,_impl_CipherHelpers_js__WEBPACK_IMPORTED_MODULE_4__.decodeAesCbc)(_SharedKey_js__WEBPACK_IMPORTED_MODULE_1__.deriveSharedKeyDeprecated, this._keyPair, recipientPublicKey, encodedMessage.message),
 			[
 				'digital envelope routines:EVP_DecryptFinal_ex:bad decrypt',
 				'digital envelope routines:EVP_DecryptFinal_ex:wrong final block length',
@@ -82087,44 +84058,59 @@ class MessageEncoder {
 			]
 		);
 		if (result)
-			return [true, message];
+			return { isDecoded: true, message };
 
-		return [false, encodedMessage];
+		return { isDecoded: false, message: encodedMessage };
 	}
 
 	/**
 	 * Encodes message to recipient using recommended format.
-	 * @deprecated
 	 * @param {PublicKey} recipientPublicKey Recipient public key.
 	 * @param {Uint8Array} message Message to encode.
-	 * @returns {Uint8Array} Encrypted and encoded message.
+	 * @returns {Message} Encrypted and encoded message.
 	 */
-	encodeDeprecated(recipientPublicKey, message) {
-		// eslint-disable-next-line import/no-deprecated
-		const encoded = (0,_impl_CipherHelpers_js__WEBPACK_IMPORTED_MODULE_2__.encodeAesCbc)(_SharedKey_js__WEBPACK_IMPORTED_MODULE_0__.deriveSharedKeyDeprecated, this.keyPair, recipientPublicKey, message);
+	encode(recipientPublicKey, message) {
+		const { tag, initializationVector, cipherText } = (0,_impl_CipherHelpers_js__WEBPACK_IMPORTED_MODULE_4__.encodeAesGcm)(_SharedKey_js__WEBPACK_IMPORTED_MODULE_1__.deriveSharedKey, this._keyPair, recipientPublicKey, message);
 
-		const encodedMessage = new _models_js__WEBPACK_IMPORTED_MODULE_1__.Message();
-		encodedMessage.messageType = _models_js__WEBPACK_IMPORTED_MODULE_1__.MessageType.ENCRYPTED;
-		encodedMessage.message = (0,_impl_CipherHelpers_js__WEBPACK_IMPORTED_MODULE_2__.concatArrays)(encoded.salt, encoded.initializationVector, encoded.cipherText);
+		const encodedMessage = new _models_js__WEBPACK_IMPORTED_MODULE_2__.Message();
+		encodedMessage.messageType = _models_js__WEBPACK_IMPORTED_MODULE_2__.MessageType.ENCRYPTED;
+		encodedMessage.message = (0,_impl_CipherHelpers_js__WEBPACK_IMPORTED_MODULE_4__.concatArrays)(tag, initializationVector, cipherText);
 		return encodedMessage;
 	}
 
 	/**
 	 * Encodes message to recipient using recommended format.
+	 * @deprecated This function is only provided for compatability with older NEM messages.
+	 *             Please use `encode` in any new code.
 	 * @param {PublicKey} recipientPublicKey Recipient public key.
 	 * @param {Uint8Array} message Message to encode.
-	 * @returns {Uint8Array} Encrypted and encoded message.
+	 * @returns {Message} Encrypted and encoded message.
 	 */
-	encode(recipientPublicKey, message) {
-		const { tag, initializationVector, cipherText } = (0,_impl_CipherHelpers_js__WEBPACK_IMPORTED_MODULE_2__.encodeAesGcm)(_SharedKey_js__WEBPACK_IMPORTED_MODULE_0__.deriveSharedKey, this.keyPair, recipientPublicKey, message);
+	encodeDeprecated(recipientPublicKey, message) {
+		// eslint-disable-next-line import/no-deprecated
+		const encoded = (0,_impl_CipherHelpers_js__WEBPACK_IMPORTED_MODULE_4__.encodeAesCbc)(_SharedKey_js__WEBPACK_IMPORTED_MODULE_1__.deriveSharedKeyDeprecated, this._keyPair, recipientPublicKey, message);
 
-		const encodedMessage = new _models_js__WEBPACK_IMPORTED_MODULE_1__.Message();
-		encodedMessage.messageType = _models_js__WEBPACK_IMPORTED_MODULE_1__.MessageType.ENCRYPTED;
-		encodedMessage.message = (0,_impl_CipherHelpers_js__WEBPACK_IMPORTED_MODULE_2__.concatArrays)(tag, initializationVector, cipherText);
+		const encodedMessage = new _models_js__WEBPACK_IMPORTED_MODULE_2__.Message();
+		encodedMessage.messageType = _models_js__WEBPACK_IMPORTED_MODULE_2__.MessageType.ENCRYPTED;
+		encodedMessage.message = (0,_impl_CipherHelpers_js__WEBPACK_IMPORTED_MODULE_4__.concatArrays)(encoded.salt, encoded.initializationVector, encoded.cipherText);
 		return encodedMessage;
 	}
 }
 
+// region type declarations
+
+/**
+ * Result of a try decode operation.
+ * @class
+ * @typedef {object} TryDecodeResult
+ * @property {boolean} isDecoded \c true if message has been decoded and decrypted; \c false otherwise.
+ * @property {Uint8Array|Message} message Decoded message when `isDecoded` is \c true; encoded message otherwise.
+ */
+
+// endregion
+
+__webpack_async_result__();
+} catch(e) { __webpack_async_result__(e); } });
 
 /***/ }),
 
@@ -82136,9 +84122,9 @@ class MessageEncoder {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "Address": () => (/* binding */ Address),
-/* harmony export */   "Network": () => (/* binding */ Network),
-/* harmony export */   "NetworkTimestamp": () => (/* binding */ NetworkTimestamp)
+/* harmony export */   Address: () => (/* binding */ Address),
+/* harmony export */   Network: () => (/* binding */ Network),
+/* harmony export */   NetworkTimestamp: () => (/* binding */ NetworkTimestamp)
 /* harmony export */ });
 /* harmony import */ var _ByteArray_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../ByteArray.js */ "./src/ByteArray.js");
 /* harmony import */ var _Network_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Network.js */ "./src/Network.js");
@@ -82152,7 +84138,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /**
- * Represents a NEM network timestamp with millisecond resolution.
+ * Represents a NEM network timestamp with second resolution.
  */
 class NetworkTimestamp extends _NetworkTimestamp_js__WEBPACK_IMPORTED_MODULE_2__.NetworkTimestamp {
 	/**
@@ -82170,27 +84156,39 @@ class NetworkTimestamp extends _NetworkTimestamp_js__WEBPACK_IMPORTED_MODULE_2__
  * Represents a NEM address.
  */
 class Address extends _ByteArray_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
+	/**
+	 * Byte size of raw address.
+	 * @type number
+	 */
 	static SIZE = 25;
 
+	/**
+	 * Length of encoded address string.
+	 * @type number
+	 */
 	static ENCODED_SIZE = 40;
 
 	/**
 	 * Creates a NEM address.
-	 * @param {Uint8Array|string|Address} address Input string, byte array or address.
+	 * @param {Uint8Array|string|Address} addressInput Input string, byte array or address.
 	 */
-	constructor(address) {
-		let rawBytes = address;
-		if ('string' === typeof address)
-			rawBytes = _utils_base32_js__WEBPACK_IMPORTED_MODULE_3__["default"].decode(address);
-		else if (address instanceof Address)
-			rawBytes = address.bytes;
+	constructor(addressInput) {
+		const extractAddressBytes = () => {
+			if ('string' === typeof addressInput)
+				return _utils_base32_js__WEBPACK_IMPORTED_MODULE_3__["default"].decode(addressInput);
 
-		super(Address.SIZE, rawBytes);
+			if (addressInput instanceof Address)
+				return addressInput.bytes;
+
+			return addressInput;
+		};
+
+		super(Address.SIZE, extractAddressBytes());
 	}
 
 	/**
 	 * Returns string representation of this object.
-	 * @returns {string} String representation of this object
+	 * @returns {string} String representation of this object.
 	 */
 	toString() {
 		return _utils_base32_js__WEBPACK_IMPORTED_MODULE_3__["default"].encode(this.bytes);
@@ -82201,6 +84199,24 @@ class Address extends _ByteArray_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
  * Represents a NEM network.
  */
 class Network extends _Network_js__WEBPACK_IMPORTED_MODULE_1__.Network {
+	/**
+	 * NEM main network.
+	 * @type Network
+	 */
+	static MAINNET;
+
+	/**
+	 * NEM test network.
+	 * @type Network
+	 */
+	static TESTNET;
+
+	/**
+	 * NEM well known networks.
+	 * @type Array<Network>
+	 */
+	static NETWORKS;
+
 	/**
 	 * Creates a new network with the specified name, identifier byte and generation hash seed.
 	 * @param {string} name Network name.
@@ -82231,22 +84247,29 @@ Network.NETWORKS = [Network.MAINNET, Network.TESTNET];
 /*!******************************!*\
   !*** ./src/nem/SharedKey.js ***!
   \******************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+/***/ ((__webpack_module__, __webpack_exports__, __webpack_require__) => {
 
+__webpack_require__.a(__webpack_module__, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "deriveSharedKey": () => (/* binding */ deriveSharedKey),
-/* harmony export */   "deriveSharedKeyDeprecated": () => (/* binding */ deriveSharedKeyDeprecated)
+/* harmony export */   deriveSharedKey: () => (/* binding */ deriveSharedKey),
+/* harmony export */   deriveSharedKeyDeprecated: () => (/* binding */ deriveSharedKeyDeprecated)
 /* harmony export */ });
-/* harmony import */ var _CryptoTypes_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../CryptoTypes.js */ "./src/CryptoTypes.js");
-/* harmony import */ var _SharedKey_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../SharedKey.js */ "./src/SharedKey.js");
-/* harmony import */ var _noble_hashes_sha3__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @noble/hashes/sha3 */ "./node_modules/@noble/hashes/esm/sha3.js");
+/* harmony import */ var _KeyPair_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./KeyPair.js */ "./src/nem/KeyPair.js");
+/* harmony import */ var _CryptoTypes_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../CryptoTypes.js */ "./src/CryptoTypes.js");
+/* harmony import */ var _SharedKey_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../SharedKey.js */ "./src/SharedKey.js");
+/* harmony import */ var _noble_hashes_sha3__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @noble/hashes/sha3 */ "./node_modules/@noble/hashes/esm/sha3.js");
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_KeyPair_js__WEBPACK_IMPORTED_MODULE_0__]);
+_KeyPair_js__WEBPACK_IMPORTED_MODULE_0__ = (__webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__)[0];
+/* eslint-disable no-unused-vars */
+
+/* eslint-enable no-unused-vars */
 
 
 
 
 const crypto_hash = (out, m, n) => {
-	const hashBuilder = _noble_hashes_sha3__WEBPACK_IMPORTED_MODULE_2__.keccak_512.create();
+	const hashBuilder = _noble_hashes_sha3__WEBPACK_IMPORTED_MODULE_3__.keccak_512.create();
 	hashBuilder.update(m.subarray(0, n));
 	const hash = hashBuilder.digest();
 
@@ -82255,8 +84278,8 @@ const crypto_hash = (out, m, n) => {
 
 	return 0;
 };
-const deriveSharedSecretImpl = (0,_SharedKey_js__WEBPACK_IMPORTED_MODULE_1__.deriveSharedSecretFactory)(crypto_hash);
-const deriveSharedKeyImpl = (0,_SharedKey_js__WEBPACK_IMPORTED_MODULE_1__.deriveSharedKeyFactory)('nem-nis1', crypto_hash);
+const deriveSharedSecretImpl = (0,_SharedKey_js__WEBPACK_IMPORTED_MODULE_2__.deriveSharedSecretFactory)(crypto_hash);
+const deriveSharedKeyImpl = (0,_SharedKey_js__WEBPACK_IMPORTED_MODULE_2__.deriveSharedKeyFactory)('nem-nis1', crypto_hash);
 
 /**
  * Derives shared key from key pair and other party's public key.
@@ -82280,20 +84303,24 @@ const deriveSharedKey = (keyPair, otherPublicKey) => {
  * @returns {SharedKey256} Shared encryption key.
  */
 const deriveSharedKeyDeprecated = (keyPair, otherPublicKey, salt) => {
-	if (_CryptoTypes_js__WEBPACK_IMPORTED_MODULE_0__.SharedKey256.SIZE !== salt.length)
+	if (_CryptoTypes_js__WEBPACK_IMPORTED_MODULE_1__.SharedKey256.SIZE !== salt.length)
 		throw Error('invalid salt');
 
 	const reversedPrivateKeyBytes = new Uint8Array([...keyPair.privateKey.bytes]);
 	reversedPrivateKeyBytes.reverse();
 
 	const sharedSecret = deriveSharedSecretImpl(reversedPrivateKeyBytes, otherPublicKey);
-	const sharedKeyBytes = new Uint8Array(_CryptoTypes_js__WEBPACK_IMPORTED_MODULE_0__.SharedKey256.SIZE);
-	for (let i = 0; _CryptoTypes_js__WEBPACK_IMPORTED_MODULE_0__.SharedKey256.SIZE > i; ++i)
+	const sharedKeyBytes = new Uint8Array(_CryptoTypes_js__WEBPACK_IMPORTED_MODULE_1__.SharedKey256.SIZE);
+	for (let i = 0; _CryptoTypes_js__WEBPACK_IMPORTED_MODULE_1__.SharedKey256.SIZE > i; ++i)
 		sharedKeyBytes[i] = sharedSecret[i] ^ salt[i];
 
-	return new _CryptoTypes_js__WEBPACK_IMPORTED_MODULE_0__.SharedKey256((0,_noble_hashes_sha3__WEBPACK_IMPORTED_MODULE_2__.keccak_256)(sharedKeyBytes));
+	return new _CryptoTypes_js__WEBPACK_IMPORTED_MODULE_1__.SharedKey256((0,_noble_hashes_sha3__WEBPACK_IMPORTED_MODULE_3__.keccak_256)(sharedKeyBytes));
 };
 
+
+
+__webpack_async_result__();
+} catch(e) { __webpack_async_result__(e); } });
 
 /***/ }),
 
@@ -82325,11 +84352,35 @@ class TransactionFactory {
 	/**
 	 * Creates a factory for the specified network.
 	 * @param {Network} network NEM network.
-	 * @param {Map} typeRuleOverrides Type rule overrides.
+	 * @param {Map<string, function>|undefined} typeRuleOverrides Type rule overrides.
 	 */
-	constructor(network, typeRuleOverrides) {
-		this.factory = TransactionFactory.buildRules(typeRuleOverrides);
-		this.network = network;
+	constructor(network, typeRuleOverrides = undefined) {
+		/**
+		 * @private
+		 */
+		this._factory = TransactionFactory._buildRules(typeRuleOverrides); // eslint-disable-line no-underscore-dangle
+
+		/**
+		 * @private
+		 */
+		this._network = network;
+	}
+
+	/**
+	 * Gets rule names with registered hints.
+	 */
+	get ruleNames() {
+		return Array.from(this._factory.rules.keys());
+	}
+
+	/**
+	 * Looks up the friendly name for the specified transaction.
+	 * @param {nc.TransactionType} transactionType Transaction type.
+	 * @param {number} transactionVersion Transaction version.
+	 * @returns {string} Transaction friendly name.
+	 */
+	static lookupTransactionName(transactionType, transactionVersion) {
+		return `${_models_js__WEBPACK_IMPORTED_MODULE_1__.TransactionType.valueToKey(transactionType.value).toLowerCase()}_transaction_v${transactionVersion}`;
 	}
 
 	/**
@@ -82337,12 +84388,12 @@ class TransactionFactory {
 	 * @param {object} transactionDescriptor Transaction descriptor.
 	 * @param {boolean} autosort When set (default), descriptor arrays requiring ordering will be automatically sorted.
 	 *                           When unset, descriptor arrays will be presumed to be already sorted.
-	 * @returns {object} Newly created transaction.
+	 * @returns {nc.Transaction} Newly created transaction.
 	 */
 	create(transactionDescriptor, autosort = true) {
-		const transaction = this.factory.createFromFactory(_models_js__WEBPACK_IMPORTED_MODULE_1__.TransactionFactory.createByName, {
+		const transaction = this._factory.createFromFactory(_models_js__WEBPACK_IMPORTED_MODULE_1__.TransactionFactory.createByName, {
 			...transactionDescriptor,
-			network: this.network.identifier
+			network: this._network.identifier
 		});
 		if (autosort)
 			transaction.sort();
@@ -82356,8 +84407,8 @@ class TransactionFactory {
 
 	/**
 	 * Converts a transaction to a non-verifiable transaction.
-	 * @param {object} transaction Transaction object.
-	 * @returns {object} Non-verifiable transaction object.
+	 * @param {nc.Transaction|nc.NonVerifiableTransaction} transaction Transaction object.
+	 * @returns {nc.NonVerifiableTransaction} Non-verifiable transaction object.
 	 */
 	static toNonVerifiableTransaction(transaction) {
 		let nonVerifiableClassName = transaction.constructor.name;
@@ -82367,7 +84418,8 @@ class TransactionFactory {
 		const NonVerifiableClass = _models_js__WEBPACK_IMPORTED_MODULE_1__[nonVerifiableClassName];
 		const nonVerifiableTransaction = new NonVerifiableClass();
 		Object.getOwnPropertyNames(transaction).forEach(key => {
-			nonVerifiableTransaction[key] = transaction[key];
+			if (key in nonVerifiableTransaction)
+				nonVerifiableTransaction[key] = transaction[key];
 		});
 
 		return nonVerifiableTransaction;
@@ -82375,7 +84427,7 @@ class TransactionFactory {
 
 	/**
 	 * Attaches a signature to a transaction.
-	 * @param {object} transaction Transaction object.
+	 * @param {nc.Transaction} transaction Transaction object.
 	 * @param {Signature} signature Signature to attach.
 	 * @returns {string} JSON transaction payload.
 	 */
@@ -82388,6 +84440,12 @@ class TransactionFactory {
 		return jsonPayload;
 	}
 
+	/**
+	 * Tries to coerce an sdk type to a model type.
+	 * @param {object} value Value to convert.
+	 * @returns {nc.Address|undefined} Converted value or undefined.
+	 * @private
+	 */
 	static _nemTypeConverter(value) {
 		if (value instanceof _Network_js__WEBPACK_IMPORTED_MODULE_0__.Address) {
 			// yes, unfortunately, nem's Address is 40 bytes string, but we need to pass it as actual bytes not to confuse ByteArray
@@ -82397,7 +84455,13 @@ class TransactionFactory {
 		return undefined;
 	}
 
-	static buildRules(typeRuleOverrides) {
+	/**
+	 * Builds a rule based transaction factory.
+	 * @param {Map<string, function>|undefined} typeRuleOverrides Type rule overrides.
+	 * @returns {RuleBasedTransactionFactory} Rule based transaction factory.
+	 * @private
+	 */
+	static _buildRules(typeRuleOverrides) {
 		const factory = new _RuleBasedTransactionFactory_js__WEBPACK_IMPORTED_MODULE_3__["default"](_models_js__WEBPACK_IMPORTED_MODULE_1__, this._nemTypeConverter, typeRuleOverrides);
 		factory.autodetect();
 
@@ -82438,55 +84502,55 @@ class TransactionFactory {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "AccountKeyLinkTransactionV1": () => (/* binding */ AccountKeyLinkTransactionV1),
-/* harmony export */   "Address": () => (/* binding */ Address),
-/* harmony export */   "Amount": () => (/* binding */ Amount),
-/* harmony export */   "CosignatureV1": () => (/* binding */ CosignatureV1),
-/* harmony export */   "Hash256": () => (/* binding */ Hash256),
-/* harmony export */   "Height": () => (/* binding */ Height),
-/* harmony export */   "LinkAction": () => (/* binding */ LinkAction),
-/* harmony export */   "Message": () => (/* binding */ Message),
-/* harmony export */   "MessageType": () => (/* binding */ MessageType),
-/* harmony export */   "Mosaic": () => (/* binding */ Mosaic),
-/* harmony export */   "MosaicDefinition": () => (/* binding */ MosaicDefinition),
-/* harmony export */   "MosaicDefinitionTransactionV1": () => (/* binding */ MosaicDefinitionTransactionV1),
-/* harmony export */   "MosaicId": () => (/* binding */ MosaicId),
-/* harmony export */   "MosaicLevy": () => (/* binding */ MosaicLevy),
-/* harmony export */   "MosaicProperty": () => (/* binding */ MosaicProperty),
-/* harmony export */   "MosaicSupplyChangeAction": () => (/* binding */ MosaicSupplyChangeAction),
-/* harmony export */   "MosaicSupplyChangeTransactionV1": () => (/* binding */ MosaicSupplyChangeTransactionV1),
-/* harmony export */   "MosaicTransferFeeType": () => (/* binding */ MosaicTransferFeeType),
-/* harmony export */   "MultisigAccountModification": () => (/* binding */ MultisigAccountModification),
-/* harmony export */   "MultisigAccountModificationTransactionV1": () => (/* binding */ MultisigAccountModificationTransactionV1),
-/* harmony export */   "MultisigAccountModificationTransactionV2": () => (/* binding */ MultisigAccountModificationTransactionV2),
-/* harmony export */   "MultisigAccountModificationType": () => (/* binding */ MultisigAccountModificationType),
-/* harmony export */   "MultisigTransactionV1": () => (/* binding */ MultisigTransactionV1),
-/* harmony export */   "NamespaceId": () => (/* binding */ NamespaceId),
-/* harmony export */   "NamespaceRegistrationTransactionV1": () => (/* binding */ NamespaceRegistrationTransactionV1),
-/* harmony export */   "NetworkType": () => (/* binding */ NetworkType),
-/* harmony export */   "NonVerifiableAccountKeyLinkTransactionV1": () => (/* binding */ NonVerifiableAccountKeyLinkTransactionV1),
-/* harmony export */   "NonVerifiableMosaicDefinitionTransactionV1": () => (/* binding */ NonVerifiableMosaicDefinitionTransactionV1),
-/* harmony export */   "NonVerifiableMosaicSupplyChangeTransactionV1": () => (/* binding */ NonVerifiableMosaicSupplyChangeTransactionV1),
-/* harmony export */   "NonVerifiableMultisigAccountModificationTransactionV1": () => (/* binding */ NonVerifiableMultisigAccountModificationTransactionV1),
-/* harmony export */   "NonVerifiableMultisigAccountModificationTransactionV2": () => (/* binding */ NonVerifiableMultisigAccountModificationTransactionV2),
-/* harmony export */   "NonVerifiableMultisigTransactionV1": () => (/* binding */ NonVerifiableMultisigTransactionV1),
-/* harmony export */   "NonVerifiableNamespaceRegistrationTransactionV1": () => (/* binding */ NonVerifiableNamespaceRegistrationTransactionV1),
-/* harmony export */   "NonVerifiableTransaction": () => (/* binding */ NonVerifiableTransaction),
-/* harmony export */   "NonVerifiableTransactionFactory": () => (/* binding */ NonVerifiableTransactionFactory),
-/* harmony export */   "NonVerifiableTransferTransactionV1": () => (/* binding */ NonVerifiableTransferTransactionV1),
-/* harmony export */   "NonVerifiableTransferTransactionV2": () => (/* binding */ NonVerifiableTransferTransactionV2),
-/* harmony export */   "PublicKey": () => (/* binding */ PublicKey),
-/* harmony export */   "Signature": () => (/* binding */ Signature),
-/* harmony export */   "SizePrefixedCosignatureV1": () => (/* binding */ SizePrefixedCosignatureV1),
-/* harmony export */   "SizePrefixedMosaic": () => (/* binding */ SizePrefixedMosaic),
-/* harmony export */   "SizePrefixedMosaicProperty": () => (/* binding */ SizePrefixedMosaicProperty),
-/* harmony export */   "SizePrefixedMultisigAccountModification": () => (/* binding */ SizePrefixedMultisigAccountModification),
-/* harmony export */   "Timestamp": () => (/* binding */ Timestamp),
-/* harmony export */   "Transaction": () => (/* binding */ Transaction),
-/* harmony export */   "TransactionFactory": () => (/* binding */ TransactionFactory),
-/* harmony export */   "TransactionType": () => (/* binding */ TransactionType),
-/* harmony export */   "TransferTransactionV1": () => (/* binding */ TransferTransactionV1),
-/* harmony export */   "TransferTransactionV2": () => (/* binding */ TransferTransactionV2)
+/* harmony export */   AccountKeyLinkTransactionV1: () => (/* binding */ AccountKeyLinkTransactionV1),
+/* harmony export */   Address: () => (/* binding */ Address),
+/* harmony export */   Amount: () => (/* binding */ Amount),
+/* harmony export */   CosignatureV1: () => (/* binding */ CosignatureV1),
+/* harmony export */   Hash256: () => (/* binding */ Hash256),
+/* harmony export */   Height: () => (/* binding */ Height),
+/* harmony export */   LinkAction: () => (/* binding */ LinkAction),
+/* harmony export */   Message: () => (/* binding */ Message),
+/* harmony export */   MessageType: () => (/* binding */ MessageType),
+/* harmony export */   Mosaic: () => (/* binding */ Mosaic),
+/* harmony export */   MosaicDefinition: () => (/* binding */ MosaicDefinition),
+/* harmony export */   MosaicDefinitionTransactionV1: () => (/* binding */ MosaicDefinitionTransactionV1),
+/* harmony export */   MosaicId: () => (/* binding */ MosaicId),
+/* harmony export */   MosaicLevy: () => (/* binding */ MosaicLevy),
+/* harmony export */   MosaicProperty: () => (/* binding */ MosaicProperty),
+/* harmony export */   MosaicSupplyChangeAction: () => (/* binding */ MosaicSupplyChangeAction),
+/* harmony export */   MosaicSupplyChangeTransactionV1: () => (/* binding */ MosaicSupplyChangeTransactionV1),
+/* harmony export */   MosaicTransferFeeType: () => (/* binding */ MosaicTransferFeeType),
+/* harmony export */   MultisigAccountModification: () => (/* binding */ MultisigAccountModification),
+/* harmony export */   MultisigAccountModificationTransactionV1: () => (/* binding */ MultisigAccountModificationTransactionV1),
+/* harmony export */   MultisigAccountModificationTransactionV2: () => (/* binding */ MultisigAccountModificationTransactionV2),
+/* harmony export */   MultisigAccountModificationType: () => (/* binding */ MultisigAccountModificationType),
+/* harmony export */   MultisigTransactionV1: () => (/* binding */ MultisigTransactionV1),
+/* harmony export */   NamespaceId: () => (/* binding */ NamespaceId),
+/* harmony export */   NamespaceRegistrationTransactionV1: () => (/* binding */ NamespaceRegistrationTransactionV1),
+/* harmony export */   NetworkType: () => (/* binding */ NetworkType),
+/* harmony export */   NonVerifiableAccountKeyLinkTransactionV1: () => (/* binding */ NonVerifiableAccountKeyLinkTransactionV1),
+/* harmony export */   NonVerifiableMosaicDefinitionTransactionV1: () => (/* binding */ NonVerifiableMosaicDefinitionTransactionV1),
+/* harmony export */   NonVerifiableMosaicSupplyChangeTransactionV1: () => (/* binding */ NonVerifiableMosaicSupplyChangeTransactionV1),
+/* harmony export */   NonVerifiableMultisigAccountModificationTransactionV1: () => (/* binding */ NonVerifiableMultisigAccountModificationTransactionV1),
+/* harmony export */   NonVerifiableMultisigAccountModificationTransactionV2: () => (/* binding */ NonVerifiableMultisigAccountModificationTransactionV2),
+/* harmony export */   NonVerifiableMultisigTransactionV1: () => (/* binding */ NonVerifiableMultisigTransactionV1),
+/* harmony export */   NonVerifiableNamespaceRegistrationTransactionV1: () => (/* binding */ NonVerifiableNamespaceRegistrationTransactionV1),
+/* harmony export */   NonVerifiableTransaction: () => (/* binding */ NonVerifiableTransaction),
+/* harmony export */   NonVerifiableTransactionFactory: () => (/* binding */ NonVerifiableTransactionFactory),
+/* harmony export */   NonVerifiableTransferTransactionV1: () => (/* binding */ NonVerifiableTransferTransactionV1),
+/* harmony export */   NonVerifiableTransferTransactionV2: () => (/* binding */ NonVerifiableTransferTransactionV2),
+/* harmony export */   PublicKey: () => (/* binding */ PublicKey),
+/* harmony export */   Signature: () => (/* binding */ Signature),
+/* harmony export */   SizePrefixedCosignatureV1: () => (/* binding */ SizePrefixedCosignatureV1),
+/* harmony export */   SizePrefixedMosaic: () => (/* binding */ SizePrefixedMosaic),
+/* harmony export */   SizePrefixedMosaicProperty: () => (/* binding */ SizePrefixedMosaicProperty),
+/* harmony export */   SizePrefixedMultisigAccountModification: () => (/* binding */ SizePrefixedMultisigAccountModification),
+/* harmony export */   Timestamp: () => (/* binding */ Timestamp),
+/* harmony export */   Transaction: () => (/* binding */ Transaction),
+/* harmony export */   TransactionFactory: () => (/* binding */ TransactionFactory),
+/* harmony export */   TransactionType: () => (/* binding */ TransactionType),
+/* harmony export */   TransferTransactionV1: () => (/* binding */ TransferTransactionV1),
+/* harmony export */   TransferTransactionV2: () => (/* binding */ TransferTransactionV2)
 /* harmony export */ });
 /* harmony import */ var _BaseValue_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../BaseValue.js */ "./src/BaseValue.js");
 /* harmony import */ var _ByteArray_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../ByteArray.js */ "./src/ByteArray.js");
@@ -82514,12 +84578,12 @@ class Amount extends _BaseValue_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
 
 	static deserialize(payload) {
 		const byteArray = payload;
-		return new Amount(_utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToIntUnaligned(byteArray, 8, false));
+		return new Amount(_utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToBigIntUnaligned(byteArray, 8, false));
 	}
 
 	static deserializeAligned(payload) {
 		const byteArray = payload;
-		return new Amount(_utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToInt(byteArray, 8, false));
+		return new Amount(_utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToBigInt(byteArray, 8, false));
 	}
 
 	serialize() {
@@ -82536,12 +84600,12 @@ class Height extends _BaseValue_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
 
 	static deserialize(payload) {
 		const byteArray = payload;
-		return new Height(_utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToIntUnaligned(byteArray, 8, false));
+		return new Height(_utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToBigIntUnaligned(byteArray, 8, false));
 	}
 
 	static deserializeAligned(payload) {
 		const byteArray = payload;
-		return new Height(_utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToInt(byteArray, 8, false));
+		return new Height(_utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToBigInt(byteArray, 8, false));
 	}
 
 	serialize() {
@@ -82715,7 +84779,7 @@ class TransactionType {
 
 	static MULTISIG_COSIGNATURE = new TransactionType(4098);
 
-	static MULTISIG_TRANSACTION = new TransactionType(4100);
+	static MULTISIG = new TransactionType(4100);
 
 	static NAMESPACE_REGISTRATION = new TransactionType(8193);
 
@@ -82732,8 +84796,8 @@ class TransactionType {
 			257, 2049, 4097, 4098, 4100, 8193, 16385, 16386
 		];
 		const keys = [
-			'TRANSFER', 'ACCOUNT_KEY_LINK', 'MULTISIG_ACCOUNT_MODIFICATION', 'MULTISIG_COSIGNATURE', 'MULTISIG_TRANSACTION',
-			'NAMESPACE_REGISTRATION', 'MOSAIC_DEFINITION', 'MOSAIC_SUPPLY_CHANGE'
+			'TRANSFER', 'ACCOUNT_KEY_LINK', 'MULTISIG_ACCOUNT_MODIFICATION', 'MULTISIG_COSIGNATURE', 'MULTISIG', 'NAMESPACE_REGISTRATION',
+			'MOSAIC_DEFINITION', 'MOSAIC_SUPPLY_CHANGE'
 		];
 
 		const index = values.indexOf(value);
@@ -86590,7 +88654,7 @@ class SizePrefixedCosignatureV1 {
 class MultisigTransactionV1 {
 	static TRANSACTION_VERSION = 1;
 
-	static TRANSACTION_TYPE = TransactionType.MULTISIG_TRANSACTION;
+	static TRANSACTION_TYPE = TransactionType.MULTISIG;
 
 	static TYPE_HINTS = {
 		type: 'enum:TransactionType',
@@ -86818,7 +88882,7 @@ class MultisigTransactionV1 {
 class NonVerifiableMultisigTransactionV1 {
 	static TRANSACTION_VERSION = 1;
 
-	static TRANSACTION_TYPE = TransactionType.MULTISIG_TRANSACTION;
+	static TRANSACTION_TYPE = TransactionType.MULTISIG;
 
 	static TYPE_HINTS = {
 		type: 'enum:TransactionType',
@@ -88692,18 +90756,17 @@ class TransactionFactory {
 	static deserialize(payload) {
 		const view = new _utils_BufferView_js__WEBPACK_IMPORTED_MODULE_2__["default"](payload);
 		const parent = Transaction.deserialize(view.buffer);
-		const mapping = new Map([
-			[TransactionFactory.toKey([AccountKeyLinkTransactionV1.TRANSACTION_TYPE.value, AccountKeyLinkTransactionV1.TRANSACTION_VERSION]), AccountKeyLinkTransactionV1],
-			[TransactionFactory.toKey([MosaicDefinitionTransactionV1.TRANSACTION_TYPE.value, MosaicDefinitionTransactionV1.TRANSACTION_VERSION]), MosaicDefinitionTransactionV1],
-			[TransactionFactory.toKey([MosaicSupplyChangeTransactionV1.TRANSACTION_TYPE.value, MosaicSupplyChangeTransactionV1.TRANSACTION_VERSION]), MosaicSupplyChangeTransactionV1],
-			[TransactionFactory.toKey([MultisigAccountModificationTransactionV1.TRANSACTION_TYPE.value, MultisigAccountModificationTransactionV1.TRANSACTION_VERSION]), MultisigAccountModificationTransactionV1],
-			[TransactionFactory.toKey([MultisigAccountModificationTransactionV2.TRANSACTION_TYPE.value, MultisigAccountModificationTransactionV2.TRANSACTION_VERSION]), MultisigAccountModificationTransactionV2],
-			[TransactionFactory.toKey([CosignatureV1.TRANSACTION_TYPE.value, CosignatureV1.TRANSACTION_VERSION]), CosignatureV1],
-			[TransactionFactory.toKey([MultisigTransactionV1.TRANSACTION_TYPE.value, MultisigTransactionV1.TRANSACTION_VERSION]), MultisigTransactionV1],
-			[TransactionFactory.toKey([NamespaceRegistrationTransactionV1.TRANSACTION_TYPE.value, NamespaceRegistrationTransactionV1.TRANSACTION_VERSION]), NamespaceRegistrationTransactionV1],
-			[TransactionFactory.toKey([TransferTransactionV1.TRANSACTION_TYPE.value, TransferTransactionV1.TRANSACTION_VERSION]), TransferTransactionV1],
-			[TransactionFactory.toKey([TransferTransactionV2.TRANSACTION_TYPE.value, TransferTransactionV2.TRANSACTION_VERSION]), TransferTransactionV2]
-		]);
+		const mapping = new Map();
+		mapping.set(TransactionFactory.toKey([AccountKeyLinkTransactionV1.TRANSACTION_TYPE.value, AccountKeyLinkTransactionV1.TRANSACTION_VERSION]), AccountKeyLinkTransactionV1);
+		mapping.set(TransactionFactory.toKey([MosaicDefinitionTransactionV1.TRANSACTION_TYPE.value, MosaicDefinitionTransactionV1.TRANSACTION_VERSION]), MosaicDefinitionTransactionV1);
+		mapping.set(TransactionFactory.toKey([MosaicSupplyChangeTransactionV1.TRANSACTION_TYPE.value, MosaicSupplyChangeTransactionV1.TRANSACTION_VERSION]), MosaicSupplyChangeTransactionV1);
+		mapping.set(TransactionFactory.toKey([MultisigAccountModificationTransactionV1.TRANSACTION_TYPE.value, MultisigAccountModificationTransactionV1.TRANSACTION_VERSION]), MultisigAccountModificationTransactionV1);
+		mapping.set(TransactionFactory.toKey([MultisigAccountModificationTransactionV2.TRANSACTION_TYPE.value, MultisigAccountModificationTransactionV2.TRANSACTION_VERSION]), MultisigAccountModificationTransactionV2);
+		mapping.set(TransactionFactory.toKey([CosignatureV1.TRANSACTION_TYPE.value, CosignatureV1.TRANSACTION_VERSION]), CosignatureV1);
+		mapping.set(TransactionFactory.toKey([MultisigTransactionV1.TRANSACTION_TYPE.value, MultisigTransactionV1.TRANSACTION_VERSION]), MultisigTransactionV1);
+		mapping.set(TransactionFactory.toKey([NamespaceRegistrationTransactionV1.TRANSACTION_TYPE.value, NamespaceRegistrationTransactionV1.TRANSACTION_VERSION]), NamespaceRegistrationTransactionV1);
+		mapping.set(TransactionFactory.toKey([TransferTransactionV1.TRANSACTION_TYPE.value, TransferTransactionV1.TRANSACTION_VERSION]), TransferTransactionV1);
+		mapping.set(TransactionFactory.toKey([TransferTransactionV2.TRANSACTION_TYPE.value, TransferTransactionV2.TRANSACTION_VERSION]), TransferTransactionV2);
 		const discriminator = TransactionFactory.toKey([parent.type.value, parent.version]);
 		const factory_class = mapping.get(discriminator);
 		return factory_class.deserialize(view.buffer);
@@ -88742,17 +90805,16 @@ class NonVerifiableTransactionFactory {
 	static deserialize(payload) {
 		const view = new _utils_BufferView_js__WEBPACK_IMPORTED_MODULE_2__["default"](payload);
 		const parent = NonVerifiableTransaction.deserialize(view.buffer);
-		const mapping = new Map([
-			[NonVerifiableTransactionFactory.toKey([NonVerifiableAccountKeyLinkTransactionV1.TRANSACTION_TYPE.value, NonVerifiableAccountKeyLinkTransactionV1.TRANSACTION_VERSION]), NonVerifiableAccountKeyLinkTransactionV1],
-			[NonVerifiableTransactionFactory.toKey([NonVerifiableMosaicDefinitionTransactionV1.TRANSACTION_TYPE.value, NonVerifiableMosaicDefinitionTransactionV1.TRANSACTION_VERSION]), NonVerifiableMosaicDefinitionTransactionV1],
-			[NonVerifiableTransactionFactory.toKey([NonVerifiableMosaicSupplyChangeTransactionV1.TRANSACTION_TYPE.value, NonVerifiableMosaicSupplyChangeTransactionV1.TRANSACTION_VERSION]), NonVerifiableMosaicSupplyChangeTransactionV1],
-			[NonVerifiableTransactionFactory.toKey([NonVerifiableMultisigAccountModificationTransactionV1.TRANSACTION_TYPE.value, NonVerifiableMultisigAccountModificationTransactionV1.TRANSACTION_VERSION]), NonVerifiableMultisigAccountModificationTransactionV1],
-			[NonVerifiableTransactionFactory.toKey([NonVerifiableMultisigAccountModificationTransactionV2.TRANSACTION_TYPE.value, NonVerifiableMultisigAccountModificationTransactionV2.TRANSACTION_VERSION]), NonVerifiableMultisigAccountModificationTransactionV2],
-			[NonVerifiableTransactionFactory.toKey([NonVerifiableMultisigTransactionV1.TRANSACTION_TYPE.value, NonVerifiableMultisigTransactionV1.TRANSACTION_VERSION]), NonVerifiableMultisigTransactionV1],
-			[NonVerifiableTransactionFactory.toKey([NonVerifiableNamespaceRegistrationTransactionV1.TRANSACTION_TYPE.value, NonVerifiableNamespaceRegistrationTransactionV1.TRANSACTION_VERSION]), NonVerifiableNamespaceRegistrationTransactionV1],
-			[NonVerifiableTransactionFactory.toKey([NonVerifiableTransferTransactionV1.TRANSACTION_TYPE.value, NonVerifiableTransferTransactionV1.TRANSACTION_VERSION]), NonVerifiableTransferTransactionV1],
-			[NonVerifiableTransactionFactory.toKey([NonVerifiableTransferTransactionV2.TRANSACTION_TYPE.value, NonVerifiableTransferTransactionV2.TRANSACTION_VERSION]), NonVerifiableTransferTransactionV2]
-		]);
+		const mapping = new Map();
+		mapping.set(NonVerifiableTransactionFactory.toKey([NonVerifiableAccountKeyLinkTransactionV1.TRANSACTION_TYPE.value, NonVerifiableAccountKeyLinkTransactionV1.TRANSACTION_VERSION]), NonVerifiableAccountKeyLinkTransactionV1);
+		mapping.set(NonVerifiableTransactionFactory.toKey([NonVerifiableMosaicDefinitionTransactionV1.TRANSACTION_TYPE.value, NonVerifiableMosaicDefinitionTransactionV1.TRANSACTION_VERSION]), NonVerifiableMosaicDefinitionTransactionV1);
+		mapping.set(NonVerifiableTransactionFactory.toKey([NonVerifiableMosaicSupplyChangeTransactionV1.TRANSACTION_TYPE.value, NonVerifiableMosaicSupplyChangeTransactionV1.TRANSACTION_VERSION]), NonVerifiableMosaicSupplyChangeTransactionV1);
+		mapping.set(NonVerifiableTransactionFactory.toKey([NonVerifiableMultisigAccountModificationTransactionV1.TRANSACTION_TYPE.value, NonVerifiableMultisigAccountModificationTransactionV1.TRANSACTION_VERSION]), NonVerifiableMultisigAccountModificationTransactionV1);
+		mapping.set(NonVerifiableTransactionFactory.toKey([NonVerifiableMultisigAccountModificationTransactionV2.TRANSACTION_TYPE.value, NonVerifiableMultisigAccountModificationTransactionV2.TRANSACTION_VERSION]), NonVerifiableMultisigAccountModificationTransactionV2);
+		mapping.set(NonVerifiableTransactionFactory.toKey([NonVerifiableMultisigTransactionV1.TRANSACTION_TYPE.value, NonVerifiableMultisigTransactionV1.TRANSACTION_VERSION]), NonVerifiableMultisigTransactionV1);
+		mapping.set(NonVerifiableTransactionFactory.toKey([NonVerifiableNamespaceRegistrationTransactionV1.TRANSACTION_TYPE.value, NonVerifiableNamespaceRegistrationTransactionV1.TRANSACTION_VERSION]), NonVerifiableNamespaceRegistrationTransactionV1);
+		mapping.set(NonVerifiableTransactionFactory.toKey([NonVerifiableTransferTransactionV1.TRANSACTION_TYPE.value, NonVerifiableTransferTransactionV1.TRANSACTION_VERSION]), NonVerifiableTransferTransactionV1);
+		mapping.set(NonVerifiableTransactionFactory.toKey([NonVerifiableTransferTransactionV2.TRANSACTION_TYPE.value, NonVerifiableTransferTransactionV2.TRANSACTION_VERSION]), NonVerifiableTransferTransactionV2);
 		const discriminator = NonVerifiableTransactionFactory.toKey([parent.type.value, parent.version]);
 		const factory_class = mapping.get(discriminator);
 		return factory_class.deserialize(view.buffer);
@@ -88790,8 +90852,8 @@ class NonVerifiableTransactionFactory {
 __webpack_require__.a(__webpack_module__, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "KeyPair": () => (/* binding */ KeyPair),
-/* harmony export */   "Verifier": () => (/* binding */ Verifier)
+/* harmony export */   KeyPair: () => (/* binding */ KeyPair),
+/* harmony export */   Verifier: () => (/* binding */ Verifier)
 /* harmony export */ });
 /* harmony import */ var _CryptoTypes_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../CryptoTypes.js */ "./src/CryptoTypes.js");
 /* harmony import */ var _impl_ed25519_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../impl/ed25519.js */ "./src/impl/ed25519.js");
@@ -88813,7 +90875,14 @@ class KeyPair {
 	 * @param {PrivateKey} privateKey Private key.
 	 */
 	constructor(privateKey) {
+		/**
+		 * @private
+		 */
 		this._privateKey = privateKey;
+
+		/**
+		 * @private
+		 */
 		this._keyPair = _impl_ed25519_js__WEBPACK_IMPORTED_MODULE_1__["default"].keyPairFromSeed(HASH_MODE, this._privateKey.bytes);
 	}
 
@@ -88855,6 +90924,10 @@ class Verifier {
 		if (0 === (0,_utils_arrayHelpers_js__WEBPACK_IMPORTED_MODULE_2__.deepCompare)(new Uint8Array(_CryptoTypes_js__WEBPACK_IMPORTED_MODULE_0__.PublicKey.SIZE), publicKey.bytes))
 			throw new Error('public key cannot be zero');
 
+		/**
+		 * Public key used for signature verification.
+		 * @type PublicKey
+		 */
 		this.publicKey = publicKey;
 	}
 
@@ -88890,9 +90963,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _CryptoTypes_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../CryptoTypes.js */ "./src/CryptoTypes.js");
 /* harmony import */ var _impl_CipherHelpers_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../impl/CipherHelpers.js */ "./src/impl/CipherHelpers.js");
 /* harmony import */ var _utils_arrayHelpers_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/arrayHelpers.js */ "./src/utils/arrayHelpers.js");
+/* harmony import */ var _utils_converter_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/converter.js */ "./src/utils/converter.js");
 /* provided dependency */ var Buffer = __webpack_require__(/*! buffer */ "./node_modules/buffer/index.js")["Buffer"];
-var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_KeyPair_js__WEBPACK_IMPORTED_MODULE_0__]);
-_KeyPair_js__WEBPACK_IMPORTED_MODULE_0__ = (__webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__)[0];
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_KeyPair_js__WEBPACK_IMPORTED_MODULE_0__, _SharedKey_js__WEBPACK_IMPORTED_MODULE_1__]);
+([_KeyPair_js__WEBPACK_IMPORTED_MODULE_0__, _SharedKey_js__WEBPACK_IMPORTED_MODULE_1__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
+
 
 
 
@@ -88922,25 +90997,34 @@ class MessageEncoder {
 	 * @param {KeyPair} keyPair Key pair.
 	 */
 	constructor(keyPair) {
-		this.keyPair = keyPair;
+		/**
+		 * @private
+		 */
+		this._keyPair = keyPair;
 	}
 
 	/**
-	 * Tries to decode encoded message, returns tuple:
-	 *  * true, message - if message has been decoded and decrypted
-	 *  * false, encodedMessage - otherwise
+	 * Public key used for message encoding.
+	 * @returns {PublicKey} Public key used for message encoding.
+	 */
+	get publicKey() {
+		return this._keyPair.publicKey;
+	}
+
+	/**
+	 * Tries to decode encoded message.
 	 * @param {PublicKey} recipientPublicKey Recipient's public key.
-	 * @param {Uint8Array} encodedMessage Encoded message
-	 * @returns {array} Tuple containing decoded status and message.
+	 * @param {Uint8Array} encodedMessage Encoded message.
+	 * @returns {TryDecodeResult} Tuple containing decoded status and message.
 	 */
 	tryDecode(recipientPublicKey, encodedMessage) {
 		if (1 === encodedMessage[0]) {
 			const [result, message] = filterExceptions(
-				() => (0,_impl_CipherHelpers_js__WEBPACK_IMPORTED_MODULE_3__.decodeAesGcm)(_SharedKey_js__WEBPACK_IMPORTED_MODULE_1__.deriveSharedKey, this.keyPair, recipientPublicKey, encodedMessage.subarray(1)),
+				() => (0,_impl_CipherHelpers_js__WEBPACK_IMPORTED_MODULE_3__.decodeAesGcm)(_SharedKey_js__WEBPACK_IMPORTED_MODULE_1__.deriveSharedKey, this._keyPair, recipientPublicKey, encodedMessage.subarray(1)),
 				['Unsupported state or unable to authenticate data']
 			);
 			if (result)
-				return [true, message];
+				return { isDecoded: true, message };
 		}
 
 		if (0xFE === encodedMessage[0] && 0 === (0,_utils_arrayHelpers_js__WEBPACK_IMPORTED_MODULE_4__.deepCompare)(DELEGATION_MARKER, encodedMessage.slice(0, 8))) {
@@ -88949,17 +91033,17 @@ class MessageEncoder {
 			const ephemeralPublicKey = new _CryptoTypes_js__WEBPACK_IMPORTED_MODULE_2__.PublicKey(encodedMessage.subarray(ephemeralPublicKeyStart, ephemeralPublicKeyEnd));
 
 			const [result, message] = filterExceptions(
-				() => (0,_impl_CipherHelpers_js__WEBPACK_IMPORTED_MODULE_3__.decodeAesGcm)(_SharedKey_js__WEBPACK_IMPORTED_MODULE_1__.deriveSharedKey, this.keyPair, ephemeralPublicKey, encodedMessage.subarray(ephemeralPublicKeyEnd)),
+				() => (0,_impl_CipherHelpers_js__WEBPACK_IMPORTED_MODULE_3__.decodeAesGcm)(_SharedKey_js__WEBPACK_IMPORTED_MODULE_1__.deriveSharedKey, this._keyPair, ephemeralPublicKey, encodedMessage.subarray(ephemeralPublicKeyEnd)),
 				[
 					'Unsupported state or unable to authenticate data',
 					'invalid point'
 				]
 			);
 			if (result)
-				return [true, message];
+				return { isDecoded: true, message };
 		}
 
-		return [false, encodedMessage];
+		return { isDecoded: false, message: encodedMessage };
 	}
 
 	/**
@@ -88969,7 +91053,7 @@ class MessageEncoder {
 	 * @returns {Uint8Array} Encrypted and encoded message.
 	 */
 	encode(recipientPublicKey, message) {
-		const { tag, initializationVector, cipherText } = (0,_impl_CipherHelpers_js__WEBPACK_IMPORTED_MODULE_3__.encodeAesGcm)(_SharedKey_js__WEBPACK_IMPORTED_MODULE_1__.deriveSharedKey, this.keyPair, recipientPublicKey, message);
+		const { tag, initializationVector, cipherText } = (0,_impl_CipherHelpers_js__WEBPACK_IMPORTED_MODULE_3__.encodeAesGcm)(_SharedKey_js__WEBPACK_IMPORTED_MODULE_1__.deriveSharedKey, this._keyPair, recipientPublicKey, message);
 
 		return (0,_impl_CipherHelpers_js__WEBPACK_IMPORTED_MODULE_3__.concatArrays)(new Uint8Array([1]), tag, initializationVector, cipherText);
 	}
@@ -88989,7 +91073,52 @@ class MessageEncoder {
 
 		return (0,_impl_CipherHelpers_js__WEBPACK_IMPORTED_MODULE_3__.concatArrays)(DELEGATION_MARKER, ephemeralKeyPair.publicKey.bytes, tag, initializationVector, cipherText);
 	}
+
+	/**
+	 * Tries to decode encoded message.
+	 * @deprecated This function is only provided for compatability with the original Symbol wallets.
+	 *             Please use `tryDecode` in any new code.
+	 * @param {PublicKey} recipientPublicKey Recipient's public key.
+	 * @param {Uint8Array} encodedMessage Encoded message
+	 * @returns {TryDecodeResult} Tuple containing decoded status and message.
+	 */
+	tryDecodeDeprecated(recipientPublicKey, encodedMessage) {
+		const encodedHexString = new TextDecoder().decode(encodedMessage.subarray(1));
+		if (1 === encodedMessage[0] && (0,_utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.isHexString)(encodedHexString)) {
+			// wallet additionally hex encodes
+			return this.tryDecode(recipientPublicKey, new Uint8Array([1, ...(0,_utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.hexToUint8)(encodedHexString)]));
+		}
+
+		return this.tryDecode(recipientPublicKey, encodedMessage);
+	}
+
+	/**
+	 * Encodes message to recipient using (deprecated) wallet format.
+	 * @deprecated This function is only provided for compatability with the original Symbol wallets.
+	 *             Please use `encode` in any new code.
+	 * @param {PublicKey} recipientPublicKey Recipient public key.
+	 * @param {Uint8Array} message Message to encode.
+	 * @returns {Uint8Array} Encrypted and encoded message.
+	 */
+	encodeDeprecated(recipientPublicKey, message) {
+		// wallet additionally hex encodes
+		const encodedHexString = (0,_utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.uint8ToHex)(this.encode(recipientPublicKey, message).subarray(1));
+		const encodedHexStringBytes = new TextEncoder().encode(encodedHexString);
+		return new Uint8Array([1, ...encodedHexStringBytes]);
+	}
 }
+
+// region type declarations
+
+/**
+ * Result of a try decode operation.
+ * @class
+ * @typedef {object} TryDecodeResult
+ * @property {boolean} isDecoded \c true if message has been decoded and decrypted; \c false otherwise.
+ * @property {Uint8Array} message Decoded message when `isDecoded` is \c true; encoded message otherwise.
+ */
+
+// endregion
 
 __webpack_async_result__();
 } catch(e) { __webpack_async_result__(e); } });
@@ -89004,9 +91133,9 @@ __webpack_async_result__();
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "Address": () => (/* binding */ Address),
-/* harmony export */   "Network": () => (/* binding */ Network),
-/* harmony export */   "NetworkTimestamp": () => (/* binding */ NetworkTimestamp)
+/* harmony export */   Address: () => (/* binding */ Address),
+/* harmony export */   Network: () => (/* binding */ Network),
+/* harmony export */   NetworkTimestamp: () => (/* binding */ NetworkTimestamp)
 /* harmony export */ });
 /* harmony import */ var _ByteArray_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../ByteArray.js */ "./src/ByteArray.js");
 /* harmony import */ var _CryptoTypes_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../CryptoTypes.js */ "./src/CryptoTypes.js");
@@ -89022,12 +91151,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /**
- * Represents a symbol network timestamp with millisecond resolution.
+ * Represents a Symbol network timestamp with millisecond resolution.
  */
 class NetworkTimestamp extends _NetworkTimestamp_js__WEBPACK_IMPORTED_MODULE_3__.NetworkTimestamp {
 	/**
 	 * Adds a specified number of milliseconds to this timestamp.
-	 * @param {number} count Number of milliseconds to add.
+	 * @param {number|bigint} count Number of milliseconds to add.
 	 * @returns {NetworkTimestamp} New timestamp that is the specified number of milliseconds past this timestamp.
 	 */
 	addMilliseconds(count) {
@@ -89037,7 +91166,7 @@ class NetworkTimestamp extends _NetworkTimestamp_js__WEBPACK_IMPORTED_MODULE_3__
 	/**
 	 * Adds a specified number of seconds to this timestamp.
 	 * @override
-	 * @param {number} count Number of seconds to add.
+	 * @param {number|bigint} count Number of seconds to add.
 	 * @returns {NetworkTimestamp} New timestamp that is the specified number of seconds past this timestamp.
 	 */
 	addSeconds(count) {
@@ -89049,22 +91178,34 @@ class NetworkTimestamp extends _NetworkTimestamp_js__WEBPACK_IMPORTED_MODULE_3__
  * Represents a Symbol address.
  */
 class Address extends _ByteArray_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
+	/**
+	 * Byte size of raw address.
+	 * @type number
+	 */
 	static SIZE = 24;
 
+	/**
+	 * Length of encoded address string.
+	 * @type number
+	 */
 	static ENCODED_SIZE = 39;
 
 	/**
 	 * Creates a Symbol address.
-	 * @param {Uint8Array|string|Address} address Input string, byte array or address.
+	 * @param {Uint8Array|string|Address} addressInput Input string, byte array or address.
 	 */
-	constructor(address) {
-		let rawBytes = address;
-		if ('string' === typeof address)
-			rawBytes = _utils_base32_js__WEBPACK_IMPORTED_MODULE_4__["default"].decode(`${address}A`).slice(0, -1);
-		else if (address instanceof Address)
-			rawBytes = address.bytes;
+	constructor(addressInput) {
+		const extractAddressBytes = () => {
+			if ('string' === typeof addressInput)
+				return _utils_base32_js__WEBPACK_IMPORTED_MODULE_4__["default"].decode(`${addressInput}A`).slice(0, -1);
 
-		super(Address.SIZE, rawBytes);
+			if (addressInput instanceof Address)
+				return addressInput.bytes;
+
+			return addressInput;
+		};
+
+		super(Address.SIZE, extractAddressBytes());
 	}
 
 	/**
@@ -89081,13 +91222,31 @@ class Address extends _ByteArray_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
  */
 class Network extends _Network_js__WEBPACK_IMPORTED_MODULE_2__.Network {
 	/**
+	 * Symbol main network.
+	 * @type Network
+	 */
+	static MAINNET;
+
+	/**
+	 * Symbol test network.
+	 * @type Network
+	 */
+	static TESTNET;
+
+	/**
+	 * Symbol well known networks.
+	 * @type Array<Network>
+	 */
+	static NETWORKS;
+
+	/**
 	 * Creates a new network with the specified name, identifier byte and generation hash seed.
 	 * @param {string} name Network name.
 	 * @param {number} identifier Network identifier byte.
 	 * @param {Date} epochTime Network epoch time.
 	 * @param {Hash256} generationHashSeed Network generation hash seed.
 	 */
-	constructor(name, identifier, epochTime, generationHashSeed = undefined) {
+	constructor(name, identifier, epochTime, generationHashSeed) {
 		super(
 			name,
 			identifier,
@@ -89097,6 +91256,11 @@ class Network extends _Network_js__WEBPACK_IMPORTED_MODULE_2__.Network {
 			Address,
 			NetworkTimestamp
 		);
+
+		/**
+		 * Network generation hash seed.
+		 * @type Hash256
+		 */
 		this.generationHashSeed = generationHashSeed;
 	}
 }
@@ -89122,19 +91286,28 @@ Network.NETWORKS = [Network.MAINNET, Network.TESTNET];
 /*!*********************************!*\
   !*** ./src/symbol/SharedKey.js ***!
   \*********************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+/***/ ((__webpack_module__, __webpack_exports__, __webpack_require__) => {
 
+__webpack_require__.a(__webpack_module__, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "deriveSharedKey": () => (/* binding */ deriveSharedKey)
+/* harmony export */   deriveSharedKey: () => (/* binding */ deriveSharedKey)
 /* harmony export */ });
-/* harmony import */ var _SharedKey_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../SharedKey.js */ "./src/SharedKey.js");
-/* harmony import */ var tweetnacl__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! tweetnacl */ "./node_modules/tweetnacl/nacl-fast.js");
+/* harmony import */ var _KeyPair_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./KeyPair.js */ "./src/symbol/KeyPair.js");
+/* harmony import */ var _CryptoTypes_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../CryptoTypes.js */ "./src/CryptoTypes.js");
+/* harmony import */ var _SharedKey_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../SharedKey.js */ "./src/SharedKey.js");
+/* harmony import */ var tweetnacl__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! tweetnacl */ "./node_modules/tweetnacl/nacl-fast.js");
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_KeyPair_js__WEBPACK_IMPORTED_MODULE_0__]);
+_KeyPair_js__WEBPACK_IMPORTED_MODULE_0__ = (__webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__)[0];
+/* eslint-disable no-unused-vars */
+
+
+/* eslint-enable no-unused-vars */
 
 
 
-const { crypto_hash } = tweetnacl__WEBPACK_IMPORTED_MODULE_1__.lowlevel;
-const deriveSharedKeyImpl = (0,_SharedKey_js__WEBPACK_IMPORTED_MODULE_0__.deriveSharedKeyFactory)('catapult', crypto_hash);
+const tweetnacl_lowlevel = tweetnacl__WEBPACK_IMPORTED_MODULE_3__.lowlevel;
+const deriveSharedKeyImpl = (0,_SharedKey_js__WEBPACK_IMPORTED_MODULE_2__.deriveSharedKeyFactory)('catapult', tweetnacl_lowlevel.crypto_hash);
 
 /**
  * Derives shared key from key pair and other party's public key.
@@ -89142,9 +91315,12 @@ const deriveSharedKeyImpl = (0,_SharedKey_js__WEBPACK_IMPORTED_MODULE_0__.derive
  * @param {PublicKey} otherPublicKey Other party's public key.
  * @returns {SharedKey256} Shared encryption key.
  */
-const deriveSharedKey = (keyPair, otherPublicKey) => // eslint-disable-line import/prefer-default-export
-	deriveSharedKeyImpl(keyPair.privateKey.bytes, otherPublicKey);
+const deriveSharedKey = (keyPair, otherPublicKey) => deriveSharedKeyImpl(keyPair.privateKey.bytes, otherPublicKey);
 
+ // eslint-disable-line import/prefer-default-export
+
+__webpack_async_result__();
+} catch(e) { __webpack_async_result__(e); } });
 
 /***/ }),
 
@@ -89178,17 +91354,51 @@ class TransactionFactory {
 	/**
 	 * Creates a factory for the specified network.
 	 * @param {Network} network Symbol network.
-	 * @param {Map} typeRuleOverrides Type rule overrides.
+	 * @param {Map<string, function>|undefined} typeRuleOverrides Type rule overrides.
 	 */
-	constructor(network, typeRuleOverrides) {
-		this.factory = TransactionFactory.buildRules(typeRuleOverrides);
-		this.network = network;
+	constructor(network, typeRuleOverrides = undefined) {
+		/**
+		 * @private
+		 */
+		this._factory = TransactionFactory._buildRules(typeRuleOverrides); // eslint-disable-line no-underscore-dangle
+
+		/**
+		 * @private
+		 */
+		this._network = network;
 	}
 
+	/**
+	 * Gets rule names with registered hints.
+	 */
+	get ruleNames() {
+		return Array.from(this._factory.rules.keys());
+	}
+
+	/**
+	 * Looks up the friendly name for the specified transaction.
+	 * @param {sc.TransactionType} transactionType Transaction type.
+	 * @param {number} transactionVersion Transaction version.
+	 * @returns {string} Transaction friendly name.
+	 */
+	static lookupTransactionName(transactionType, transactionVersion) {
+		return `${_models_js__WEBPACK_IMPORTED_MODULE_2__.TransactionType.valueToKey(transactionType.value).toLowerCase()}_transaction_v${transactionVersion}`;
+	}
+
+	/**
+	 * Creates a transaction from a transaction descriptor.
+	 * @template TTransaction
+	 * @param {object} transactionDescriptor Transaction descriptor.
+	 * @param {boolean} autosort When set (default), descriptor arrays requiring ordering will be automatically sorted.
+	 *                           When unset, descriptor arrays will be presumed to be already sorted.
+	 * @param {{createByName: function}} FactoryClass Factory class used to create the transaction.
+	 * @returns {TTransaction} Newly created transaction.
+	 * @private
+	 */
 	_createAndExtend(transactionDescriptor, autosort, FactoryClass) {
-		const transaction = this.factory.createFromFactory(FactoryClass.createByName, {
+		const transaction = this._factory.createFromFactory(FactoryClass.createByName, {
 			...transactionDescriptor,
-			network: this.network.identifier
+			network: this._network.identifier
 		});
 		if (autosort)
 			transaction.sort();
@@ -89199,7 +91409,7 @@ class TransactionFactory {
 			const rawNamespaceId = (0,_idGenerator_js__WEBPACK_IMPORTED_MODULE_1__.generateNamespaceId)(new TextDecoder().decode(transaction.name), parentId);
 			transaction.id = new _models_js__WEBPACK_IMPORTED_MODULE_2__.NamespaceId(rawNamespaceId);
 		} else if (_models_js__WEBPACK_IMPORTED_MODULE_2__.TransactionType.MOSAIC_DEFINITION === transaction.type) {
-			const address = this.network.publicKeyToAddress(new _CryptoTypes_js__WEBPACK_IMPORTED_MODULE_3__.PublicKey(transaction.signerPublicKey.bytes));
+			const address = this._network.publicKeyToAddress(new _CryptoTypes_js__WEBPACK_IMPORTED_MODULE_3__.PublicKey(transaction.signerPublicKey.bytes));
 			transaction.id = new _models_js__WEBPACK_IMPORTED_MODULE_2__.MosaicId((0,_idGenerator_js__WEBPACK_IMPORTED_MODULE_1__.generateMosaicId)(address, transaction.nonce.value));
 		}
 
@@ -89211,7 +91421,7 @@ class TransactionFactory {
 	 * @param {object} transactionDescriptor Transaction descriptor.
 	 * @param {boolean} autosort When set (default), descriptor arrays requiring ordering will be automatically sorted.
 	 *                           When unset, descriptor arrays will be presumed to be already sorted.
-	 * @returns {object} Newly created transaction.
+	 * @returns {sc.Transaction} Newly created transaction.
 	 */
 	create(transactionDescriptor, autosort = true) {
 		return this._createAndExtend(transactionDescriptor, autosort, _models_js__WEBPACK_IMPORTED_MODULE_2__.TransactionFactory);
@@ -89222,7 +91432,7 @@ class TransactionFactory {
 	 * @param {object} transactionDescriptor Transaction descriptor.
 	 * @param {boolean} autosort When set (default), descriptor arrays requiring ordering will be automatically sorted.
 	 *                           When unset, descriptor arrays will be presumed to be already sorted.
-	 * @returns {object} Newly created transaction.
+	 * @returns {sc.EmbeddedTransaction} Newly created transaction.
 	 */
 	createEmbedded(transactionDescriptor, autosort = true) {
 		return this._createAndExtend(transactionDescriptor, autosort, _models_js__WEBPACK_IMPORTED_MODULE_2__.EmbeddedTransactionFactory);
@@ -89230,7 +91440,7 @@ class TransactionFactory {
 
 	/**
 	 * Attaches a signature to a transaction.
-	 * @param {object} transaction Transaction object.
+	 * @param {sc.Transaction} transaction Transaction object.
 	 * @param {Signature} signature Signature to attach.
 	 * @returns {string} JSON transaction payload.
 	 */
@@ -89243,6 +91453,12 @@ class TransactionFactory {
 		return jsonPayload;
 	}
 
+	/**
+	 * Tries to coerce an sdk type to a model type.
+	 * @param {object} value Value to convert.
+	 * @returns {sc.Address|undefined} Converted value or undefined.
+	 * @private
+	 */
 	static _symbolTypeConverter(value) {
 		if (value instanceof _Network_js__WEBPACK_IMPORTED_MODULE_0__.Address)
 			return new _models_js__WEBPACK_IMPORTED_MODULE_2__.UnresolvedAddress(value.bytes);
@@ -89250,7 +91466,13 @@ class TransactionFactory {
 		return undefined;
 	}
 
-	static buildRules(typeRuleOverrides) {
+	/**
+	 * Builds a rule based transaction factory.
+	 * @param {Map<string, function>|undefined} typeRuleOverrides Type rule overrides.
+	 * @returns {RuleBasedTransactionFactory} Rule based transaction factory.
+	 * @private
+	 */
+	static _buildRules(typeRuleOverrides) {
 		const factory = new _RuleBasedTransactionFactory_js__WEBPACK_IMPORTED_MODULE_4__["default"](_models_js__WEBPACK_IMPORTED_MODULE_2__, this._symbolTypeConverter, typeRuleOverrides);
 		factory.autodetect();
 
@@ -89284,6 +91506,97 @@ class TransactionFactory {
 
 /***/ }),
 
+/***/ "./src/symbol/VotingKeysGenerator.js":
+/*!*******************************************!*\
+  !*** ./src/symbol/VotingKeysGenerator.js ***!
+  \*******************************************/
+/***/ ((__webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.a(__webpack_module__, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ VotingKeysGenerator)
+/* harmony export */ });
+/* harmony import */ var _KeyPair_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./KeyPair.js */ "./src/symbol/KeyPair.js");
+/* harmony import */ var _CryptoTypes_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../CryptoTypes.js */ "./src/CryptoTypes.js");
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_KeyPair_js__WEBPACK_IMPORTED_MODULE_0__]);
+_KeyPair_js__WEBPACK_IMPORTED_MODULE_0__ = (__webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__)[0];
+
+
+
+const setBuffer = (destination, offset, source) => {
+	source.forEach((byte, i) => { destination.setUint8(offset + i, source[i]); });
+};
+
+/**
+ * Generates symbol voting keys.
+ */
+class VotingKeysGenerator {
+	/**
+	 * Creates a generator around a voting root key pair.
+	 * @param {KeyPair} rootKeyPair Voting root key pair.
+	 * @param {function} privateKeyGenerator Private key generator.
+	 */
+	constructor(rootKeyPair, privateKeyGenerator = _CryptoTypes_js__WEBPACK_IMPORTED_MODULE_1__.PrivateKey.random) {
+		/**
+		 * @private
+		 */
+		this._rootKeyPair = rootKeyPair;
+
+		/**
+		 * @private
+		 */
+		this._privateKeyGenerator = privateKeyGenerator;
+	}
+
+	/**
+	 * Generates voting keys for specified epochs.
+	 * @param {bigint} startEpoch Start epoch.
+	 * @param {bigint} endEpoch End epoch.
+	 * @returns {Uint8Array} Serialized voting keys.
+	 */
+	generate(startEpoch, endEpoch) {
+		const HEADER_SIZE = 80;
+		const EPOCH_ENTRY_SIZE = 96;
+
+		const numEpochs = Number(endEpoch - startEpoch + 1n);
+		const buffer = new ArrayBuffer(HEADER_SIZE + (EPOCH_ENTRY_SIZE * numEpochs));
+
+		const view = new DataView(buffer);
+		view.setBigUint64(0, startEpoch, true); // start key identifier
+		view.setBigUint64(8, endEpoch, true); // end key identifier
+		view.setBigUint64(16, 0xFFFFFFFFFFFFFFFFn, true); // reserved - last (used) key identifier
+		view.setBigUint64(24, 0xFFFFFFFFFFFFFFFFn, true); // reserved - last wiped key identifier
+
+		setBuffer(view, 32, this._rootKeyPair.publicKey.bytes); // root voting public key
+		view.setBigUint64(64, startEpoch, true); // level 1/1 start key identifier
+		view.setBigUint64(72, endEpoch, true); // level 1/1 end key identifier
+
+		for (let i = 0; i < numEpochs; ++i) {
+			const identifier = endEpoch - BigInt(i);
+			const childPrivateKey = this._privateKeyGenerator();
+			const childKeyPair = new _KeyPair_js__WEBPACK_IMPORTED_MODULE_0__.KeyPair(childPrivateKey);
+
+			const parentSignedPayloadBuffer = new ArrayBuffer(40);
+			const parentSignedPayloadView = new DataView(parentSignedPayloadBuffer);
+			setBuffer(parentSignedPayloadView, 0, childKeyPair.publicKey.bytes);
+			parentSignedPayloadView.setBigUint64(32, identifier, true);
+			const signature = this._rootKeyPair.sign(new Uint8Array(parentSignedPayloadBuffer));
+
+			const startOffset = HEADER_SIZE + (EPOCH_ENTRY_SIZE * i);
+			setBuffer(view, startOffset, childKeyPair.privateKey.bytes); // child voting private key used to sign votes for an epoch
+			setBuffer(view, startOffset + _CryptoTypes_js__WEBPACK_IMPORTED_MODULE_1__.PrivateKey.SIZE, signature.bytes); // signature proving derivation of child key pair from root
+		}
+
+		return new Uint8Array(buffer);
+	}
+}
+
+__webpack_async_result__();
+} catch(e) { __webpack_async_result__(e); } });
+
+/***/ }),
+
 /***/ "./src/symbol/idGenerator.js":
 /*!***********************************!*\
   !*** ./src/symbol/idGenerator.js ***!
@@ -89292,13 +91605,17 @@ class TransactionFactory {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "generateMosaicAliasId": () => (/* binding */ generateMosaicAliasId),
-/* harmony export */   "generateMosaicId": () => (/* binding */ generateMosaicId),
-/* harmony export */   "generateNamespaceId": () => (/* binding */ generateNamespaceId),
-/* harmony export */   "generateNamespacePath": () => (/* binding */ generateNamespacePath),
-/* harmony export */   "isValidNamespaceName": () => (/* binding */ isValidNamespaceName)
+/* harmony export */   generateMosaicAliasId: () => (/* binding */ generateMosaicAliasId),
+/* harmony export */   generateMosaicId: () => (/* binding */ generateMosaicId),
+/* harmony export */   generateNamespaceId: () => (/* binding */ generateNamespaceId),
+/* harmony export */   generateNamespacePath: () => (/* binding */ generateNamespacePath),
+/* harmony export */   isValidNamespaceName: () => (/* binding */ isValidNamespaceName)
 /* harmony export */ });
-/* harmony import */ var _noble_hashes_sha3__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @noble/hashes/sha3 */ "./node_modules/@noble/hashes/esm/sha3.js");
+/* harmony import */ var _Network_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Network.js */ "./src/symbol/Network.js");
+/* harmony import */ var _noble_hashes_sha3__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @noble/hashes/sha3 */ "./node_modules/@noble/hashes/esm/sha3.js");
+/* eslint-disable no-unused-vars */
+
+/* eslint-enable no-unused-vars */
 
 
 const NAMESPACE_FLAG = 1n << 63n;
@@ -89322,10 +91639,10 @@ const digestToBigInt = digest => {
  * Generates a mosaic id from an owner address and a nonce.
  * @param {Address} ownerAddress Owner address.
  * @param {number} nonce Nonce.
- * @returns {BigInt} Computed mosaic id.
+ * @returns {bigint} Computed mosaic id.
  */
 const generateMosaicId = (ownerAddress, nonce) => {
-	const hasher = _noble_hashes_sha3__WEBPACK_IMPORTED_MODULE_0__.sha3_256.create();
+	const hasher = _noble_hashes_sha3__WEBPACK_IMPORTED_MODULE_1__.sha3_256.create();
 	hasher.update(uint32ToBytes(nonce));
 	hasher.update(ownerAddress.bytes);
 	const digest = hasher.digest();
@@ -89340,11 +91657,11 @@ const generateMosaicId = (ownerAddress, nonce) => {
 /**
  * Generates a namespace id from a name and an optional parent namespace id.
  * @param {string} name Namespace name.
- * @param {BigInt} parentNamespaceId Parent namespace id.
- * @returns {BigInt} Computed namespace id.
+ * @param {bigint} parentNamespaceId Parent namespace id.
+ * @returns {bigint} Computed namespace id.
  */
 const generateNamespaceId = (name, parentNamespaceId = 0n) => {
-	const hasher = _noble_hashes_sha3__WEBPACK_IMPORTED_MODULE_0__.sha3_256.create();
+	const hasher = _noble_hashes_sha3__WEBPACK_IMPORTED_MODULE_1__.sha3_256.create();
 	hasher.update(uint32ToBytes(Number(parentNamespaceId & 0xFFFFFFFFn)));
 	hasher.update(uint32ToBytes(Number((parentNamespaceId >> 32n) & 0xFFFFFFFFn)));
 	hasher.update(name);
@@ -89376,7 +91693,7 @@ const isValidNamespaceName = name => {
 /**
  * Parses a fully qualified namespace name into a path.
  * @param {string} fullyQualifiedName Fully qualified namespace name.
- * @returns {array<BigInt>} Computed namespace path.
+ * @returns {Array<bigint>} Computed namespace path.
  */
 const generateNamespacePath = fullyQualifiedName => {
 	const path = [];
@@ -89395,12 +91712,14 @@ const generateNamespacePath = fullyQualifiedName => {
 /**
  * Generates a mosaic id from a fully qualified mosaic alias name.
  * @param {string} fullyQualifiedName Fully qualified mosaic name.
- * @returns {BigInt} Computed mosaic id.
+ * @returns {bigint} Computed mosaic id.
  */
 const generateMosaicAliasId = fullyQualifiedName => {
 	const path = generateNamespacePath(fullyQualifiedName);
 	return path[path.length - 1];
 };
+
+
 
 
 /***/ }),
@@ -89413,11 +91732,14 @@ const generateMosaicAliasId = fullyQualifiedName => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "MerkleHashBuilder": () => (/* binding */ MerkleHashBuilder),
-/* harmony export */   "PatriciaMerkleProofResult": () => (/* binding */ PatriciaMerkleProofResult),
-/* harmony export */   "deserializePatriciaTreeNodes": () => (/* binding */ deserializePatriciaTreeNodes),
-/* harmony export */   "proveMerkle": () => (/* binding */ proveMerkle),
-/* harmony export */   "provePatriciaMerkle": () => (/* binding */ provePatriciaMerkle)
+/* harmony export */   BranchNode: () => (/* binding */ BranchNode),
+/* harmony export */   LeafNode: () => (/* binding */ LeafNode),
+/* harmony export */   MerkleHashBuilder: () => (/* binding */ MerkleHashBuilder),
+/* harmony export */   PatriciaMerkleProofResult: () => (/* binding */ PatriciaMerkleProofResult),
+/* harmony export */   TreeNode: () => (/* binding */ TreeNode),
+/* harmony export */   deserializePatriciaTreeNodes: () => (/* binding */ deserializePatriciaTreeNodes),
+/* harmony export */   proveMerkle: () => (/* binding */ proveMerkle),
+/* harmony export */   provePatriciaMerkle: () => (/* binding */ provePatriciaMerkle)
 /* harmony export */ });
 /* harmony import */ var _CryptoTypes_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../CryptoTypes.js */ "./src/CryptoTypes.js");
 /* harmony import */ var _utils_arrayHelpers_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/arrayHelpers.js */ "./src/utils/arrayHelpers.js");
@@ -89438,15 +91760,18 @@ class MerkleHashBuilder {
 	 * Creates a merkle hash builder.
 	 */
 	constructor() {
-		this.hashes = [];
+		/**
+		 * @private
+		 */
+		this._hashes = [];
 	}
 
 	/**
-	 * Adds a hash to the merkle hash.""
+	 * Adds a hash to the merkle hash.
 	 * @param {Hash256} componentHash Hash to add.
 	 */
 	update(componentHash) {
-		this.hashes.push(componentHash.bytes);
+		this._hashes.push(componentHash.bytes);
 	}
 
 	/**
@@ -89454,32 +91779,32 @@ class MerkleHashBuilder {
 	 * @returns {Hash256} Merkle hash.
 	 */
 	final() {
-		if (0 === this.hashes.length)
+		if (0 === this._hashes.length)
 			return _CryptoTypes_js__WEBPACK_IMPORTED_MODULE_0__.Hash256.zero();
 
-		let numRemainingHashes = this.hashes.length;
+		let numRemainingHashes = this._hashes.length;
 		while (1 < numRemainingHashes) {
 			let i = 0;
 			while (i < numRemainingHashes) {
 				const hasher = _noble_hashes_sha3__WEBPACK_IMPORTED_MODULE_3__.sha3_256.create();
-				hasher.update(this.hashes[i]);
+				hasher.update(this._hashes[i]);
 
 				if (i + 1 < numRemainingHashes) {
-					hasher.update(this.hashes[i + 1]);
+					hasher.update(this._hashes[i + 1]);
 				} else {
 					// if there is an odd number of hashes, duplicate the last one
-					hasher.update(this.hashes[i]);
+					hasher.update(this._hashes[i]);
 					numRemainingHashes += 1;
 				}
 
-				this.hashes[Math.floor(i / 2)] = hasher.digest();
+				this._hashes[Math.floor(i / 2)] = hasher.digest();
 				i += 2;
 			}
 
 			numRemainingHashes = Math.floor(numRemainingHashes / 2);
 		}
 
-		return new _CryptoTypes_js__WEBPACK_IMPORTED_MODULE_0__.Hash256(this.hashes[0]);
+		return new _CryptoTypes_js__WEBPACK_IMPORTED_MODULE_0__.Hash256(this._hashes[0]);
 	}
 }
 
@@ -89490,9 +91815,9 @@ class MerkleHashBuilder {
 /**
  * Proves a merkle hash.
  * @param {Hash256} leafHash Leaf hash to prove.
- * @param {array<object>} merklePath Merkle *hash chain* path from leaf to root. Each part has shape {hash: Hash256, isLeft: boolean}.
+ * @param {Array<MerklePart>} merklePath Merkle *hash chain* path from leaf to root.
  * @param {Hash256} rootHash Root hash of the merkle tree.
- * @returns {boolean} true if leaf hash is connected to root hash; false otherwise.
+ * @returns {boolean} \c true if leaf hash is connected to root hash; false otherwise.
  */
 const proveMerkle = (leafHash, merklePath, rootHash) => {
 	const computedRootHash = merklePath.reduce((workingHash, merklePart) => {
@@ -89538,7 +91863,7 @@ const encodePath = (path, isLeaf) => {
 };
 
 /**
- *  Node in a compact patricia tree.
+ *  Node in a compact Patricia tree.
  */
 class TreeNode {
 	/**
@@ -89546,20 +91871,32 @@ class TreeNode {
 	 * @param {PatriciaTreePath} path Node path.
 	 */
 	constructor(path) {
+		/**
+		 * Node path.
+		 * @type PatriciaTreePath
+		 */
 		this.path = path;
 	}
 
 	/**
 	 * Gets hex representation of path.
-	 * @returns {str} Hex representation of path.
+	 * @returns {string} Hex representation of path.
 	 */
 	get hexPath() {
 		return (0,_utils_converter_js__WEBPACK_IMPORTED_MODULE_2__.uint8ToHex)(this.path.path).substring(0, this.path.size);
 	}
+
+	/**
+	 * Calculates node hash.
+	 * @returns {Hash256} Hash of the node.
+	 */
+	calculateHash() { // eslint-disable-line class-methods-use-this
+		return _CryptoTypes_js__WEBPACK_IMPORTED_MODULE_0__.Hash256.zero();
+	}
 }
 
 /**
- *  Leaf node in a compact patricia tree.
+ *  Leaf node in a compact Patricia tree.
  */
 class LeafNode extends TreeNode {
 	/**
@@ -89569,11 +91906,17 @@ class LeafNode extends TreeNode {
 	 */
 	constructor(path, value) {
 		super(path);
+
+		/**
+		 * Leaf value.
+		 * @type {Hash256}
+		 */
 		this.value = value;
 	}
 
 	/**
 	 * Calculates node hash.
+	 * @override
 	 * @returns {Hash256} Hash of the node.
 	 */
 	calculateHash() {
@@ -89585,21 +91928,27 @@ class LeafNode extends TreeNode {
 }
 
 /**
- *  Branch node in a compact patricia tree.
+ *  Branch node in a compact Patricia tree.
  */
 class BranchNode extends TreeNode {
 	/**
 	 * Creates a branch node.
 	 * @param {PatriciaTreePath} path Branch path.
-	 * @param {array<Hash256>} links Branch links.
+	 * @param {Array<Hash256>} links Branch links.
 	 */
 	constructor(path, links) {
 		super(path);
+
+		/**
+		 * Branch links.
+		 * @type Array<Hash256>
+		 */
 		this.links = links;
 	}
 
 	/**
 	 * Calculates node hash.
+	 * @override
 	 * @returns {Hash256} Hash of the node.
 	 */
 	calculateHash() {
@@ -89669,6 +92018,11 @@ const deserializeBranch = reader => {
 	return new BranchNode(path, links);
 };
 
+/**
+ * Deserializes a buffer containing patricia tree nodes.
+ * @param {Uint8Array} buffer Buffer containing serialized patricia tree nodes.
+ * @returns {Array<TreeNode>} Deserialized patricia tree nodes.
+ */
 const deserializePatriciaTreeNodes = buffer => {
 	const reader = new BufferReader(buffer.buffer);
 	const nodes = [];
@@ -89700,28 +92054,52 @@ const deserializePatriciaTreeNodes = buffer => {
  * Possible results of a patricia merkle proof.
  */
 class PatriciaMerkleProofResult {
-	/// Proof is valid (positive).
+	/**
+	 * Proof is valid (positive).
+	 * @type number
+	 */
 	static VALID_POSITIVE = 0x0001;
 
-	/// Proof is valid (negative).
+	/**
+	 * Proof is valid (negative).
+	 * @type number
+	 */
 	static VALID_NEGATIVE = 0x0002;
 
-	/// Negative proof is inconclusive.
+	/**
+	 * Negative proof is inconclusive.
+	 * @type number
+	 */
 	static INCONCLUSIVE = 0x4001;
 
-	/// State hash cannot be derived from subcache merkle roots.
+	/**
+	 * State hash cannot be derived from subcache merkle roots.
+	 * @type number
+	 */
 	static STATE_HASH_DOES_NOT_MATCH_ROOTS = 0x8001;
 
-	/// Root of the path tree being proven is not a subcache merkle root.
+	/**
+	 * Root of the path tree being proven is not a subcache merkle root.
+	 * @type number
+	 */
 	static UNANCHORED_PATH_TREE = 0x8002;
 
-	/// Leaf value does not match expected value.
+	/**
+	 * Leaf value does not match expected value.
+	 * @type number
+	 */
 	static LEAF_VALUE_MISMATCH = 0x8003;
 
-	/// Provided merkle hash contains an unlinked node.
+	/**
+	 * Provided merkle hash contains an unlinked node.
+	 * @type number
+	 */
 	static UNLINKED_NODE = 0x8004;
 
-	/// Actual merkle path does not match encoded key.
+	/**
+	 * Actual merkle path does not match encoded key.
+	 * @type number
+	 */
 	static PATH_MISMATCH = 0x8005;
 }
 
@@ -89742,10 +92120,10 @@ const findLinkIndex = (branchNode, targetLinkHash) => (
  * Proves a patricia merkle hash.
  * @param {Hash256} encodedKey Encoded key of the state to prove.
  * @param {Hash256} valueToTest Expected hash of the state to prove.
- * @param {array<BranchNode|LeafNode>} merklePath Merkle *node* path from root to leaf. Each element is BranchNode or LeafNode.
+ * @param {Array<TreeNode>} merklePath Merkle *node* path from root to leaf.
  * @param {Hash256} stateHash State hash from a block header.
- * @param {Hash256} subcacheMerkleRoots Sub cache merkle roots corresponding to the state hash.
- * @returns {numeric} Proof result code.
+ * @param {Array<Hash256>} subcacheMerkleRoots Sub cache merkle roots corresponding to the state hash.
+ * @returns {number} Proof result code.
  */
 const provePatriciaMerkle = (encodedKey, valueToTest, merklePath, stateHash, subcacheMerkleRoots) => {
 	if (!checkStateHash(stateHash, subcacheMerkleRoots))
@@ -89756,9 +92134,9 @@ const provePatriciaMerkle = (encodedKey, valueToTest, merklePath, stateHash, sub
 		return PatriciaMerkleProofResult.UNANCHORED_PATH_TREE;
 
 	// positive proof must end with a leaf
-	const isPositiveProof = undefined !== merklePath[merklePath.length - 1].value;
+	const isPositiveProof = 'value' in merklePath[merklePath.length - 1];
 	if (isPositiveProof) {
-		if (0 !== (0,_utils_arrayHelpers_js__WEBPACK_IMPORTED_MODULE_1__.deepCompare)(valueToTest.bytes, merklePath[merklePath.length - 1].value.bytes))
+		if (0 !== (0,_utils_arrayHelpers_js__WEBPACK_IMPORTED_MODULE_1__.deepCompare)(valueToTest.bytes, (/** @type LeafNode */ (merklePath[merklePath.length - 1])).value.bytes))
 			return PatriciaMerkleProofResult.LEAF_VALUE_MISMATCH;
 	}
 
@@ -89790,9 +92168,31 @@ const provePatriciaMerkle = (encodedKey, valueToTest, merklePath, stateHash, sub
 		return PatriciaMerkleProofResult.PATH_MISMATCH;
 
 	const nextNibble = getNibbleAt({ path: encodedKey.bytes, size: 2 * encodedKey.bytes.length }, actualPath.length);
-	const nextNode = merklePath[merklePath.length - 1].links[nextNibble];
+	const nextNode = (/** @type BranchNode */ (merklePath[merklePath.length - 1])).links[nextNibble];
 	return undefined !== nextNode ? PatriciaMerkleProofResult.INCONCLUSIVE : PatriciaMerkleProofResult.VALID_NEGATIVE;
 };
+
+// endregion
+
+
+
+// region type declarations
+
+/**
+ * Path in a Patricia merkle treee.
+ * @class
+ * @typedef {object} PatriciaTreePath
+ * @property {Uint8Array} path Bytes composing the full path.
+ * @property {number} size Length (in nibbles) of the path.
+ */
+
+/**
+ * Represents part of a merkle tree proof.
+ * @class
+ * @typedef {object} MerklePart
+ * @property {Hash256} hash Hash at this node.
+ * @property {boolean} isLeft \c true if this is a left node; right otherwise.
+ */
 
 // endregion
 
@@ -89807,15 +92207,15 @@ const provePatriciaMerkle = (encodedKey, valueToTest, merklePath, stateHash, sub
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "metadataUpdateValue": () => (/* binding */ metadataUpdateValue)
+/* harmony export */   metadataUpdateValue: () => (/* binding */ metadataUpdateValue)
 /* harmony export */ });
 /**
  * Creates a metadata payload for updating old value to new value.
- * @param {Uint8Array} oldValue Old metadata value.
+ * @param {Uint8Array|undefined} oldValue Old metadata value.
  * @param {Uint8Array} newValue New metadata value.
  * @returns {Uint8Array} Metadata payload for updating old value to new value.
  */
-const metadataUpdateValue = (oldValue, newValue) => { // eslint-disable-line import/prefer-default-export
+const metadataUpdateValue = (oldValue, newValue) => {
 	if (!oldValue)
 		return newValue;
 
@@ -89835,6 +92235,8 @@ const metadataUpdateValue = (oldValue, newValue) => { // eslint-disable-line imp
 	return result;
 };
 
+ // eslint-disable-line import/prefer-default-export
+
 
 /***/ }),
 
@@ -89846,131 +92248,131 @@ const metadataUpdateValue = (oldValue, newValue) => { // eslint-disable-line imp
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "AccountAddressRestrictionTransactionV1": () => (/* binding */ AccountAddressRestrictionTransactionV1),
-/* harmony export */   "AccountKeyLinkTransactionV1": () => (/* binding */ AccountKeyLinkTransactionV1),
-/* harmony export */   "AccountMetadataTransactionV1": () => (/* binding */ AccountMetadataTransactionV1),
-/* harmony export */   "AccountMosaicRestrictionTransactionV1": () => (/* binding */ AccountMosaicRestrictionTransactionV1),
-/* harmony export */   "AccountOperationRestrictionTransactionV1": () => (/* binding */ AccountOperationRestrictionTransactionV1),
-/* harmony export */   "AccountRestrictionFlags": () => (/* binding */ AccountRestrictionFlags),
-/* harmony export */   "Address": () => (/* binding */ Address),
-/* harmony export */   "AddressAliasTransactionV1": () => (/* binding */ AddressAliasTransactionV1),
-/* harmony export */   "AddressResolutionEntry": () => (/* binding */ AddressResolutionEntry),
-/* harmony export */   "AddressResolutionStatement": () => (/* binding */ AddressResolutionStatement),
-/* harmony export */   "AggregateBondedTransactionV1": () => (/* binding */ AggregateBondedTransactionV1),
-/* harmony export */   "AggregateBondedTransactionV2": () => (/* binding */ AggregateBondedTransactionV2),
-/* harmony export */   "AggregateCompleteTransactionV1": () => (/* binding */ AggregateCompleteTransactionV1),
-/* harmony export */   "AggregateCompleteTransactionV2": () => (/* binding */ AggregateCompleteTransactionV2),
-/* harmony export */   "AliasAction": () => (/* binding */ AliasAction),
-/* harmony export */   "Amount": () => (/* binding */ Amount),
-/* harmony export */   "Block": () => (/* binding */ Block),
-/* harmony export */   "BlockDuration": () => (/* binding */ BlockDuration),
-/* harmony export */   "BlockFactory": () => (/* binding */ BlockFactory),
-/* harmony export */   "BlockFeeMultiplier": () => (/* binding */ BlockFeeMultiplier),
-/* harmony export */   "BlockStatement": () => (/* binding */ BlockStatement),
-/* harmony export */   "BlockType": () => (/* binding */ BlockType),
-/* harmony export */   "Cosignature": () => (/* binding */ Cosignature),
-/* harmony export */   "DetachedCosignature": () => (/* binding */ DetachedCosignature),
-/* harmony export */   "Difficulty": () => (/* binding */ Difficulty),
-/* harmony export */   "EmbeddedAccountAddressRestrictionTransactionV1": () => (/* binding */ EmbeddedAccountAddressRestrictionTransactionV1),
-/* harmony export */   "EmbeddedAccountKeyLinkTransactionV1": () => (/* binding */ EmbeddedAccountKeyLinkTransactionV1),
-/* harmony export */   "EmbeddedAccountMetadataTransactionV1": () => (/* binding */ EmbeddedAccountMetadataTransactionV1),
-/* harmony export */   "EmbeddedAccountMosaicRestrictionTransactionV1": () => (/* binding */ EmbeddedAccountMosaicRestrictionTransactionV1),
-/* harmony export */   "EmbeddedAccountOperationRestrictionTransactionV1": () => (/* binding */ EmbeddedAccountOperationRestrictionTransactionV1),
-/* harmony export */   "EmbeddedAddressAliasTransactionV1": () => (/* binding */ EmbeddedAddressAliasTransactionV1),
-/* harmony export */   "EmbeddedHashLockTransactionV1": () => (/* binding */ EmbeddedHashLockTransactionV1),
-/* harmony export */   "EmbeddedMosaicAddressRestrictionTransactionV1": () => (/* binding */ EmbeddedMosaicAddressRestrictionTransactionV1),
-/* harmony export */   "EmbeddedMosaicAliasTransactionV1": () => (/* binding */ EmbeddedMosaicAliasTransactionV1),
-/* harmony export */   "EmbeddedMosaicDefinitionTransactionV1": () => (/* binding */ EmbeddedMosaicDefinitionTransactionV1),
-/* harmony export */   "EmbeddedMosaicGlobalRestrictionTransactionV1": () => (/* binding */ EmbeddedMosaicGlobalRestrictionTransactionV1),
-/* harmony export */   "EmbeddedMosaicMetadataTransactionV1": () => (/* binding */ EmbeddedMosaicMetadataTransactionV1),
-/* harmony export */   "EmbeddedMosaicSupplyChangeTransactionV1": () => (/* binding */ EmbeddedMosaicSupplyChangeTransactionV1),
-/* harmony export */   "EmbeddedMosaicSupplyRevocationTransactionV1": () => (/* binding */ EmbeddedMosaicSupplyRevocationTransactionV1),
-/* harmony export */   "EmbeddedMultisigAccountModificationTransactionV1": () => (/* binding */ EmbeddedMultisigAccountModificationTransactionV1),
-/* harmony export */   "EmbeddedNamespaceMetadataTransactionV1": () => (/* binding */ EmbeddedNamespaceMetadataTransactionV1),
-/* harmony export */   "EmbeddedNamespaceRegistrationTransactionV1": () => (/* binding */ EmbeddedNamespaceRegistrationTransactionV1),
-/* harmony export */   "EmbeddedNodeKeyLinkTransactionV1": () => (/* binding */ EmbeddedNodeKeyLinkTransactionV1),
-/* harmony export */   "EmbeddedSecretLockTransactionV1": () => (/* binding */ EmbeddedSecretLockTransactionV1),
-/* harmony export */   "EmbeddedSecretProofTransactionV1": () => (/* binding */ EmbeddedSecretProofTransactionV1),
-/* harmony export */   "EmbeddedTransaction": () => (/* binding */ EmbeddedTransaction),
-/* harmony export */   "EmbeddedTransactionFactory": () => (/* binding */ EmbeddedTransactionFactory),
-/* harmony export */   "EmbeddedTransferTransactionV1": () => (/* binding */ EmbeddedTransferTransactionV1),
-/* harmony export */   "EmbeddedVotingKeyLinkTransactionV1": () => (/* binding */ EmbeddedVotingKeyLinkTransactionV1),
-/* harmony export */   "EmbeddedVrfKeyLinkTransactionV1": () => (/* binding */ EmbeddedVrfKeyLinkTransactionV1),
-/* harmony export */   "FinalizationEpoch": () => (/* binding */ FinalizationEpoch),
-/* harmony export */   "FinalizationPoint": () => (/* binding */ FinalizationPoint),
-/* harmony export */   "FinalizationRound": () => (/* binding */ FinalizationRound),
-/* harmony export */   "FinalizedBlockHeader": () => (/* binding */ FinalizedBlockHeader),
-/* harmony export */   "HarvestFeeReceipt": () => (/* binding */ HarvestFeeReceipt),
-/* harmony export */   "Hash256": () => (/* binding */ Hash256),
-/* harmony export */   "Hash512": () => (/* binding */ Hash512),
-/* harmony export */   "HashLockTransactionV1": () => (/* binding */ HashLockTransactionV1),
-/* harmony export */   "Height": () => (/* binding */ Height),
-/* harmony export */   "Importance": () => (/* binding */ Importance),
-/* harmony export */   "ImportanceBlockV1": () => (/* binding */ ImportanceBlockV1),
-/* harmony export */   "ImportanceHeight": () => (/* binding */ ImportanceHeight),
-/* harmony export */   "InflationReceipt": () => (/* binding */ InflationReceipt),
-/* harmony export */   "LinkAction": () => (/* binding */ LinkAction),
-/* harmony export */   "LockHashAlgorithm": () => (/* binding */ LockHashAlgorithm),
-/* harmony export */   "LockHashCompletedFeeReceipt": () => (/* binding */ LockHashCompletedFeeReceipt),
-/* harmony export */   "LockHashCreatedFeeReceipt": () => (/* binding */ LockHashCreatedFeeReceipt),
-/* harmony export */   "LockHashExpiredFeeReceipt": () => (/* binding */ LockHashExpiredFeeReceipt),
-/* harmony export */   "LockSecretCompletedFeeReceipt": () => (/* binding */ LockSecretCompletedFeeReceipt),
-/* harmony export */   "LockSecretCreatedFeeReceipt": () => (/* binding */ LockSecretCreatedFeeReceipt),
-/* harmony export */   "LockSecretExpiredFeeReceipt": () => (/* binding */ LockSecretExpiredFeeReceipt),
-/* harmony export */   "Mosaic": () => (/* binding */ Mosaic),
-/* harmony export */   "MosaicAddressRestrictionTransactionV1": () => (/* binding */ MosaicAddressRestrictionTransactionV1),
-/* harmony export */   "MosaicAliasTransactionV1": () => (/* binding */ MosaicAliasTransactionV1),
-/* harmony export */   "MosaicDefinitionTransactionV1": () => (/* binding */ MosaicDefinitionTransactionV1),
-/* harmony export */   "MosaicExpiredReceipt": () => (/* binding */ MosaicExpiredReceipt),
-/* harmony export */   "MosaicFlags": () => (/* binding */ MosaicFlags),
-/* harmony export */   "MosaicGlobalRestrictionTransactionV1": () => (/* binding */ MosaicGlobalRestrictionTransactionV1),
-/* harmony export */   "MosaicId": () => (/* binding */ MosaicId),
-/* harmony export */   "MosaicMetadataTransactionV1": () => (/* binding */ MosaicMetadataTransactionV1),
-/* harmony export */   "MosaicNonce": () => (/* binding */ MosaicNonce),
-/* harmony export */   "MosaicRentalFeeReceipt": () => (/* binding */ MosaicRentalFeeReceipt),
-/* harmony export */   "MosaicResolutionEntry": () => (/* binding */ MosaicResolutionEntry),
-/* harmony export */   "MosaicResolutionStatement": () => (/* binding */ MosaicResolutionStatement),
-/* harmony export */   "MosaicRestrictionKey": () => (/* binding */ MosaicRestrictionKey),
-/* harmony export */   "MosaicRestrictionType": () => (/* binding */ MosaicRestrictionType),
-/* harmony export */   "MosaicSupplyChangeAction": () => (/* binding */ MosaicSupplyChangeAction),
-/* harmony export */   "MosaicSupplyChangeTransactionV1": () => (/* binding */ MosaicSupplyChangeTransactionV1),
-/* harmony export */   "MosaicSupplyRevocationTransactionV1": () => (/* binding */ MosaicSupplyRevocationTransactionV1),
-/* harmony export */   "MultisigAccountModificationTransactionV1": () => (/* binding */ MultisigAccountModificationTransactionV1),
-/* harmony export */   "NamespaceDeletedReceipt": () => (/* binding */ NamespaceDeletedReceipt),
-/* harmony export */   "NamespaceExpiredReceipt": () => (/* binding */ NamespaceExpiredReceipt),
-/* harmony export */   "NamespaceId": () => (/* binding */ NamespaceId),
-/* harmony export */   "NamespaceMetadataTransactionV1": () => (/* binding */ NamespaceMetadataTransactionV1),
-/* harmony export */   "NamespaceRegistrationTransactionV1": () => (/* binding */ NamespaceRegistrationTransactionV1),
-/* harmony export */   "NamespaceRegistrationType": () => (/* binding */ NamespaceRegistrationType),
-/* harmony export */   "NamespaceRentalFeeReceipt": () => (/* binding */ NamespaceRentalFeeReceipt),
-/* harmony export */   "NemesisBlockV1": () => (/* binding */ NemesisBlockV1),
-/* harmony export */   "NetworkType": () => (/* binding */ NetworkType),
-/* harmony export */   "NodeKeyLinkTransactionV1": () => (/* binding */ NodeKeyLinkTransactionV1),
-/* harmony export */   "NormalBlockV1": () => (/* binding */ NormalBlockV1),
-/* harmony export */   "ProofGamma": () => (/* binding */ ProofGamma),
-/* harmony export */   "ProofScalar": () => (/* binding */ ProofScalar),
-/* harmony export */   "ProofVerificationHash": () => (/* binding */ ProofVerificationHash),
-/* harmony export */   "PublicKey": () => (/* binding */ PublicKey),
-/* harmony export */   "Receipt": () => (/* binding */ Receipt),
-/* harmony export */   "ReceiptFactory": () => (/* binding */ ReceiptFactory),
-/* harmony export */   "ReceiptSource": () => (/* binding */ ReceiptSource),
-/* harmony export */   "ReceiptType": () => (/* binding */ ReceiptType),
-/* harmony export */   "SecretLockTransactionV1": () => (/* binding */ SecretLockTransactionV1),
-/* harmony export */   "SecretProofTransactionV1": () => (/* binding */ SecretProofTransactionV1),
-/* harmony export */   "Signature": () => (/* binding */ Signature),
-/* harmony export */   "Timestamp": () => (/* binding */ Timestamp),
-/* harmony export */   "Transaction": () => (/* binding */ Transaction),
-/* harmony export */   "TransactionFactory": () => (/* binding */ TransactionFactory),
-/* harmony export */   "TransactionStatement": () => (/* binding */ TransactionStatement),
-/* harmony export */   "TransactionType": () => (/* binding */ TransactionType),
-/* harmony export */   "TransferTransactionV1": () => (/* binding */ TransferTransactionV1),
-/* harmony export */   "UnresolvedAddress": () => (/* binding */ UnresolvedAddress),
-/* harmony export */   "UnresolvedMosaic": () => (/* binding */ UnresolvedMosaic),
-/* harmony export */   "UnresolvedMosaicId": () => (/* binding */ UnresolvedMosaicId),
-/* harmony export */   "VotingKeyLinkTransactionV1": () => (/* binding */ VotingKeyLinkTransactionV1),
-/* harmony export */   "VotingPublicKey": () => (/* binding */ VotingPublicKey),
-/* harmony export */   "VrfKeyLinkTransactionV1": () => (/* binding */ VrfKeyLinkTransactionV1),
-/* harmony export */   "VrfProof": () => (/* binding */ VrfProof)
+/* harmony export */   AccountAddressRestrictionTransactionV1: () => (/* binding */ AccountAddressRestrictionTransactionV1),
+/* harmony export */   AccountKeyLinkTransactionV1: () => (/* binding */ AccountKeyLinkTransactionV1),
+/* harmony export */   AccountMetadataTransactionV1: () => (/* binding */ AccountMetadataTransactionV1),
+/* harmony export */   AccountMosaicRestrictionTransactionV1: () => (/* binding */ AccountMosaicRestrictionTransactionV1),
+/* harmony export */   AccountOperationRestrictionTransactionV1: () => (/* binding */ AccountOperationRestrictionTransactionV1),
+/* harmony export */   AccountRestrictionFlags: () => (/* binding */ AccountRestrictionFlags),
+/* harmony export */   Address: () => (/* binding */ Address),
+/* harmony export */   AddressAliasTransactionV1: () => (/* binding */ AddressAliasTransactionV1),
+/* harmony export */   AddressResolutionEntry: () => (/* binding */ AddressResolutionEntry),
+/* harmony export */   AddressResolutionStatement: () => (/* binding */ AddressResolutionStatement),
+/* harmony export */   AggregateBondedTransactionV1: () => (/* binding */ AggregateBondedTransactionV1),
+/* harmony export */   AggregateBondedTransactionV2: () => (/* binding */ AggregateBondedTransactionV2),
+/* harmony export */   AggregateCompleteTransactionV1: () => (/* binding */ AggregateCompleteTransactionV1),
+/* harmony export */   AggregateCompleteTransactionV2: () => (/* binding */ AggregateCompleteTransactionV2),
+/* harmony export */   AliasAction: () => (/* binding */ AliasAction),
+/* harmony export */   Amount: () => (/* binding */ Amount),
+/* harmony export */   Block: () => (/* binding */ Block),
+/* harmony export */   BlockDuration: () => (/* binding */ BlockDuration),
+/* harmony export */   BlockFactory: () => (/* binding */ BlockFactory),
+/* harmony export */   BlockFeeMultiplier: () => (/* binding */ BlockFeeMultiplier),
+/* harmony export */   BlockStatement: () => (/* binding */ BlockStatement),
+/* harmony export */   BlockType: () => (/* binding */ BlockType),
+/* harmony export */   Cosignature: () => (/* binding */ Cosignature),
+/* harmony export */   DetachedCosignature: () => (/* binding */ DetachedCosignature),
+/* harmony export */   Difficulty: () => (/* binding */ Difficulty),
+/* harmony export */   EmbeddedAccountAddressRestrictionTransactionV1: () => (/* binding */ EmbeddedAccountAddressRestrictionTransactionV1),
+/* harmony export */   EmbeddedAccountKeyLinkTransactionV1: () => (/* binding */ EmbeddedAccountKeyLinkTransactionV1),
+/* harmony export */   EmbeddedAccountMetadataTransactionV1: () => (/* binding */ EmbeddedAccountMetadataTransactionV1),
+/* harmony export */   EmbeddedAccountMosaicRestrictionTransactionV1: () => (/* binding */ EmbeddedAccountMosaicRestrictionTransactionV1),
+/* harmony export */   EmbeddedAccountOperationRestrictionTransactionV1: () => (/* binding */ EmbeddedAccountOperationRestrictionTransactionV1),
+/* harmony export */   EmbeddedAddressAliasTransactionV1: () => (/* binding */ EmbeddedAddressAliasTransactionV1),
+/* harmony export */   EmbeddedHashLockTransactionV1: () => (/* binding */ EmbeddedHashLockTransactionV1),
+/* harmony export */   EmbeddedMosaicAddressRestrictionTransactionV1: () => (/* binding */ EmbeddedMosaicAddressRestrictionTransactionV1),
+/* harmony export */   EmbeddedMosaicAliasTransactionV1: () => (/* binding */ EmbeddedMosaicAliasTransactionV1),
+/* harmony export */   EmbeddedMosaicDefinitionTransactionV1: () => (/* binding */ EmbeddedMosaicDefinitionTransactionV1),
+/* harmony export */   EmbeddedMosaicGlobalRestrictionTransactionV1: () => (/* binding */ EmbeddedMosaicGlobalRestrictionTransactionV1),
+/* harmony export */   EmbeddedMosaicMetadataTransactionV1: () => (/* binding */ EmbeddedMosaicMetadataTransactionV1),
+/* harmony export */   EmbeddedMosaicSupplyChangeTransactionV1: () => (/* binding */ EmbeddedMosaicSupplyChangeTransactionV1),
+/* harmony export */   EmbeddedMosaicSupplyRevocationTransactionV1: () => (/* binding */ EmbeddedMosaicSupplyRevocationTransactionV1),
+/* harmony export */   EmbeddedMultisigAccountModificationTransactionV1: () => (/* binding */ EmbeddedMultisigAccountModificationTransactionV1),
+/* harmony export */   EmbeddedNamespaceMetadataTransactionV1: () => (/* binding */ EmbeddedNamespaceMetadataTransactionV1),
+/* harmony export */   EmbeddedNamespaceRegistrationTransactionV1: () => (/* binding */ EmbeddedNamespaceRegistrationTransactionV1),
+/* harmony export */   EmbeddedNodeKeyLinkTransactionV1: () => (/* binding */ EmbeddedNodeKeyLinkTransactionV1),
+/* harmony export */   EmbeddedSecretLockTransactionV1: () => (/* binding */ EmbeddedSecretLockTransactionV1),
+/* harmony export */   EmbeddedSecretProofTransactionV1: () => (/* binding */ EmbeddedSecretProofTransactionV1),
+/* harmony export */   EmbeddedTransaction: () => (/* binding */ EmbeddedTransaction),
+/* harmony export */   EmbeddedTransactionFactory: () => (/* binding */ EmbeddedTransactionFactory),
+/* harmony export */   EmbeddedTransferTransactionV1: () => (/* binding */ EmbeddedTransferTransactionV1),
+/* harmony export */   EmbeddedVotingKeyLinkTransactionV1: () => (/* binding */ EmbeddedVotingKeyLinkTransactionV1),
+/* harmony export */   EmbeddedVrfKeyLinkTransactionV1: () => (/* binding */ EmbeddedVrfKeyLinkTransactionV1),
+/* harmony export */   FinalizationEpoch: () => (/* binding */ FinalizationEpoch),
+/* harmony export */   FinalizationPoint: () => (/* binding */ FinalizationPoint),
+/* harmony export */   FinalizationRound: () => (/* binding */ FinalizationRound),
+/* harmony export */   FinalizedBlockHeader: () => (/* binding */ FinalizedBlockHeader),
+/* harmony export */   HarvestFeeReceipt: () => (/* binding */ HarvestFeeReceipt),
+/* harmony export */   Hash256: () => (/* binding */ Hash256),
+/* harmony export */   Hash512: () => (/* binding */ Hash512),
+/* harmony export */   HashLockTransactionV1: () => (/* binding */ HashLockTransactionV1),
+/* harmony export */   Height: () => (/* binding */ Height),
+/* harmony export */   Importance: () => (/* binding */ Importance),
+/* harmony export */   ImportanceBlockV1: () => (/* binding */ ImportanceBlockV1),
+/* harmony export */   ImportanceHeight: () => (/* binding */ ImportanceHeight),
+/* harmony export */   InflationReceipt: () => (/* binding */ InflationReceipt),
+/* harmony export */   LinkAction: () => (/* binding */ LinkAction),
+/* harmony export */   LockHashAlgorithm: () => (/* binding */ LockHashAlgorithm),
+/* harmony export */   LockHashCompletedFeeReceipt: () => (/* binding */ LockHashCompletedFeeReceipt),
+/* harmony export */   LockHashCreatedFeeReceipt: () => (/* binding */ LockHashCreatedFeeReceipt),
+/* harmony export */   LockHashExpiredFeeReceipt: () => (/* binding */ LockHashExpiredFeeReceipt),
+/* harmony export */   LockSecretCompletedFeeReceipt: () => (/* binding */ LockSecretCompletedFeeReceipt),
+/* harmony export */   LockSecretCreatedFeeReceipt: () => (/* binding */ LockSecretCreatedFeeReceipt),
+/* harmony export */   LockSecretExpiredFeeReceipt: () => (/* binding */ LockSecretExpiredFeeReceipt),
+/* harmony export */   Mosaic: () => (/* binding */ Mosaic),
+/* harmony export */   MosaicAddressRestrictionTransactionV1: () => (/* binding */ MosaicAddressRestrictionTransactionV1),
+/* harmony export */   MosaicAliasTransactionV1: () => (/* binding */ MosaicAliasTransactionV1),
+/* harmony export */   MosaicDefinitionTransactionV1: () => (/* binding */ MosaicDefinitionTransactionV1),
+/* harmony export */   MosaicExpiredReceipt: () => (/* binding */ MosaicExpiredReceipt),
+/* harmony export */   MosaicFlags: () => (/* binding */ MosaicFlags),
+/* harmony export */   MosaicGlobalRestrictionTransactionV1: () => (/* binding */ MosaicGlobalRestrictionTransactionV1),
+/* harmony export */   MosaicId: () => (/* binding */ MosaicId),
+/* harmony export */   MosaicMetadataTransactionV1: () => (/* binding */ MosaicMetadataTransactionV1),
+/* harmony export */   MosaicNonce: () => (/* binding */ MosaicNonce),
+/* harmony export */   MosaicRentalFeeReceipt: () => (/* binding */ MosaicRentalFeeReceipt),
+/* harmony export */   MosaicResolutionEntry: () => (/* binding */ MosaicResolutionEntry),
+/* harmony export */   MosaicResolutionStatement: () => (/* binding */ MosaicResolutionStatement),
+/* harmony export */   MosaicRestrictionKey: () => (/* binding */ MosaicRestrictionKey),
+/* harmony export */   MosaicRestrictionType: () => (/* binding */ MosaicRestrictionType),
+/* harmony export */   MosaicSupplyChangeAction: () => (/* binding */ MosaicSupplyChangeAction),
+/* harmony export */   MosaicSupplyChangeTransactionV1: () => (/* binding */ MosaicSupplyChangeTransactionV1),
+/* harmony export */   MosaicSupplyRevocationTransactionV1: () => (/* binding */ MosaicSupplyRevocationTransactionV1),
+/* harmony export */   MultisigAccountModificationTransactionV1: () => (/* binding */ MultisigAccountModificationTransactionV1),
+/* harmony export */   NamespaceDeletedReceipt: () => (/* binding */ NamespaceDeletedReceipt),
+/* harmony export */   NamespaceExpiredReceipt: () => (/* binding */ NamespaceExpiredReceipt),
+/* harmony export */   NamespaceId: () => (/* binding */ NamespaceId),
+/* harmony export */   NamespaceMetadataTransactionV1: () => (/* binding */ NamespaceMetadataTransactionV1),
+/* harmony export */   NamespaceRegistrationTransactionV1: () => (/* binding */ NamespaceRegistrationTransactionV1),
+/* harmony export */   NamespaceRegistrationType: () => (/* binding */ NamespaceRegistrationType),
+/* harmony export */   NamespaceRentalFeeReceipt: () => (/* binding */ NamespaceRentalFeeReceipt),
+/* harmony export */   NemesisBlockV1: () => (/* binding */ NemesisBlockV1),
+/* harmony export */   NetworkType: () => (/* binding */ NetworkType),
+/* harmony export */   NodeKeyLinkTransactionV1: () => (/* binding */ NodeKeyLinkTransactionV1),
+/* harmony export */   NormalBlockV1: () => (/* binding */ NormalBlockV1),
+/* harmony export */   ProofGamma: () => (/* binding */ ProofGamma),
+/* harmony export */   ProofScalar: () => (/* binding */ ProofScalar),
+/* harmony export */   ProofVerificationHash: () => (/* binding */ ProofVerificationHash),
+/* harmony export */   PublicKey: () => (/* binding */ PublicKey),
+/* harmony export */   Receipt: () => (/* binding */ Receipt),
+/* harmony export */   ReceiptFactory: () => (/* binding */ ReceiptFactory),
+/* harmony export */   ReceiptSource: () => (/* binding */ ReceiptSource),
+/* harmony export */   ReceiptType: () => (/* binding */ ReceiptType),
+/* harmony export */   SecretLockTransactionV1: () => (/* binding */ SecretLockTransactionV1),
+/* harmony export */   SecretProofTransactionV1: () => (/* binding */ SecretProofTransactionV1),
+/* harmony export */   Signature: () => (/* binding */ Signature),
+/* harmony export */   Timestamp: () => (/* binding */ Timestamp),
+/* harmony export */   Transaction: () => (/* binding */ Transaction),
+/* harmony export */   TransactionFactory: () => (/* binding */ TransactionFactory),
+/* harmony export */   TransactionStatement: () => (/* binding */ TransactionStatement),
+/* harmony export */   TransactionType: () => (/* binding */ TransactionType),
+/* harmony export */   TransferTransactionV1: () => (/* binding */ TransferTransactionV1),
+/* harmony export */   UnresolvedAddress: () => (/* binding */ UnresolvedAddress),
+/* harmony export */   UnresolvedMosaic: () => (/* binding */ UnresolvedMosaic),
+/* harmony export */   UnresolvedMosaicId: () => (/* binding */ UnresolvedMosaicId),
+/* harmony export */   VotingKeyLinkTransactionV1: () => (/* binding */ VotingKeyLinkTransactionV1),
+/* harmony export */   VotingPublicKey: () => (/* binding */ VotingPublicKey),
+/* harmony export */   VrfKeyLinkTransactionV1: () => (/* binding */ VrfKeyLinkTransactionV1),
+/* harmony export */   VrfProof: () => (/* binding */ VrfProof)
 /* harmony export */ });
 /* harmony import */ var _BaseValue_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../BaseValue.js */ "./src/BaseValue.js");
 /* harmony import */ var _ByteArray_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../ByteArray.js */ "./src/ByteArray.js");
@@ -89996,12 +92398,12 @@ class Amount extends _BaseValue_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
 
 	static deserialize(payload) {
 		const byteArray = payload;
-		return new Amount(_utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToIntUnaligned(byteArray, 8, false));
+		return new Amount(_utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToBigIntUnaligned(byteArray, 8, false));
 	}
 
 	static deserializeAligned(payload) {
 		const byteArray = payload;
-		return new Amount(_utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToInt(byteArray, 8, false));
+		return new Amount(_utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToBigInt(byteArray, 8, false));
 	}
 
 	serialize() {
@@ -90018,12 +92420,12 @@ class BlockDuration extends _BaseValue_js__WEBPACK_IMPORTED_MODULE_0__["default"
 
 	static deserialize(payload) {
 		const byteArray = payload;
-		return new BlockDuration(_utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToIntUnaligned(byteArray, 8, false));
+		return new BlockDuration(_utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToBigIntUnaligned(byteArray, 8, false));
 	}
 
 	static deserializeAligned(payload) {
 		const byteArray = payload;
-		return new BlockDuration(_utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToInt(byteArray, 8, false));
+		return new BlockDuration(_utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToBigInt(byteArray, 8, false));
 	}
 
 	serialize() {
@@ -90062,12 +92464,12 @@ class Difficulty extends _BaseValue_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
 
 	static deserialize(payload) {
 		const byteArray = payload;
-		return new Difficulty(_utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToIntUnaligned(byteArray, 8, false));
+		return new Difficulty(_utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToBigIntUnaligned(byteArray, 8, false));
 	}
 
 	static deserializeAligned(payload) {
 		const byteArray = payload;
-		return new Difficulty(_utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToInt(byteArray, 8, false));
+		return new Difficulty(_utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToBigInt(byteArray, 8, false));
 	}
 
 	serialize() {
@@ -90128,12 +92530,12 @@ class Height extends _BaseValue_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
 
 	static deserialize(payload) {
 		const byteArray = payload;
-		return new Height(_utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToIntUnaligned(byteArray, 8, false));
+		return new Height(_utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToBigIntUnaligned(byteArray, 8, false));
 	}
 
 	static deserializeAligned(payload) {
 		const byteArray = payload;
-		return new Height(_utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToInt(byteArray, 8, false));
+		return new Height(_utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToBigInt(byteArray, 8, false));
 	}
 
 	serialize() {
@@ -90150,12 +92552,12 @@ class Importance extends _BaseValue_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
 
 	static deserialize(payload) {
 		const byteArray = payload;
-		return new Importance(_utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToIntUnaligned(byteArray, 8, false));
+		return new Importance(_utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToBigIntUnaligned(byteArray, 8, false));
 	}
 
 	static deserializeAligned(payload) {
 		const byteArray = payload;
-		return new Importance(_utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToInt(byteArray, 8, false));
+		return new Importance(_utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToBigInt(byteArray, 8, false));
 	}
 
 	serialize() {
@@ -90172,12 +92574,12 @@ class ImportanceHeight extends _BaseValue_js__WEBPACK_IMPORTED_MODULE_0__["defau
 
 	static deserialize(payload) {
 		const byteArray = payload;
-		return new ImportanceHeight(_utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToIntUnaligned(byteArray, 8, false));
+		return new ImportanceHeight(_utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToBigIntUnaligned(byteArray, 8, false));
 	}
 
 	static deserializeAligned(payload) {
 		const byteArray = payload;
-		return new ImportanceHeight(_utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToInt(byteArray, 8, false));
+		return new ImportanceHeight(_utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToBigInt(byteArray, 8, false));
 	}
 
 	serialize() {
@@ -90194,12 +92596,12 @@ class UnresolvedMosaicId extends _BaseValue_js__WEBPACK_IMPORTED_MODULE_0__["def
 
 	static deserialize(payload) {
 		const byteArray = payload;
-		return new UnresolvedMosaicId(_utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToIntUnaligned(byteArray, 8, false));
+		return new UnresolvedMosaicId(_utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToBigIntUnaligned(byteArray, 8, false));
 	}
 
 	static deserializeAligned(payload) {
 		const byteArray = payload;
-		return new UnresolvedMosaicId(_utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToInt(byteArray, 8, false));
+		return new UnresolvedMosaicId(_utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToBigInt(byteArray, 8, false));
 	}
 
 	serialize() {
@@ -90216,12 +92618,12 @@ class MosaicId extends _BaseValue_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
 
 	static deserialize(payload) {
 		const byteArray = payload;
-		return new MosaicId(_utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToIntUnaligned(byteArray, 8, false));
+		return new MosaicId(_utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToBigIntUnaligned(byteArray, 8, false));
 	}
 
 	static deserializeAligned(payload) {
 		const byteArray = payload;
-		return new MosaicId(_utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToInt(byteArray, 8, false));
+		return new MosaicId(_utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToBigInt(byteArray, 8, false));
 	}
 
 	serialize() {
@@ -90238,12 +92640,12 @@ class Timestamp extends _BaseValue_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
 
 	static deserialize(payload) {
 		const byteArray = payload;
-		return new Timestamp(_utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToIntUnaligned(byteArray, 8, false));
+		return new Timestamp(_utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToBigIntUnaligned(byteArray, 8, false));
 	}
 
 	static deserializeAligned(payload) {
 		const byteArray = payload;
-		return new Timestamp(_utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToInt(byteArray, 8, false));
+		return new Timestamp(_utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToBigInt(byteArray, 8, false));
 	}
 
 	serialize() {
@@ -91805,7 +94207,7 @@ class NemesisBlockV1 {
 		view.shiftRight(feeMultiplier.size);
 		const votingEligibleAccountsCount = _utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToInt(view.buffer, 4, false);
 		view.shiftRight(4);
-		const harvestingEligibleAccountsCount = _utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToInt(view.buffer, 8, false);
+		const harvestingEligibleAccountsCount = _utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToBigInt(view.buffer, 8, false);
 		view.shiftRight(8);
 		const totalVotingBalance = Amount.deserializeAligned(view.buffer);
 		view.shiftRight(totalVotingBalance.size);
@@ -92500,7 +94902,7 @@ class ImportanceBlockV1 {
 		view.shiftRight(feeMultiplier.size);
 		const votingEligibleAccountsCount = _utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToInt(view.buffer, 4, false);
 		view.shiftRight(4);
-		const harvestingEligibleAccountsCount = _utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToInt(view.buffer, 8, false);
+		const harvestingEligibleAccountsCount = _utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToBigInt(view.buffer, 8, false);
 		view.shiftRight(8);
 		const totalVotingBalance = Amount.deserializeAligned(view.buffer);
 		view.shiftRight(totalVotingBalance.size);
@@ -94163,12 +96565,12 @@ class NamespaceId extends _BaseValue_js__WEBPACK_IMPORTED_MODULE_0__["default"] 
 
 	static deserialize(payload) {
 		const byteArray = payload;
-		return new NamespaceId(_utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToIntUnaligned(byteArray, 8, false));
+		return new NamespaceId(_utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToBigIntUnaligned(byteArray, 8, false));
 	}
 
 	static deserializeAligned(payload) {
 		const byteArray = payload;
-		return new NamespaceId(_utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToInt(byteArray, 8, false));
+		return new NamespaceId(_utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToBigInt(byteArray, 8, false));
 	}
 
 	serialize() {
@@ -95907,7 +98309,7 @@ class Cosignature {
 
 	static deserialize(payload) {
 		const view = new _utils_BufferView_js__WEBPACK_IMPORTED_MODULE_2__["default"](payload);
-		const version = _utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToInt(view.buffer, 8, false);
+		const version = _utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToBigInt(view.buffer, 8, false);
 		view.shiftRight(8);
 		const signerPublicKey = PublicKey.deserialize(view.buffer);
 		view.shiftRight(signerPublicKey.size);
@@ -95999,7 +98401,7 @@ class DetachedCosignature {
 
 	static deserialize(payload) {
 		const view = new _utils_BufferView_js__WEBPACK_IMPORTED_MODULE_2__["default"](payload);
-		const version = _utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToInt(view.buffer, 8, false);
+		const version = _utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToBigInt(view.buffer, 8, false);
 		view.shiftRight(8);
 		const signerPublicKey = PublicKey.deserialize(view.buffer);
 		view.shiftRight(signerPublicKey.size);
@@ -99197,7 +101599,7 @@ class AccountMetadataTransactionV1 {
 		view.shiftRight(deadline.size);
 		const targetAddress = UnresolvedAddress.deserialize(view.buffer);
 		view.shiftRight(targetAddress.size);
-		const scopedMetadataKey = _utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToInt(view.buffer, 8, false);
+		const scopedMetadataKey = _utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToBigInt(view.buffer, 8, false);
 		view.shiftRight(8);
 		const valueSizeDelta = _utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToInt(view.buffer, 2, true);
 		view.shiftRight(2);
@@ -99392,7 +101794,7 @@ class EmbeddedAccountMetadataTransactionV1 {
 		view.shiftRight(type.size);
 		const targetAddress = UnresolvedAddress.deserialize(view.buffer);
 		view.shiftRight(targetAddress.size);
-		const scopedMetadataKey = _utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToInt(view.buffer, 8, false);
+		const scopedMetadataKey = _utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToBigInt(view.buffer, 8, false);
 		view.shiftRight(8);
 		const valueSizeDelta = _utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToInt(view.buffer, 2, true);
 		view.shiftRight(2);
@@ -99628,7 +102030,7 @@ class MosaicMetadataTransactionV1 {
 		view.shiftRight(deadline.size);
 		const targetAddress = UnresolvedAddress.deserialize(view.buffer);
 		view.shiftRight(targetAddress.size);
-		const scopedMetadataKey = _utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToInt(view.buffer, 8, false);
+		const scopedMetadataKey = _utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToBigInt(view.buffer, 8, false);
 		view.shiftRight(8);
 		const targetMosaicId = UnresolvedMosaicId.deserializeAligned(view.buffer);
 		view.shiftRight(targetMosaicId.size);
@@ -99839,7 +102241,7 @@ class EmbeddedMosaicMetadataTransactionV1 {
 		view.shiftRight(type.size);
 		const targetAddress = UnresolvedAddress.deserialize(view.buffer);
 		view.shiftRight(targetAddress.size);
-		const scopedMetadataKey = _utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToInt(view.buffer, 8, false);
+		const scopedMetadataKey = _utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToBigInt(view.buffer, 8, false);
 		view.shiftRight(8);
 		const targetMosaicId = UnresolvedMosaicId.deserializeAligned(view.buffer);
 		view.shiftRight(targetMosaicId.size);
@@ -100080,7 +102482,7 @@ class NamespaceMetadataTransactionV1 {
 		view.shiftRight(deadline.size);
 		const targetAddress = UnresolvedAddress.deserialize(view.buffer);
 		view.shiftRight(targetAddress.size);
-		const scopedMetadataKey = _utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToInt(view.buffer, 8, false);
+		const scopedMetadataKey = _utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToBigInt(view.buffer, 8, false);
 		view.shiftRight(8);
 		const targetNamespaceId = NamespaceId.deserializeAligned(view.buffer);
 		view.shiftRight(targetNamespaceId.size);
@@ -100291,7 +102693,7 @@ class EmbeddedNamespaceMetadataTransactionV1 {
 		view.shiftRight(type.size);
 		const targetAddress = UnresolvedAddress.deserialize(view.buffer);
 		view.shiftRight(targetAddress.size);
-		const scopedMetadataKey = _utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToInt(view.buffer, 8, false);
+		const scopedMetadataKey = _utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToBigInt(view.buffer, 8, false);
 		view.shiftRight(8);
 		const targetNamespaceId = NamespaceId.deserializeAligned(view.buffer);
 		view.shiftRight(targetNamespaceId.size);
@@ -103067,11 +105469,11 @@ class NamespaceRegistrationTransactionV1 {
 		view.shiftRight(id.size);
 		const registrationType = NamespaceRegistrationType.deserializeAligned(view.buffer);
 		view.shiftRight(registrationType.size);
-		let duration = null;
+		let duration = new BlockDuration();
 		if (NamespaceRegistrationType.ROOT === registrationType)
 			duration = BlockDuration.deserializeAligned(registration_type_condition);
 
-		let parentId = null;
+		let parentId = new NamespaceId();
 		if (NamespaceRegistrationType.CHILD === registrationType)
 			parentId = NamespaceId.deserializeAligned(registration_type_condition);
 
@@ -103301,11 +105703,11 @@ class EmbeddedNamespaceRegistrationTransactionV1 {
 		view.shiftRight(id.size);
 		const registrationType = NamespaceRegistrationType.deserializeAligned(view.buffer);
 		view.shiftRight(registrationType.size);
-		let duration = null;
+		let duration = new BlockDuration();
 		if (NamespaceRegistrationType.ROOT === registrationType)
 			duration = BlockDuration.deserializeAligned(registration_type_condition);
 
-		let parentId = null;
+		let parentId = new NamespaceId();
 		if (NamespaceRegistrationType.CHILD === registrationType)
 			parentId = NamespaceId.deserializeAligned(registration_type_condition);
 
@@ -104847,11 +107249,11 @@ class MosaicAddressRestrictionTransactionV1 {
 		view.shiftRight(deadline.size);
 		const mosaicId = UnresolvedMosaicId.deserializeAligned(view.buffer);
 		view.shiftRight(mosaicId.size);
-		const restrictionKey = _utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToInt(view.buffer, 8, false);
+		const restrictionKey = _utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToBigInt(view.buffer, 8, false);
 		view.shiftRight(8);
-		const previousRestrictionValue = _utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToInt(view.buffer, 8, false);
+		const previousRestrictionValue = _utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToBigInt(view.buffer, 8, false);
 		view.shiftRight(8);
-		const newRestrictionValue = _utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToInt(view.buffer, 8, false);
+		const newRestrictionValue = _utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToBigInt(view.buffer, 8, false);
 		view.shiftRight(8);
 		const targetAddress = UnresolvedAddress.deserialize(view.buffer);
 		view.shiftRight(targetAddress.size);
@@ -105053,11 +107455,11 @@ class EmbeddedMosaicAddressRestrictionTransactionV1 {
 		view.shiftRight(type.size);
 		const mosaicId = UnresolvedMosaicId.deserializeAligned(view.buffer);
 		view.shiftRight(mosaicId.size);
-		const restrictionKey = _utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToInt(view.buffer, 8, false);
+		const restrictionKey = _utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToBigInt(view.buffer, 8, false);
 		view.shiftRight(8);
-		const previousRestrictionValue = _utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToInt(view.buffer, 8, false);
+		const previousRestrictionValue = _utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToBigInt(view.buffer, 8, false);
 		view.shiftRight(8);
-		const newRestrictionValue = _utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToInt(view.buffer, 8, false);
+		const newRestrictionValue = _utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToBigInt(view.buffer, 8, false);
 		view.shiftRight(8);
 		const targetAddress = UnresolvedAddress.deserialize(view.buffer);
 		view.shiftRight(targetAddress.size);
@@ -105117,12 +107519,12 @@ class MosaicRestrictionKey extends _BaseValue_js__WEBPACK_IMPORTED_MODULE_0__["d
 
 	static deserialize(payload) {
 		const byteArray = payload;
-		return new MosaicRestrictionKey(_utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToIntUnaligned(byteArray, 8, false));
+		return new MosaicRestrictionKey(_utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToBigIntUnaligned(byteArray, 8, false));
 	}
 
 	static deserializeAligned(payload) {
 		const byteArray = payload;
-		return new MosaicRestrictionKey(_utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToInt(byteArray, 8, false));
+		return new MosaicRestrictionKey(_utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToBigInt(byteArray, 8, false));
 	}
 
 	serialize() {
@@ -105396,11 +107798,11 @@ class MosaicGlobalRestrictionTransactionV1 {
 		view.shiftRight(mosaicId.size);
 		const referenceMosaicId = UnresolvedMosaicId.deserializeAligned(view.buffer);
 		view.shiftRight(referenceMosaicId.size);
-		const restrictionKey = _utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToInt(view.buffer, 8, false);
+		const restrictionKey = _utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToBigInt(view.buffer, 8, false);
 		view.shiftRight(8);
-		const previousRestrictionValue = _utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToInt(view.buffer, 8, false);
+		const previousRestrictionValue = _utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToBigInt(view.buffer, 8, false);
 		view.shiftRight(8);
-		const newRestrictionValue = _utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToInt(view.buffer, 8, false);
+		const newRestrictionValue = _utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToBigInt(view.buffer, 8, false);
 		view.shiftRight(8);
 		const previousRestrictionType = MosaicRestrictionType.deserializeAligned(view.buffer);
 		view.shiftRight(previousRestrictionType.size);
@@ -105634,11 +108036,11 @@ class EmbeddedMosaicGlobalRestrictionTransactionV1 {
 		view.shiftRight(mosaicId.size);
 		const referenceMosaicId = UnresolvedMosaicId.deserializeAligned(view.buffer);
 		view.shiftRight(referenceMosaicId.size);
-		const restrictionKey = _utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToInt(view.buffer, 8, false);
+		const restrictionKey = _utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToBigInt(view.buffer, 8, false);
 		view.shiftRight(8);
-		const previousRestrictionValue = _utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToInt(view.buffer, 8, false);
+		const previousRestrictionValue = _utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToBigInt(view.buffer, 8, false);
 		view.shiftRight(8);
-		const newRestrictionValue = _utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToInt(view.buffer, 8, false);
+		const newRestrictionValue = _utils_converter_js__WEBPACK_IMPORTED_MODULE_5__.bytesToBigInt(view.buffer, 8, false);
 		view.shiftRight(8);
 		const previousRestrictionType = MosaicRestrictionType.deserializeAligned(view.buffer);
 		view.shiftRight(previousRestrictionType.size);
@@ -106145,35 +108547,34 @@ class TransactionFactory {
 	static deserialize(payload) {
 		const view = new _utils_BufferView_js__WEBPACK_IMPORTED_MODULE_2__["default"](payload);
 		const parent = Transaction.deserialize(view.buffer);
-		const mapping = new Map([
-			[TransactionFactory.toKey([AccountKeyLinkTransactionV1.TRANSACTION_TYPE.value, AccountKeyLinkTransactionV1.TRANSACTION_VERSION]), AccountKeyLinkTransactionV1],
-			[TransactionFactory.toKey([NodeKeyLinkTransactionV1.TRANSACTION_TYPE.value, NodeKeyLinkTransactionV1.TRANSACTION_VERSION]), NodeKeyLinkTransactionV1],
-			[TransactionFactory.toKey([AggregateCompleteTransactionV1.TRANSACTION_TYPE.value, AggregateCompleteTransactionV1.TRANSACTION_VERSION]), AggregateCompleteTransactionV1],
-			[TransactionFactory.toKey([AggregateCompleteTransactionV2.TRANSACTION_TYPE.value, AggregateCompleteTransactionV2.TRANSACTION_VERSION]), AggregateCompleteTransactionV2],
-			[TransactionFactory.toKey([AggregateBondedTransactionV1.TRANSACTION_TYPE.value, AggregateBondedTransactionV1.TRANSACTION_VERSION]), AggregateBondedTransactionV1],
-			[TransactionFactory.toKey([AggregateBondedTransactionV2.TRANSACTION_TYPE.value, AggregateBondedTransactionV2.TRANSACTION_VERSION]), AggregateBondedTransactionV2],
-			[TransactionFactory.toKey([VotingKeyLinkTransactionV1.TRANSACTION_TYPE.value, VotingKeyLinkTransactionV1.TRANSACTION_VERSION]), VotingKeyLinkTransactionV1],
-			[TransactionFactory.toKey([VrfKeyLinkTransactionV1.TRANSACTION_TYPE.value, VrfKeyLinkTransactionV1.TRANSACTION_VERSION]), VrfKeyLinkTransactionV1],
-			[TransactionFactory.toKey([HashLockTransactionV1.TRANSACTION_TYPE.value, HashLockTransactionV1.TRANSACTION_VERSION]), HashLockTransactionV1],
-			[TransactionFactory.toKey([SecretLockTransactionV1.TRANSACTION_TYPE.value, SecretLockTransactionV1.TRANSACTION_VERSION]), SecretLockTransactionV1],
-			[TransactionFactory.toKey([SecretProofTransactionV1.TRANSACTION_TYPE.value, SecretProofTransactionV1.TRANSACTION_VERSION]), SecretProofTransactionV1],
-			[TransactionFactory.toKey([AccountMetadataTransactionV1.TRANSACTION_TYPE.value, AccountMetadataTransactionV1.TRANSACTION_VERSION]), AccountMetadataTransactionV1],
-			[TransactionFactory.toKey([MosaicMetadataTransactionV1.TRANSACTION_TYPE.value, MosaicMetadataTransactionV1.TRANSACTION_VERSION]), MosaicMetadataTransactionV1],
-			[TransactionFactory.toKey([NamespaceMetadataTransactionV1.TRANSACTION_TYPE.value, NamespaceMetadataTransactionV1.TRANSACTION_VERSION]), NamespaceMetadataTransactionV1],
-			[TransactionFactory.toKey([MosaicDefinitionTransactionV1.TRANSACTION_TYPE.value, MosaicDefinitionTransactionV1.TRANSACTION_VERSION]), MosaicDefinitionTransactionV1],
-			[TransactionFactory.toKey([MosaicSupplyChangeTransactionV1.TRANSACTION_TYPE.value, MosaicSupplyChangeTransactionV1.TRANSACTION_VERSION]), MosaicSupplyChangeTransactionV1],
-			[TransactionFactory.toKey([MosaicSupplyRevocationTransactionV1.TRANSACTION_TYPE.value, MosaicSupplyRevocationTransactionV1.TRANSACTION_VERSION]), MosaicSupplyRevocationTransactionV1],
-			[TransactionFactory.toKey([MultisigAccountModificationTransactionV1.TRANSACTION_TYPE.value, MultisigAccountModificationTransactionV1.TRANSACTION_VERSION]), MultisigAccountModificationTransactionV1],
-			[TransactionFactory.toKey([AddressAliasTransactionV1.TRANSACTION_TYPE.value, AddressAliasTransactionV1.TRANSACTION_VERSION]), AddressAliasTransactionV1],
-			[TransactionFactory.toKey([MosaicAliasTransactionV1.TRANSACTION_TYPE.value, MosaicAliasTransactionV1.TRANSACTION_VERSION]), MosaicAliasTransactionV1],
-			[TransactionFactory.toKey([NamespaceRegistrationTransactionV1.TRANSACTION_TYPE.value, NamespaceRegistrationTransactionV1.TRANSACTION_VERSION]), NamespaceRegistrationTransactionV1],
-			[TransactionFactory.toKey([AccountAddressRestrictionTransactionV1.TRANSACTION_TYPE.value, AccountAddressRestrictionTransactionV1.TRANSACTION_VERSION]), AccountAddressRestrictionTransactionV1],
-			[TransactionFactory.toKey([AccountMosaicRestrictionTransactionV1.TRANSACTION_TYPE.value, AccountMosaicRestrictionTransactionV1.TRANSACTION_VERSION]), AccountMosaicRestrictionTransactionV1],
-			[TransactionFactory.toKey([AccountOperationRestrictionTransactionV1.TRANSACTION_TYPE.value, AccountOperationRestrictionTransactionV1.TRANSACTION_VERSION]), AccountOperationRestrictionTransactionV1],
-			[TransactionFactory.toKey([MosaicAddressRestrictionTransactionV1.TRANSACTION_TYPE.value, MosaicAddressRestrictionTransactionV1.TRANSACTION_VERSION]), MosaicAddressRestrictionTransactionV1],
-			[TransactionFactory.toKey([MosaicGlobalRestrictionTransactionV1.TRANSACTION_TYPE.value, MosaicGlobalRestrictionTransactionV1.TRANSACTION_VERSION]), MosaicGlobalRestrictionTransactionV1],
-			[TransactionFactory.toKey([TransferTransactionV1.TRANSACTION_TYPE.value, TransferTransactionV1.TRANSACTION_VERSION]), TransferTransactionV1]
-		]);
+		const mapping = new Map();
+		mapping.set(TransactionFactory.toKey([AccountKeyLinkTransactionV1.TRANSACTION_TYPE.value, AccountKeyLinkTransactionV1.TRANSACTION_VERSION]), AccountKeyLinkTransactionV1);
+		mapping.set(TransactionFactory.toKey([NodeKeyLinkTransactionV1.TRANSACTION_TYPE.value, NodeKeyLinkTransactionV1.TRANSACTION_VERSION]), NodeKeyLinkTransactionV1);
+		mapping.set(TransactionFactory.toKey([AggregateCompleteTransactionV1.TRANSACTION_TYPE.value, AggregateCompleteTransactionV1.TRANSACTION_VERSION]), AggregateCompleteTransactionV1);
+		mapping.set(TransactionFactory.toKey([AggregateCompleteTransactionV2.TRANSACTION_TYPE.value, AggregateCompleteTransactionV2.TRANSACTION_VERSION]), AggregateCompleteTransactionV2);
+		mapping.set(TransactionFactory.toKey([AggregateBondedTransactionV1.TRANSACTION_TYPE.value, AggregateBondedTransactionV1.TRANSACTION_VERSION]), AggregateBondedTransactionV1);
+		mapping.set(TransactionFactory.toKey([AggregateBondedTransactionV2.TRANSACTION_TYPE.value, AggregateBondedTransactionV2.TRANSACTION_VERSION]), AggregateBondedTransactionV2);
+		mapping.set(TransactionFactory.toKey([VotingKeyLinkTransactionV1.TRANSACTION_TYPE.value, VotingKeyLinkTransactionV1.TRANSACTION_VERSION]), VotingKeyLinkTransactionV1);
+		mapping.set(TransactionFactory.toKey([VrfKeyLinkTransactionV1.TRANSACTION_TYPE.value, VrfKeyLinkTransactionV1.TRANSACTION_VERSION]), VrfKeyLinkTransactionV1);
+		mapping.set(TransactionFactory.toKey([HashLockTransactionV1.TRANSACTION_TYPE.value, HashLockTransactionV1.TRANSACTION_VERSION]), HashLockTransactionV1);
+		mapping.set(TransactionFactory.toKey([SecretLockTransactionV1.TRANSACTION_TYPE.value, SecretLockTransactionV1.TRANSACTION_VERSION]), SecretLockTransactionV1);
+		mapping.set(TransactionFactory.toKey([SecretProofTransactionV1.TRANSACTION_TYPE.value, SecretProofTransactionV1.TRANSACTION_VERSION]), SecretProofTransactionV1);
+		mapping.set(TransactionFactory.toKey([AccountMetadataTransactionV1.TRANSACTION_TYPE.value, AccountMetadataTransactionV1.TRANSACTION_VERSION]), AccountMetadataTransactionV1);
+		mapping.set(TransactionFactory.toKey([MosaicMetadataTransactionV1.TRANSACTION_TYPE.value, MosaicMetadataTransactionV1.TRANSACTION_VERSION]), MosaicMetadataTransactionV1);
+		mapping.set(TransactionFactory.toKey([NamespaceMetadataTransactionV1.TRANSACTION_TYPE.value, NamespaceMetadataTransactionV1.TRANSACTION_VERSION]), NamespaceMetadataTransactionV1);
+		mapping.set(TransactionFactory.toKey([MosaicDefinitionTransactionV1.TRANSACTION_TYPE.value, MosaicDefinitionTransactionV1.TRANSACTION_VERSION]), MosaicDefinitionTransactionV1);
+		mapping.set(TransactionFactory.toKey([MosaicSupplyChangeTransactionV1.TRANSACTION_TYPE.value, MosaicSupplyChangeTransactionV1.TRANSACTION_VERSION]), MosaicSupplyChangeTransactionV1);
+		mapping.set(TransactionFactory.toKey([MosaicSupplyRevocationTransactionV1.TRANSACTION_TYPE.value, MosaicSupplyRevocationTransactionV1.TRANSACTION_VERSION]), MosaicSupplyRevocationTransactionV1);
+		mapping.set(TransactionFactory.toKey([MultisigAccountModificationTransactionV1.TRANSACTION_TYPE.value, MultisigAccountModificationTransactionV1.TRANSACTION_VERSION]), MultisigAccountModificationTransactionV1);
+		mapping.set(TransactionFactory.toKey([AddressAliasTransactionV1.TRANSACTION_TYPE.value, AddressAliasTransactionV1.TRANSACTION_VERSION]), AddressAliasTransactionV1);
+		mapping.set(TransactionFactory.toKey([MosaicAliasTransactionV1.TRANSACTION_TYPE.value, MosaicAliasTransactionV1.TRANSACTION_VERSION]), MosaicAliasTransactionV1);
+		mapping.set(TransactionFactory.toKey([NamespaceRegistrationTransactionV1.TRANSACTION_TYPE.value, NamespaceRegistrationTransactionV1.TRANSACTION_VERSION]), NamespaceRegistrationTransactionV1);
+		mapping.set(TransactionFactory.toKey([AccountAddressRestrictionTransactionV1.TRANSACTION_TYPE.value, AccountAddressRestrictionTransactionV1.TRANSACTION_VERSION]), AccountAddressRestrictionTransactionV1);
+		mapping.set(TransactionFactory.toKey([AccountMosaicRestrictionTransactionV1.TRANSACTION_TYPE.value, AccountMosaicRestrictionTransactionV1.TRANSACTION_VERSION]), AccountMosaicRestrictionTransactionV1);
+		mapping.set(TransactionFactory.toKey([AccountOperationRestrictionTransactionV1.TRANSACTION_TYPE.value, AccountOperationRestrictionTransactionV1.TRANSACTION_VERSION]), AccountOperationRestrictionTransactionV1);
+		mapping.set(TransactionFactory.toKey([MosaicAddressRestrictionTransactionV1.TRANSACTION_TYPE.value, MosaicAddressRestrictionTransactionV1.TRANSACTION_VERSION]), MosaicAddressRestrictionTransactionV1);
+		mapping.set(TransactionFactory.toKey([MosaicGlobalRestrictionTransactionV1.TRANSACTION_TYPE.value, MosaicGlobalRestrictionTransactionV1.TRANSACTION_VERSION]), MosaicGlobalRestrictionTransactionV1);
+		mapping.set(TransactionFactory.toKey([TransferTransactionV1.TRANSACTION_TYPE.value, TransferTransactionV1.TRANSACTION_VERSION]), TransferTransactionV1);
 		const discriminator = TransactionFactory.toKey([parent.type.value, parent.version]);
 		const factory_class = mapping.get(discriminator);
 		return factory_class.deserialize(view.buffer);
@@ -106229,31 +108630,30 @@ class EmbeddedTransactionFactory {
 	static deserialize(payload) {
 		const view = new _utils_BufferView_js__WEBPACK_IMPORTED_MODULE_2__["default"](payload);
 		const parent = EmbeddedTransaction.deserialize(view.buffer);
-		const mapping = new Map([
-			[EmbeddedTransactionFactory.toKey([EmbeddedAccountKeyLinkTransactionV1.TRANSACTION_TYPE.value, EmbeddedAccountKeyLinkTransactionV1.TRANSACTION_VERSION]), EmbeddedAccountKeyLinkTransactionV1],
-			[EmbeddedTransactionFactory.toKey([EmbeddedNodeKeyLinkTransactionV1.TRANSACTION_TYPE.value, EmbeddedNodeKeyLinkTransactionV1.TRANSACTION_VERSION]), EmbeddedNodeKeyLinkTransactionV1],
-			[EmbeddedTransactionFactory.toKey([EmbeddedVotingKeyLinkTransactionV1.TRANSACTION_TYPE.value, EmbeddedVotingKeyLinkTransactionV1.TRANSACTION_VERSION]), EmbeddedVotingKeyLinkTransactionV1],
-			[EmbeddedTransactionFactory.toKey([EmbeddedVrfKeyLinkTransactionV1.TRANSACTION_TYPE.value, EmbeddedVrfKeyLinkTransactionV1.TRANSACTION_VERSION]), EmbeddedVrfKeyLinkTransactionV1],
-			[EmbeddedTransactionFactory.toKey([EmbeddedHashLockTransactionV1.TRANSACTION_TYPE.value, EmbeddedHashLockTransactionV1.TRANSACTION_VERSION]), EmbeddedHashLockTransactionV1],
-			[EmbeddedTransactionFactory.toKey([EmbeddedSecretLockTransactionV1.TRANSACTION_TYPE.value, EmbeddedSecretLockTransactionV1.TRANSACTION_VERSION]), EmbeddedSecretLockTransactionV1],
-			[EmbeddedTransactionFactory.toKey([EmbeddedSecretProofTransactionV1.TRANSACTION_TYPE.value, EmbeddedSecretProofTransactionV1.TRANSACTION_VERSION]), EmbeddedSecretProofTransactionV1],
-			[EmbeddedTransactionFactory.toKey([EmbeddedAccountMetadataTransactionV1.TRANSACTION_TYPE.value, EmbeddedAccountMetadataTransactionV1.TRANSACTION_VERSION]), EmbeddedAccountMetadataTransactionV1],
-			[EmbeddedTransactionFactory.toKey([EmbeddedMosaicMetadataTransactionV1.TRANSACTION_TYPE.value, EmbeddedMosaicMetadataTransactionV1.TRANSACTION_VERSION]), EmbeddedMosaicMetadataTransactionV1],
-			[EmbeddedTransactionFactory.toKey([EmbeddedNamespaceMetadataTransactionV1.TRANSACTION_TYPE.value, EmbeddedNamespaceMetadataTransactionV1.TRANSACTION_VERSION]), EmbeddedNamespaceMetadataTransactionV1],
-			[EmbeddedTransactionFactory.toKey([EmbeddedMosaicDefinitionTransactionV1.TRANSACTION_TYPE.value, EmbeddedMosaicDefinitionTransactionV1.TRANSACTION_VERSION]), EmbeddedMosaicDefinitionTransactionV1],
-			[EmbeddedTransactionFactory.toKey([EmbeddedMosaicSupplyChangeTransactionV1.TRANSACTION_TYPE.value, EmbeddedMosaicSupplyChangeTransactionV1.TRANSACTION_VERSION]), EmbeddedMosaicSupplyChangeTransactionV1],
-			[EmbeddedTransactionFactory.toKey([EmbeddedMosaicSupplyRevocationTransactionV1.TRANSACTION_TYPE.value, EmbeddedMosaicSupplyRevocationTransactionV1.TRANSACTION_VERSION]), EmbeddedMosaicSupplyRevocationTransactionV1],
-			[EmbeddedTransactionFactory.toKey([EmbeddedMultisigAccountModificationTransactionV1.TRANSACTION_TYPE.value, EmbeddedMultisigAccountModificationTransactionV1.TRANSACTION_VERSION]), EmbeddedMultisigAccountModificationTransactionV1],
-			[EmbeddedTransactionFactory.toKey([EmbeddedAddressAliasTransactionV1.TRANSACTION_TYPE.value, EmbeddedAddressAliasTransactionV1.TRANSACTION_VERSION]), EmbeddedAddressAliasTransactionV1],
-			[EmbeddedTransactionFactory.toKey([EmbeddedMosaicAliasTransactionV1.TRANSACTION_TYPE.value, EmbeddedMosaicAliasTransactionV1.TRANSACTION_VERSION]), EmbeddedMosaicAliasTransactionV1],
-			[EmbeddedTransactionFactory.toKey([EmbeddedNamespaceRegistrationTransactionV1.TRANSACTION_TYPE.value, EmbeddedNamespaceRegistrationTransactionV1.TRANSACTION_VERSION]), EmbeddedNamespaceRegistrationTransactionV1],
-			[EmbeddedTransactionFactory.toKey([EmbeddedAccountAddressRestrictionTransactionV1.TRANSACTION_TYPE.value, EmbeddedAccountAddressRestrictionTransactionV1.TRANSACTION_VERSION]), EmbeddedAccountAddressRestrictionTransactionV1],
-			[EmbeddedTransactionFactory.toKey([EmbeddedAccountMosaicRestrictionTransactionV1.TRANSACTION_TYPE.value, EmbeddedAccountMosaicRestrictionTransactionV1.TRANSACTION_VERSION]), EmbeddedAccountMosaicRestrictionTransactionV1],
-			[EmbeddedTransactionFactory.toKey([EmbeddedAccountOperationRestrictionTransactionV1.TRANSACTION_TYPE.value, EmbeddedAccountOperationRestrictionTransactionV1.TRANSACTION_VERSION]), EmbeddedAccountOperationRestrictionTransactionV1],
-			[EmbeddedTransactionFactory.toKey([EmbeddedMosaicAddressRestrictionTransactionV1.TRANSACTION_TYPE.value, EmbeddedMosaicAddressRestrictionTransactionV1.TRANSACTION_VERSION]), EmbeddedMosaicAddressRestrictionTransactionV1],
-			[EmbeddedTransactionFactory.toKey([EmbeddedMosaicGlobalRestrictionTransactionV1.TRANSACTION_TYPE.value, EmbeddedMosaicGlobalRestrictionTransactionV1.TRANSACTION_VERSION]), EmbeddedMosaicGlobalRestrictionTransactionV1],
-			[EmbeddedTransactionFactory.toKey([EmbeddedTransferTransactionV1.TRANSACTION_TYPE.value, EmbeddedTransferTransactionV1.TRANSACTION_VERSION]), EmbeddedTransferTransactionV1]
-		]);
+		const mapping = new Map();
+		mapping.set(EmbeddedTransactionFactory.toKey([EmbeddedAccountKeyLinkTransactionV1.TRANSACTION_TYPE.value, EmbeddedAccountKeyLinkTransactionV1.TRANSACTION_VERSION]), EmbeddedAccountKeyLinkTransactionV1);
+		mapping.set(EmbeddedTransactionFactory.toKey([EmbeddedNodeKeyLinkTransactionV1.TRANSACTION_TYPE.value, EmbeddedNodeKeyLinkTransactionV1.TRANSACTION_VERSION]), EmbeddedNodeKeyLinkTransactionV1);
+		mapping.set(EmbeddedTransactionFactory.toKey([EmbeddedVotingKeyLinkTransactionV1.TRANSACTION_TYPE.value, EmbeddedVotingKeyLinkTransactionV1.TRANSACTION_VERSION]), EmbeddedVotingKeyLinkTransactionV1);
+		mapping.set(EmbeddedTransactionFactory.toKey([EmbeddedVrfKeyLinkTransactionV1.TRANSACTION_TYPE.value, EmbeddedVrfKeyLinkTransactionV1.TRANSACTION_VERSION]), EmbeddedVrfKeyLinkTransactionV1);
+		mapping.set(EmbeddedTransactionFactory.toKey([EmbeddedHashLockTransactionV1.TRANSACTION_TYPE.value, EmbeddedHashLockTransactionV1.TRANSACTION_VERSION]), EmbeddedHashLockTransactionV1);
+		mapping.set(EmbeddedTransactionFactory.toKey([EmbeddedSecretLockTransactionV1.TRANSACTION_TYPE.value, EmbeddedSecretLockTransactionV1.TRANSACTION_VERSION]), EmbeddedSecretLockTransactionV1);
+		mapping.set(EmbeddedTransactionFactory.toKey([EmbeddedSecretProofTransactionV1.TRANSACTION_TYPE.value, EmbeddedSecretProofTransactionV1.TRANSACTION_VERSION]), EmbeddedSecretProofTransactionV1);
+		mapping.set(EmbeddedTransactionFactory.toKey([EmbeddedAccountMetadataTransactionV1.TRANSACTION_TYPE.value, EmbeddedAccountMetadataTransactionV1.TRANSACTION_VERSION]), EmbeddedAccountMetadataTransactionV1);
+		mapping.set(EmbeddedTransactionFactory.toKey([EmbeddedMosaicMetadataTransactionV1.TRANSACTION_TYPE.value, EmbeddedMosaicMetadataTransactionV1.TRANSACTION_VERSION]), EmbeddedMosaicMetadataTransactionV1);
+		mapping.set(EmbeddedTransactionFactory.toKey([EmbeddedNamespaceMetadataTransactionV1.TRANSACTION_TYPE.value, EmbeddedNamespaceMetadataTransactionV1.TRANSACTION_VERSION]), EmbeddedNamespaceMetadataTransactionV1);
+		mapping.set(EmbeddedTransactionFactory.toKey([EmbeddedMosaicDefinitionTransactionV1.TRANSACTION_TYPE.value, EmbeddedMosaicDefinitionTransactionV1.TRANSACTION_VERSION]), EmbeddedMosaicDefinitionTransactionV1);
+		mapping.set(EmbeddedTransactionFactory.toKey([EmbeddedMosaicSupplyChangeTransactionV1.TRANSACTION_TYPE.value, EmbeddedMosaicSupplyChangeTransactionV1.TRANSACTION_VERSION]), EmbeddedMosaicSupplyChangeTransactionV1);
+		mapping.set(EmbeddedTransactionFactory.toKey([EmbeddedMosaicSupplyRevocationTransactionV1.TRANSACTION_TYPE.value, EmbeddedMosaicSupplyRevocationTransactionV1.TRANSACTION_VERSION]), EmbeddedMosaicSupplyRevocationTransactionV1);
+		mapping.set(EmbeddedTransactionFactory.toKey([EmbeddedMultisigAccountModificationTransactionV1.TRANSACTION_TYPE.value, EmbeddedMultisigAccountModificationTransactionV1.TRANSACTION_VERSION]), EmbeddedMultisigAccountModificationTransactionV1);
+		mapping.set(EmbeddedTransactionFactory.toKey([EmbeddedAddressAliasTransactionV1.TRANSACTION_TYPE.value, EmbeddedAddressAliasTransactionV1.TRANSACTION_VERSION]), EmbeddedAddressAliasTransactionV1);
+		mapping.set(EmbeddedTransactionFactory.toKey([EmbeddedMosaicAliasTransactionV1.TRANSACTION_TYPE.value, EmbeddedMosaicAliasTransactionV1.TRANSACTION_VERSION]), EmbeddedMosaicAliasTransactionV1);
+		mapping.set(EmbeddedTransactionFactory.toKey([EmbeddedNamespaceRegistrationTransactionV1.TRANSACTION_TYPE.value, EmbeddedNamespaceRegistrationTransactionV1.TRANSACTION_VERSION]), EmbeddedNamespaceRegistrationTransactionV1);
+		mapping.set(EmbeddedTransactionFactory.toKey([EmbeddedAccountAddressRestrictionTransactionV1.TRANSACTION_TYPE.value, EmbeddedAccountAddressRestrictionTransactionV1.TRANSACTION_VERSION]), EmbeddedAccountAddressRestrictionTransactionV1);
+		mapping.set(EmbeddedTransactionFactory.toKey([EmbeddedAccountMosaicRestrictionTransactionV1.TRANSACTION_TYPE.value, EmbeddedAccountMosaicRestrictionTransactionV1.TRANSACTION_VERSION]), EmbeddedAccountMosaicRestrictionTransactionV1);
+		mapping.set(EmbeddedTransactionFactory.toKey([EmbeddedAccountOperationRestrictionTransactionV1.TRANSACTION_TYPE.value, EmbeddedAccountOperationRestrictionTransactionV1.TRANSACTION_VERSION]), EmbeddedAccountOperationRestrictionTransactionV1);
+		mapping.set(EmbeddedTransactionFactory.toKey([EmbeddedMosaicAddressRestrictionTransactionV1.TRANSACTION_TYPE.value, EmbeddedMosaicAddressRestrictionTransactionV1.TRANSACTION_VERSION]), EmbeddedMosaicAddressRestrictionTransactionV1);
+		mapping.set(EmbeddedTransactionFactory.toKey([EmbeddedMosaicGlobalRestrictionTransactionV1.TRANSACTION_TYPE.value, EmbeddedMosaicGlobalRestrictionTransactionV1.TRANSACTION_VERSION]), EmbeddedMosaicGlobalRestrictionTransactionV1);
+		mapping.set(EmbeddedTransactionFactory.toKey([EmbeddedTransferTransactionV1.TRANSACTION_TYPE.value, EmbeddedTransferTransactionV1.TRANSACTION_VERSION]), EmbeddedTransferTransactionV1);
 		const discriminator = EmbeddedTransactionFactory.toKey([parent.type.value, parent.version]);
 		const factory_class = mapping.get(discriminator);
 		return factory_class.deserialize(view.buffer);
@@ -106305,11 +108705,10 @@ class BlockFactory {
 	static deserialize(payload) {
 		const view = new _utils_BufferView_js__WEBPACK_IMPORTED_MODULE_2__["default"](payload);
 		const parent = Block.deserialize(view.buffer);
-		const mapping = new Map([
-			[BlockFactory.toKey([NemesisBlockV1.BLOCK_TYPE.value]), NemesisBlockV1],
-			[BlockFactory.toKey([NormalBlockV1.BLOCK_TYPE.value]), NormalBlockV1],
-			[BlockFactory.toKey([ImportanceBlockV1.BLOCK_TYPE.value]), ImportanceBlockV1]
-		]);
+		const mapping = new Map();
+		mapping.set(BlockFactory.toKey([NemesisBlockV1.BLOCK_TYPE.value]), NemesisBlockV1);
+		mapping.set(BlockFactory.toKey([NormalBlockV1.BLOCK_TYPE.value]), NormalBlockV1);
+		mapping.set(BlockFactory.toKey([ImportanceBlockV1.BLOCK_TYPE.value]), ImportanceBlockV1);
 		const discriminator = BlockFactory.toKey([parent.type.value]);
 		const factory_class = mapping.get(discriminator);
 		return factory_class.deserialize(view.buffer);
@@ -106341,21 +108740,20 @@ class ReceiptFactory {
 	static deserialize(payload) {
 		const view = new _utils_BufferView_js__WEBPACK_IMPORTED_MODULE_2__["default"](payload);
 		const parent = Receipt.deserialize(view.buffer);
-		const mapping = new Map([
-			[ReceiptFactory.toKey([HarvestFeeReceipt.RECEIPT_TYPE.value]), HarvestFeeReceipt],
-			[ReceiptFactory.toKey([InflationReceipt.RECEIPT_TYPE.value]), InflationReceipt],
-			[ReceiptFactory.toKey([LockHashCreatedFeeReceipt.RECEIPT_TYPE.value]), LockHashCreatedFeeReceipt],
-			[ReceiptFactory.toKey([LockHashCompletedFeeReceipt.RECEIPT_TYPE.value]), LockHashCompletedFeeReceipt],
-			[ReceiptFactory.toKey([LockHashExpiredFeeReceipt.RECEIPT_TYPE.value]), LockHashExpiredFeeReceipt],
-			[ReceiptFactory.toKey([LockSecretCreatedFeeReceipt.RECEIPT_TYPE.value]), LockSecretCreatedFeeReceipt],
-			[ReceiptFactory.toKey([LockSecretCompletedFeeReceipt.RECEIPT_TYPE.value]), LockSecretCompletedFeeReceipt],
-			[ReceiptFactory.toKey([LockSecretExpiredFeeReceipt.RECEIPT_TYPE.value]), LockSecretExpiredFeeReceipt],
-			[ReceiptFactory.toKey([MosaicExpiredReceipt.RECEIPT_TYPE.value]), MosaicExpiredReceipt],
-			[ReceiptFactory.toKey([MosaicRentalFeeReceipt.RECEIPT_TYPE.value]), MosaicRentalFeeReceipt],
-			[ReceiptFactory.toKey([NamespaceExpiredReceipt.RECEIPT_TYPE.value]), NamespaceExpiredReceipt],
-			[ReceiptFactory.toKey([NamespaceDeletedReceipt.RECEIPT_TYPE.value]), NamespaceDeletedReceipt],
-			[ReceiptFactory.toKey([NamespaceRentalFeeReceipt.RECEIPT_TYPE.value]), NamespaceRentalFeeReceipt]
-		]);
+		const mapping = new Map();
+		mapping.set(ReceiptFactory.toKey([HarvestFeeReceipt.RECEIPT_TYPE.value]), HarvestFeeReceipt);
+		mapping.set(ReceiptFactory.toKey([InflationReceipt.RECEIPT_TYPE.value]), InflationReceipt);
+		mapping.set(ReceiptFactory.toKey([LockHashCreatedFeeReceipt.RECEIPT_TYPE.value]), LockHashCreatedFeeReceipt);
+		mapping.set(ReceiptFactory.toKey([LockHashCompletedFeeReceipt.RECEIPT_TYPE.value]), LockHashCompletedFeeReceipt);
+		mapping.set(ReceiptFactory.toKey([LockHashExpiredFeeReceipt.RECEIPT_TYPE.value]), LockHashExpiredFeeReceipt);
+		mapping.set(ReceiptFactory.toKey([LockSecretCreatedFeeReceipt.RECEIPT_TYPE.value]), LockSecretCreatedFeeReceipt);
+		mapping.set(ReceiptFactory.toKey([LockSecretCompletedFeeReceipt.RECEIPT_TYPE.value]), LockSecretCompletedFeeReceipt);
+		mapping.set(ReceiptFactory.toKey([LockSecretExpiredFeeReceipt.RECEIPT_TYPE.value]), LockSecretExpiredFeeReceipt);
+		mapping.set(ReceiptFactory.toKey([MosaicExpiredReceipt.RECEIPT_TYPE.value]), MosaicExpiredReceipt);
+		mapping.set(ReceiptFactory.toKey([MosaicRentalFeeReceipt.RECEIPT_TYPE.value]), MosaicRentalFeeReceipt);
+		mapping.set(ReceiptFactory.toKey([NamespaceExpiredReceipt.RECEIPT_TYPE.value]), NamespaceExpiredReceipt);
+		mapping.set(ReceiptFactory.toKey([NamespaceDeletedReceipt.RECEIPT_TYPE.value]), NamespaceDeletedReceipt);
+		mapping.set(ReceiptFactory.toKey([NamespaceRentalFeeReceipt.RECEIPT_TYPE.value]), NamespaceRentalFeeReceipt);
 		const discriminator = ReceiptFactory.toKey([parent.type.value]);
 		const factory_class = mapping.get(discriminator);
 		return factory_class.deserialize(view.buffer);
@@ -106403,10 +108801,14 @@ __webpack_require__.r(__webpack_exports__);
  */
 class BufferView {
 	/**
-	 * Creates buffer view around buffer.
+	 * Creates buffer view around a buffer.
 	 * @param {Uint8Array} buffer Initial buffer view.
 	 */
 	constructor(buffer) {
+		/**
+		 * Underlying buffer view.
+		 * @type Uint8Array
+		 */
 		this.buffer = buffer;
 	}
 
@@ -106461,13 +108863,22 @@ class Writer {
 	 * @param {number} size Allocated buffer size.
 	 */
 	constructor(size) {
+		/**
+		 *  Underlying storage.
+		 * @type Uint8Array
+		 */
 		this.storage = new Uint8Array(size);
+
+		/**
+		 * Current offset.
+		 * @type number
+		 */
 		this.offset = 0;
 	}
 
 	/**
 	 * Writes array into buffer.
-	 * @param {array<byte>} buffer Data to write.
+	 * @param {Uint8Array|Array<number>} buffer Data to write.
 	 */
 	write(buffer) {
 		this.storage.set(buffer, this.offset);
@@ -106486,18 +108897,22 @@ class Writer {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "alignUp": () => (/* binding */ alignUp),
-/* harmony export */   "deepCompare": () => (/* binding */ deepCompare),
-/* harmony export */   "readArray": () => (/* binding */ readArray),
-/* harmony export */   "readArrayCount": () => (/* binding */ readArrayCount),
-/* harmony export */   "readVariableSizeElements": () => (/* binding */ readVariableSizeElements),
-/* harmony export */   "size": () => (/* binding */ size),
-/* harmony export */   "writeArray": () => (/* binding */ writeArray),
-/* harmony export */   "writeArrayCount": () => (/* binding */ writeArrayCount),
-/* harmony export */   "writeVariableSizeElements": () => (/* binding */ writeVariableSizeElements)
+/* harmony export */   alignUp: () => (/* binding */ alignUp),
+/* harmony export */   deepCompare: () => (/* binding */ deepCompare),
+/* harmony export */   readArray: () => (/* binding */ readArray),
+/* harmony export */   readArrayCount: () => (/* binding */ readArrayCount),
+/* harmony export */   readVariableSizeElements: () => (/* binding */ readVariableSizeElements),
+/* harmony export */   size: () => (/* binding */ size),
+/* harmony export */   writeArray: () => (/* binding */ writeArray),
+/* harmony export */   writeArrayCount: () => (/* binding */ writeArrayCount),
+/* harmony export */   writeVariableSizeElements: () => (/* binding */ writeVariableSizeElements)
 /* harmony export */ });
 /* harmony import */ var _BufferView_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BufferView.js */ "./src/utils/BufferView.js");
+/* harmony import */ var _Writer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Writer.js */ "./src/utils/Writer.js");
 
+/* eslint-disable no-unused-vars */
+
+/* eslint-enable no-unused-vars */
 
 /**
  * Deeply compares two array elements.
@@ -106549,7 +108964,7 @@ const readArrayImpl = (bufferInput, FactoryClass, accessor, shouldContinue) => {
 	return elements;
 };
 
-const writeArrayImpl = (output, elements, count, accessor = null) => {
+const writeArrayImpl = (output, elements, count, accessor) => {
 	for (let i = 0; i < count; ++i) {
 		const element = elements[i];
 		if (accessor && 0 < i && 0 <= deepCompare(accessor(elements[i - 1]), accessor(element)))
@@ -106571,12 +108986,12 @@ const alignUp = (size, alignment) => Math.floor((size + alignment - 1) / alignme
 
 /**
  * Calculates size of variable size objects.
- * @param {array<object>} elements Serializable elements.
+ * @param {Array<object>} elements Serializable elements.
  * @param {number} alignment Alignment used for calculations.
- * @param {boolean} skipLastElementPadding true if last element should not be aligned.
+ * @param {boolean} skipLastElementPadding \c true if last element should not be aligned.
  * @returns {number} Computed size.
  */
-const size = (elements, alignment = 0, skipLastElementPadding = undefined) => {
+const size = (elements, alignment = 0, skipLastElementPadding = false) => {
 	if (!alignment)
 		return sum(elements.map(e => e.size));
 
@@ -106588,34 +109003,34 @@ const size = (elements, alignment = 0, skipLastElementPadding = undefined) => {
 
 /**
  * Reads array of objects.
- * @param {Uint8Array} bufferInput Input buffer.
- * @param {type} FactoryClass Factory used to deserialize objects.
- * @param {function} accessor Optional accessor used to check objects order.
- * @returns {array<object>} Array of deserialized objects.
+ * @param {Uint8Array} bufferInput Buffer input.
+ * @param {{deserialize: function}} FactoryClass Factory used to deserialize objects.
+ * @param {function|undefined} accessor Optional accessor used to check objects order.
+ * @returns {Array<object>} Array of deserialized objects.
  */
-const readArray = (bufferInput, FactoryClass, accessor = null) =>
+const readArray = (bufferInput, FactoryClass, accessor = undefined) =>
 	// note: this method is used only for '__FILL__' type arrays
 	// this loop assumes properly sliced buffer is passed and that there's no additional data.
 	readArrayImpl(bufferInput, FactoryClass, accessor, (_, view) => 0 < view.buffer.length);
 
 /**
  * Reads array of deterministic number of objects.
- * @param {Uint8Array} bufferInput A uint8 array.
- * @param {type} FactoryClass Factory used to deserialize objects.
+ * @param {Uint8Array} bufferInput Buffer input.
+ * @param {{deserialize: function}} FactoryClass Factory used to deserialize objects.
  * @param {number} count Number of object to deserialize.
- * @param {function} accessor Optional accessor used to check objects order.
- * @returns {array<object>} Array of deserialized objects.
+ * @param {function|undefined} accessor Optional accessor used to check objects order.
+ * @returns {Array<object>} Array of deserialized objects.
  */
-const readArrayCount = (bufferInput, FactoryClass, count, accessor = null) =>
+const readArrayCount = (bufferInput, FactoryClass, count, accessor = undefined) =>
 	readArrayImpl(bufferInput, FactoryClass, accessor, index => count > index);
 
 /**
  * Reads array of variable size objects.
- * @param {Uint8Array} bufferInput A uint8 array.
- * @param {type} FactoryClass Factory used to deserialize objects.
+ * @param {Uint8Array} bufferInput Buffer input.
+ * @param {{deserialize: function}} FactoryClass Factory used to deserialize objects.
  * @param {number} alignment Alignment used to make sure each object is at boundary.
- * @param {boolean} skipLastElementPadding true if last element is not aligned/padded.
- * @returns {array<object>} Array of deserialized objects.
+ * @param {boolean} skipLastElementPadding \c true if last element is not aligned/padded.
+ * @returns {Array<object>} Array of deserialized objects.
  */
 const readVariableSizeElements = (bufferInput, FactoryClass, alignment, skipLastElementPadding = false) => {
 	const view = new _BufferView_js__WEBPACK_IMPORTED_MODULE_0__["default"](bufferInput);
@@ -106642,9 +109057,9 @@ const readVariableSizeElements = (bufferInput, FactoryClass, alignment, skipLast
 
 /**
  * Writes array of objects.
- * @param {Writer} output An output sink.
- * @param {array<object>} elements Serializable elements.
- * @param {function} accessor Optional accessor used to check objects order.
+ * @param {{write: function}} output Output sink.
+ * @param {Array<object>} elements Serializable elements.
+ * @param {function|undefined} accessor Optional accessor used to check objects order.
  */
 const writeArray = (output, elements, accessor = undefined) => {
 	writeArrayImpl(output, elements, elements.length, accessor);
@@ -106652,19 +109067,21 @@ const writeArray = (output, elements, accessor = undefined) => {
 
 /**
  * Writes array of deterministic number of objects.
- * @param {Writer} output An output sink.
- * @param {array<object>} elements Serializable elements.
+ * @param {{write: function}} output Output sink.
+ * @param {Array<object>} elements Serializable elements.
  * @param {number} count Number of objects to write.
- * @param {function} accessor Optional accessor used to check objects order.
+ * @param {function|undefined} accessor Optional accessor used to check objects order.
  */
-const writeArrayCount = writeArrayImpl;
+const writeArrayCount = (output, elements, count, accessor = undefined) => {
+	writeArrayImpl(output, elements, count, accessor);
+};
 
 /**
  * Writes array of variable size objects.
- * @param {Writer} output An output sink.
- * @param {array<object>} elements Serializable elements.
+ * @param {{write: function}} output Output sink.
+ * @param {Array<object>} elements Serializable elements.
  * @param {number} alignment Alignment used to make sure each object is at boundary.
- * @param {boolean} skipLastElementPadding true if last element should not be aligned/padded.
+ * @param {boolean} skipLastElementPadding \c true if last element should not be aligned/padded.
  */
 const writeVariableSizeElements = (output, elements, alignment, skipLastElementPadding = false) => {
 	elements.forEach((element, index) => {
@@ -106676,6 +109093,8 @@ const writeVariableSizeElements = (output, elements, alignment, skipLastElementP
 		}
 	});
 };
+
+
 
 
 /***/ }),
@@ -106743,41 +109162,39 @@ const decodeBlock = (input, inputOffset, output, outputOffset) => {
 
 // endregion
 
-const base32 = {
-	/**
-	 * Base32 encodes a binary buffer.
-	 * @param {Uint8Array} data Binary data to encode.
-	 * @returns {string} Base32 encoded string corresponding to the input data.
-	 */
-	encode: data => {
-		if (0 !== data.length % DECODED_BLOCK_SIZE)
-			throw Error(`decoded size must be multiple of ${DECODED_BLOCK_SIZE}`);
+/**
+ * Base32 encodes a binary buffer.
+ * @param {Uint8Array} data Binary data to encode.
+ * @returns {string} Base32 encoded string corresponding to the input data.
+ */
+const encode = data => {
+	if (0 !== data.length % DECODED_BLOCK_SIZE)
+		throw Error(`decoded size must be multiple of ${DECODED_BLOCK_SIZE}`);
 
-		const output = new Array(data.length / DECODED_BLOCK_SIZE * ENCODED_BLOCK_SIZE);
-		for (let i = 0; i < data.length / DECODED_BLOCK_SIZE; ++i)
-			encodeBlock(data, i * DECODED_BLOCK_SIZE, output, i * ENCODED_BLOCK_SIZE);
+	const output = new Array(data.length / DECODED_BLOCK_SIZE * ENCODED_BLOCK_SIZE);
+	for (let i = 0; i < data.length / DECODED_BLOCK_SIZE; ++i)
+		encodeBlock(data, i * DECODED_BLOCK_SIZE, output, i * ENCODED_BLOCK_SIZE);
 
-		return output.join('');
-	},
-
-	/**
-	 * Base32 decodes a base32 encoded string.
-	 * @param {string} encoded Base32 encoded string to decode.
-	 * @returns {Uint8Array} Binary data corresponding to the input string.
-	 */
-	decode: encoded => {
-		if (0 !== encoded.length % ENCODED_BLOCK_SIZE)
-			throw Error(`encoded size must be multiple of ${ENCODED_BLOCK_SIZE}`);
-
-		const output = new Uint8Array(encoded.length / ENCODED_BLOCK_SIZE * DECODED_BLOCK_SIZE);
-		for (let i = 0; i < encoded.length / ENCODED_BLOCK_SIZE; ++i)
-			decodeBlock(encoded, i * ENCODED_BLOCK_SIZE, output, i * DECODED_BLOCK_SIZE);
-
-		return output;
-	}
+	return output.join('');
 };
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (base32);
+/**
+ * Base32 decodes a base32 encoded string.
+ * @param {string} encoded Base32 encoded string to decode.
+ * @returns {Uint8Array} Binary data corresponding to the input string.
+ */
+const decode = encoded => {
+	if (0 !== encoded.length % ENCODED_BLOCK_SIZE)
+		throw Error(`encoded size must be multiple of ${ENCODED_BLOCK_SIZE}`);
+
+	const output = new Uint8Array(encoded.length / ENCODED_BLOCK_SIZE * DECODED_BLOCK_SIZE);
+	for (let i = 0; i < encoded.length / ENCODED_BLOCK_SIZE; ++i)
+		decodeBlock(encoded, i * ENCODED_BLOCK_SIZE, output, i * DECODED_BLOCK_SIZE);
+
+	return output;
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({ encode, decode });
 
 
 /***/ }),
@@ -106794,38 +109211,40 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /**
  * Builder for building a character map.
- * @class CharacterMapBuilder
- *
- * @property {object} map Character map.
  */
+class CharacterMapBuilder {
+	/**
+	 * Creates a new character map builder.
+	 */
+	constructor() {
+		/**
+		 * Mapping of charcters to character codes.
+		 * @type {{[key: string]: number}}
+		 */
+		this.map = {};
+	}
+
+	/**
+	 * Adds a range mapping to the map.
+	 * @param {string} start Start character.
+	 * @param {string} end End character.
+	 * @param {number} base Value corresponding to the start character.
+	 */
+	addRange(start, end, base) {
+		const startCode = start.charCodeAt(0);
+		const endCode = end.charCodeAt(0);
+
+		for (let code = startCode; code <= endCode; ++code)
+			this.map[String.fromCharCode(code)] = code - startCode + base;
+	}
+}
 
 const charMapping = {
 	/**
 	 * Creates a builder for building a character map.
-	 * @returns {module:utils/charMapping~CharacterMapBuilder} A character map builder.
+	 * @returns {CharacterMapBuilder} Character map builder.
 	 */
-	createBuilder: () => {
-		const map = {};
-		return {
-			map,
-
-			/**
-			 * Adds a range mapping to the map.
-			 * @param {string} start Start character.
-			 * @param {string} end End character.
-			 * @param {numeric} base Value corresponding to the start character.
-			 * @memberof module:utils/charMapping~CharacterMapBuilder
-			 * @instance
-			 */
-			addRange: (start, end, base) => {
-				const startCode = start.charCodeAt(0);
-				const endCode = end.charCodeAt(0);
-
-				for (let code = startCode; code <= endCode; ++code)
-					map[String.fromCharCode(code)] = code - startCode + base;
-			}
-		};
-	}
+	createBuilder: () => new CharacterMapBuilder()
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (charMapping);
@@ -106841,14 +109260,16 @@ const charMapping = {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "bytesToInt": () => (/* binding */ bytesToInt),
-/* harmony export */   "bytesToIntUnaligned": () => (/* binding */ bytesToIntUnaligned),
-/* harmony export */   "hexToUint8": () => (/* binding */ hexToUint8),
-/* harmony export */   "intToBytes": () => (/* binding */ intToBytes),
-/* harmony export */   "isHexString": () => (/* binding */ isHexString),
-/* harmony export */   "toByte": () => (/* binding */ toByte),
-/* harmony export */   "tryParseUint": () => (/* binding */ tryParseUint),
-/* harmony export */   "uint8ToHex": () => (/* binding */ uint8ToHex)
+/* harmony export */   bytesToBigInt: () => (/* binding */ bytesToBigInt),
+/* harmony export */   bytesToBigIntUnaligned: () => (/* binding */ bytesToBigIntUnaligned),
+/* harmony export */   bytesToInt: () => (/* binding */ bytesToInt),
+/* harmony export */   bytesToIntUnaligned: () => (/* binding */ bytesToIntUnaligned),
+/* harmony export */   hexToUint8: () => (/* binding */ hexToUint8),
+/* harmony export */   intToBytes: () => (/* binding */ intToBytes),
+/* harmony export */   isHexString: () => (/* binding */ isHexString),
+/* harmony export */   toByte: () => (/* binding */ toByte),
+/* harmony export */   tryParseUint: () => (/* binding */ tryParseUint),
+/* harmony export */   uint8ToHex: () => (/* binding */ uint8ToHex)
 /* harmony export */ });
 /* harmony import */ var _charMapping_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./charMapping.js */ "./src/utils/charMapping.js");
 
@@ -106896,7 +109317,7 @@ const tryParseByte = (char1, char2) => {
  * Decodes two hex characters into a byte.
  * @param {string} char1 First hex digit.
  * @param {string} char2 Second hex digit.
- * @returns {numeric} Decoded byte.
+ * @returns {number} Decoded byte.
  */
 const toByte = (char1, char2) => {
 	const byte = tryParseByte(char1, char2);
@@ -106909,7 +109330,7 @@ const toByte = (char1, char2) => {
 /**
  * Determines whether or not a string is a hex string.
  * @param {string} input String to test.
- * @returns {boolean} true if the input is a hex string, false otherwise.
+ * @returns {boolean} \c true if the input is a hex string, \c false otherwise.
  */
 const isHexString = input => {
 	if (0 !== input.length % 2)
@@ -106925,8 +109346,8 @@ const isHexString = input => {
 
 /**
  * Converts a hex string to a uint8 array.
- * @param {string} input A hex encoded string.
- * @returns {Uint8Array} A uint8 array corresponding to the input.
+ * @param {string} input Hex encoded string.
+ * @returns {Uint8Array} Uint8 array corresponding to the input.
  */
 const hexToUint8 = input => {
 	if (0 !== input.length % 2)
@@ -106941,8 +109362,8 @@ const hexToUint8 = input => {
 
 /**
  * Converts a uint8 array to a hex string.
- * @param {Uint8Array} input A uint8 array.
- * @returns {string} A hex encoded string corresponding to the input.
+ * @param {Uint8Array} input Uint8 array.
+ * @returns {string} Hex encoded string corresponding to the input.
  */
 const uint8ToHex = input => {
 	let s = '';
@@ -106957,7 +109378,7 @@ const uint8ToHex = input => {
 /**
  * Tries to parse a string representing an unsigned integer.
  * @param {string} str String to parse.
- * @returns {numeric} Number represented by the input or undefined.
+ * @returns {number|undefined} Number represented by the input or undefined.
  */
 const tryParseUint = str => {
 	if ('0' === str)
@@ -106982,49 +109403,86 @@ const tryParseUint = str => {
 
 /**
  * Converts aligned bytes to little-endian number.
- * @param {Uint8Array} input A uint8 array.
- * @param {numeric} size Number of bytes.
- * @param {boolean} isSigned Should number be treated as signed.
- * @returns {numeric|BigInt} Value corresponding to the input.
+ * @param {Uint8Array} input Uint8 array.
+ * @param {number} size Number of bytes.
+ * @param {boolean} isSigned \c true if number should be treated as signed.
+ * @returns {number} Value corresponding to the input.
  */
 const bytesToInt = (input, size, isSigned = false) => {
 	const DataType = SIGNEDNESS_AND_SIZE_TO_ARRAY_TYPE_MAPPING[isSigned][size];
+	if (!DataType || 8 <= size)
+		throw Error(`unsupported int size ${size}`);
+
 	return new DataType(input.buffer, input.byteOffset, 1)[0];
 };
 
 /**
- * Converts bytes to little-endian number.
- * @param {Uint8Array} input A uint8 array.
- * @param {numeric} size Number of bytes.
- * @param {boolean} isSigned Should number be treated as signed.
- * @returns {numeric|BigInt} Value corresponding to the input.
+ * Converts aligned bytes to little-endian number.
+ * @param {Uint8Array} input Uint8 array.
+ * @param {number} size Number of bytes.
+ * @param {boolean} isSigned \c true if number should be treated as signed.
+ * @returns {bigint} Value corresponding to the input.
  */
-const bytesToIntUnaligned = (input, size, isSigned = false) => {
+const bytesToBigInt = (input, size, isSigned = false) => {
+	const DataType = SIGNEDNESS_AND_SIZE_TO_ARRAY_TYPE_MAPPING[isSigned][size];
+	if (!DataType || 8 > size)
+		throw Error(`unsupported int size ${size}`);
+
+	return new DataType(input.buffer, input.byteOffset, 1)[0];
+};
+
+const bytesToIntUnalignedInternal = (input, size, isSigned, createMappingFromView) => {
 	const view = new DataView(input.buffer, input.byteOffset);
-	const mapping = {
-		false: {
-			1: view.getUint8,
-			2: view.getUint16,
-			4: view.getUint32,
-			8: view.getBigUint64
-		},
-		true: {
-			1: view.getInt8,
-			2: view.getInt16,
-			4: view.getInt32,
-			8: view.getBigInt64
-		}
-	};
+	const mapping = createMappingFromView(view);
 
 	const reader = mapping[isSigned][size];
+	if (!reader)
+		throw Error(`unsupported int size ${size}`);
+
 	return reader.call(view, 0, true);
 };
 
 /**
+ * Converts bytes to little-endian number.
+ * @param {Uint8Array} input Uint8 array.
+ * @param {number} size Number of bytes.
+ * @param {boolean} isSigned \c true if number should be treated as signed.
+ * @returns {number} Value corresponding to the input.
+ */
+const bytesToIntUnaligned = (input, size, isSigned = false) => bytesToIntUnalignedInternal(input, size, isSigned, view => ({
+	false: {
+		1: view.getUint8,
+		2: view.getUint16,
+		4: view.getUint32
+	},
+	true: {
+		1: view.getInt8,
+		2: view.getInt16,
+		4: view.getInt32
+	}
+}));
+
+/**
+ * Converts bytes to little-endian number.
+ * @param {Uint8Array} input Uint8 array.
+ * @param {number} size Number of bytes.
+ * @param {boolean} isSigned \c true if number should be treated as signed.
+ * @returns {bigint} Value corresponding to the input.
+ */
+const bytesToBigIntUnaligned = (input, size, isSigned = false) => bytesToIntUnalignedInternal(input, size, isSigned, view => ({
+	false: {
+		8: view.getBigUint64
+	},
+	true: {
+		8: view.getBigInt64
+	}
+}));
+
+/**
  * Converts an integer to bytes.
- * @param {numeric} value Integer value.
- * @param {numeric} byteSize Number of output bytes.
- * @param {numeric} isSigned \c true if the value is signed.
+ * @param {number|bigint} value Integer value.
+ * @param {number} byteSize Number of output bytes.
+ * @param {boolean} isSigned \c true if the value is signed.
  * @returns {Uint8Array} Byte representation of the integer.
  */
 const intToBytes = (value, byteSize, isSigned = false) => {
@@ -107032,6 +109490,8 @@ const intToBytes = (value, byteSize, isSigned = false) => {
 	const typedBuffer = new DataType([value]);
 	return new Uint8Array(typedBuffer.buffer);
 };
+
+
 
 
 /***/ }),
@@ -107044,7 +109504,7 @@ const intToBytes = (value, byteSize, isSigned = false) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "ripemdKeccak256": () => (/* binding */ ripemdKeccak256)
+/* harmony export */   ripemdKeccak256: () => (/* binding */ ripemdKeccak256)
 /* harmony export */ });
 /* harmony import */ var _noble_hashes_sha3__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @noble/hashes/sha3 */ "./node_modules/@noble/hashes/esm/sha3.js");
 /* harmony import */ var ripemd160__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ripemd160 */ "./node_modules/ripemd160/index.js");
@@ -107057,10 +109517,12 @@ __webpack_require__.r(__webpack_exports__);
  * @param {Uint8Array} payload Input buffer to hash.
  * @returns {Uint8Array} Hash result.
  */
-const ripemdKeccak256 = payload => { // eslint-disable-line import/prefer-default-export
+const ripemdKeccak256 = payload => {
 	const partOneHash = _noble_hashes_sha3__WEBPACK_IMPORTED_MODULE_0__.keccak_256.create().update(payload).digest();
 	return new Uint8Array(new ripemd160__WEBPACK_IMPORTED_MODULE_1__().update(Buffer.from(partOneHash)).digest());
 };
+
+ // eslint-disable-line import/prefer-default-export
 
 
 /***/ }),
@@ -107162,7 +109624,7 @@ module.exports = JSON.parse('{"2.16.840.1.101.3.4.1.1":"aes-128-ecb","2.16.840.1
 /***/ ((module, exports, __webpack_require__) => {
 
 var __webpack_instantiate__ = ([WEBPACK_IMPORTED_MODULE_0]) => {
-	return __webpack_require__.v(exports, module.id, "884256fb7aa0141b2cce", {
+	return __webpack_require__.v(exports, module.id, "a74271869804857d88ba", {
 		"./symbol_crypto_wasm_bg.js": {
 			"__wbg_error_f851667af71bcfc6": WEBPACK_IMPORTED_MODULE_0.__wbg_error_f851667af71bcfc6,
 			"__wbg_new_abda76e883ba8a5f": WEBPACK_IMPORTED_MODULE_0.__wbg_new_abda76e883ba8a5f,
@@ -107184,7 +109646,7 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 	/* harmony import */ var WEBPACK_IMPORTED_MODULE_0 = __webpack_require__(/*! ./symbol_crypto_wasm_bg.js */ "./_build/wasm/web_webpack/symbol_crypto_wasm_bg.js");
 	var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([WEBPACK_IMPORTED_MODULE_0]);
 	var [WEBPACK_IMPORTED_MODULE_0] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__;
-	await __webpack_require__.v(exports, module.id, "884256fb7aa0141b2cce", {
+	await __webpack_require__.v(exports, module.id, "a74271869804857d88ba", {
 		"./symbol_crypto_wasm_bg.js": {
 			"__wbg_error_f851667af71bcfc6": WEBPACK_IMPORTED_MODULE_0.__wbg_error_f851667af71bcfc6,
 			"__wbg_new_abda76e883ba8a5f": WEBPACK_IMPORTED_MODULE_0.__wbg_new_abda76e883ba8a5f,
@@ -107247,7 +109709,7 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 /******/ 	var webpackExports = typeof Symbol === "function" ? Symbol("webpack exports") : "__webpack_exports__";
 /******/ 	var webpackError = typeof Symbol === "function" ? Symbol("webpack error") : "__webpack_error__";
 /******/ 	var resolveQueue = (queue) => {
-/******/ 		if(queue && !queue.d) {
+/******/ 		if(queue && queue.d < 1) {
 /******/ 			queue.d = 1;
 /******/ 			queue.forEach((fn) => (fn.r--));
 /******/ 			queue.forEach((fn) => (fn.r-- ? fn.r++ : fn()));
@@ -107278,7 +109740,7 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 /******/ 	}));
 /******/ 	__webpack_require__.a = (module, body, hasAwait) => {
 /******/ 		var queue;
-/******/ 		hasAwait && ((queue = []).d = 1);
+/******/ 		hasAwait && ((queue = []).d = -1);
 /******/ 		var depQueues = new Set();
 /******/ 		var exports = module.exports;
 /******/ 		var currentDeps;
@@ -107306,7 +109768,7 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 /******/ 			});
 /******/ 			return fn.r ? promise : getResult();
 /******/ 		}, (err) => ((err ? reject(promise[webpackError] = err) : outerResolve(exports)), resolveQueue(queue)));
-/******/ 		queue && (queue.d = 0);
+/******/ 		queue && queue.d < 0 && (queue.d = 0);
 /******/ 	};
 /******/ })();
 /******/ 
