@@ -1,0 +1,242 @@
+<meta charset="utf-8" emacsmode="-*- markdown -*-"><link rel="stylesheet" href="./slate.css">
+
+# Monitoring nodes using lightapi (on Windows 🎉)
+
+## Prerequisites
+
+Before diving in, you'll need two things:
+ * installation of [Python 3.x](https://www.python.org/downloads/) - I'll be using 3.9
+ * either [Build Tools for Visual Studio 2019](https://wiki.python.org/moin/WindowsCompilers#Compilers_Installation_and_configuration) or [Visual Studio 2022](https://wiki.python.org/moin/WindowsCompilers#Compilers_Installation_and_configuration) (Community Edition) - this is required to automatically compile some of the python packages that come in source form
+
+## Getting lightapi
+
+```cmd
+C:\nem\monitoring-win〉python3 -m pip install symbol-sdk-python --progress-bar off
+Collecting symbol-sdk-python
+  Using cached symbol_sdk_python-3.1.0-py3-none-any.whl (77 kB)
+Collecting pyzbar<0.2.0,>=0.1.9
+  Using cached pyzbar-0.1.9-py2.py3-none-win_amd64.whl (817 kB)
+Collecting pillow<10.1.0,>=10.0.0
+  Using cached Pillow-10.0.0-cp39-cp39-win_amd64.whl (2.5 MB)
+Collecting pynacl<1.6.0,>=1.5.0
+  Using cached PyNaCl-1.5.0-cp36-abi3-win_amd64.whl (212 kB)
+Collecting qrcode<7.5.0,>=7.4.2
+  Using cached qrcode-7.4.2-py3-none-any.whl (46 kB)
+Collecting pyyaml<6.1.0,>=6.0.1
+  Using cached PyYAML-6.0.1-cp39-cp39-win_amd64.whl (152 kB)
+Collecting cryptography<41.1.0,>=41.0.3
+  Using cached cryptography-41.0.3-cp37-abi3-win_amd64.whl (2.6 MB)
+Collecting safe-pysha3<1.1.0,>=1.0.4
+  Using cached safe_pysha3-1.0.4-cp39-cp39-win_amd64.whl
+Collecting mnemonic<1.0,>=0.20
+  Using cached mnemonic-0.20-py3-none-any.whl (62 kB)
+Collecting ripemd-hash<1.1.0,>=1.0.1
+  Using cached ripemd_hash-1.0.1-cp39-cp39-win_amd64.whl
+Collecting cffi>=1.12
+  Using cached cffi-1.15.1-cp39-cp39-win_amd64.whl (179 kB)
+Requirement already satisfied: pycparser in x:\users\gimre\appdata\local\programs\python\python39\lib\site-packages (from cffi>=1.12->cryptography<41.1.0,>=41.0.3->symbol-sdk-python) (2.21)
+Requirement already satisfied: typing-extensions in x:\users\gimre\appdata\local\programs\python\python39\lib\site-packages (from qrcode<7.5.0,>=7.4.2->symbol-sdk-python) (4.7.1)
+Requirement already satisfied: pypng in x:\users\gimre\appdata\local\programs\python\python39\lib\site-packages (from qrcode<7.5.0,>=7.4.2->symbol-sdk-python) (0.20220715.0)
+Requirement already satisfied: colorama in x:\users\gimre\appdata\local\programs\python\python39\lib\site-packages (from qrcode<7.5.0,>=7.4.2->symbol-sdk-python) (0.4.6)
+Installing collected packages: cffi, safe-pysha3, ripemd-hash, qrcode, pyzbar, pyyaml, pynacl, pillow, mnemonic, cryptography, symbol-sdk-python
+Successfully installed cffi-1.15.1 cryptography-41.0.3 mnemonic-0.20 pillow-10.0.0 pynacl-1.5.0 pyyaml-6.0.1 pyzbar-0.1.9 qrcode-7.4.2 ripemd-hash-1.0.1 safe-pysha3-1.0.4 symbol-sdk-python-3.1.0
+
+C:\nem\monitoring-win〉python3 -m pip install symbol-lightapi
+Collecting symbol-lightapi
+  Downloading symbol-lightapi-0.0.5.tar.gz (24 kB)
+  Installing build dependencies ... done
+  Getting requirements to build wheel ... done
+    Preparing wheel metadata ... done
+Building wheels for collected packages: symbol-lightapi
+  Building wheel for symbol-lightapi (PEP 517) ... done
+  Created wheel for symbol-lightapi: filename=symbol_lightapi-0.0.5-cp39-abi3-win_amd64.whl size=47046 sha256=6cdad06e0ba635bf6dddf2dc1272aeb6556ad146265524fde790057c3cb57767
+  Stored in directory: x:\users\gimre\appdata\local\pip\cache\wheels\8b\56\d8\4576d5e9f7c6cd071182a6ed4aaf084a9e5aa07939869fcf9f
+Successfully built symbol-lightapi
+Installing collected packages: symbol-lightapi
+Successfully installed symbol-lightapi-0.0.5
+```
+
+It seems lightapi package did not install it automatically, so we'll also need few more packages:
+```cmd
+C:\nem\monitoring-win〉python3 -m pip install asyncio aiohttp zenlog
+Collecting asyncio
+Collecting aiohttp
+Collecting zenlog
+Installing collected packages: zenlog, asyncio, aiohttp
+Successfully installed aiohttp-3.8.5 asyncio-3.4.3 zenlog-1.1
+
+```
+
+Now, that went well.
+
+## Monitoring nodes via REST.
+
+First some code, that I'll be describe in details below
+
+```python
+import asyncio
+
+from symbollightapi.connector.SymbolConnector import SymbolConnector
+from symbollightapi.model.Exceptions import NodeException
+
+
+async def main():
+	symbol_nodes = [
+		'https://angel.vistiel-arch.jp:3001',
+		'https://yumeya1.com:3001',
+		'https://age01.kitsutsuki.tokyo:3001',
+		'http://xymharvesting.net:3000'
+	]
+	symbol_connectors = [SymbolConnector(name) for name in symbol_nodes]
+
+	symbol_heights = {}
+	async def get_height(connector):
+		try:
+			height = await connector.chain_height()
+		except NodeException:
+			print(f'exception occured, when talking with node {connector.endpoint}')
+			height = 0
+		symbol_heights[connector.endpoint] = height
+
+	symbol_promises = [get_height(connector) for connector in symbol_connectors]
+	await asyncio.gather(*symbol_promises)
+
+	for name, height in sorted(symbol_heights.items()):
+		print(f'{name:40} {height}')
+
+
+if '__main__' == __name__:
+	asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+	asyncio.run(main())
+```
+
+First we have set of imports:
+```python
+import asyncio
+
+from symbollightapi.connector.SymbolConnector import SymbolConnector
+from symbollightapi.model.Exceptions import NodeException
+```
+
+`asyncio` is needed because whole application will be asynchronous. [SymbolConnector](https://github.com/symbol/product/blob/dev/lightapi/python/symbollightapi/connector/SymbolConnector.py) will be used to talk to the nodes. Connectors might raise `NodeException`.
+
+Now let's take a look at the bottom, there's quite usual:
+```python
+if '__main__' == __name__:
+	asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+	asyncio.run(main())
+```
+
+This fires `main()` function within asynchronous loop. Call to `set_event_loop_policy` is required on Windows.
+
+It's time to examine main function:
+```python
+	symbol_nodes = [
+		'https://angel.vistiel-arch.jp:3001',
+		'https://yumeya1.com:3001',
+		'https://age01.kitsutsuki.tokyo:3001',
+		'http://xymharvesting.net:3000'
+	]
+	symbol_connectors = [SymbolConnector(name) for name in symbol_nodes]
+```
+Just some random Symbol REST endpoint, that are wrapped into `SymbolConnectors` array, right below.
+
+```
+	symbol_heights = {}
+	async def get_height(connector):
+		try:
+			height = await connector.chain_height()
+		except NodeException:
+			print(f'exception occured, when talking with node {connector.endpoint}')
+			height = 0
+		symbol_heights[connector.endpoint] = height
+```
+
+Next we have a helper method that will invoke async method `connector.chain_height()` [SymbolConnector.chain_height](https://github.com/symbol/product/blob/dev/lightapi/python/symbollightapi/connector/SymbolConnector.py#:~:text=def%20chain_height) and store results for each node in `symbol_heights` dictionary.
+
+```py
+	symbol_promises = [get_height(connector) for connector in symbol_connectors]
+	await asyncio.gather(*symbol_promises)
+```
+
+That's an array with promises, `asyncio.gather` will wait for promises to finish (I'm simplifying here, consult the docs if you want to know what it does).
+
+
+Finally last part, just displays the results
+```py
+	for name, height in sorted(symbol_heights.items()):
+		print(f'{name:40} {height}')
+```
+
+## Lightapi can talk to nem nodes too 🚀
+
+Yes, the example above can easily be modified to talk to nem nodes:
+ * there's [symbollightapi.connector.NemConnector](https://github.com/symbol/product/blob/dev/lightapi/python/symbollightapi/connector/NemConnector.py)
+ * nem endpoints look like: `http://nis1.dusan.gq:7890`
+
+## Talking to peer nodes 👩‍🔬
+
+This part is slightly more complicated, as there's certificate required to talk with nodes.
+
+On linux/macOS shoestring could be used to generate certs, on win there are currently problems with this, so let me refer you to this part instead:
+[Generating Symbol certificates using openssl](http://127.0.0.1:8000/2021-03-24-deploying.part1.html).
+
+There are only slight differences:
+
+ * there's `SymbolPeerConnector`, but it takes (host, port) pair rather than endpoint
+ * obviously it also requires mentioned certificate directory (to identify to a node)
+
+```python
+import asyncio
+from pathlib import Path
+
+from symbollightapi.connector.SymbolPeerConnector import SymbolPeerConnector
+from symbollightapi.model.Exceptions import NodeException
+
+
+async def get_height(connector):
+	try:
+		height = await connector.chain_height()
+	except NodeException:
+		print(f'exception occured, when talking with node {connector.node_host}:{connector.node_port}')
+		height = 0
+
+	return height
+
+async def store(map_name, connector, callback):
+	result = await callback(connector)
+	name = f'{connector.node_host}:{connector.node_port}'
+	map_name[name] = result
+
+async def main():
+	symbol_nodes = [
+		'ahra-symbol.com',
+		'x.innermedia.net',
+		'harvest-01.symbol.farm',
+		'i.symbol-nember.tokyo'
+	]
+	symbol_connectors = [SymbolPeerConnector(node_host, 7900, Path('cert')) for node_host in symbol_nodes]
+
+	symbol_heights = {}
+	symbol_promises = [store(symbol_heights, connector, get_height) for connector in symbol_connectors]
+	await asyncio.gather(*symbol_promises)
+
+	for name, height in sorted(symbol_heights.items()):
+		print(f'{name:40} {height}')
+
+
+if '__main__' == __name__:
+	asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+	asyncio.run(main())
+```
+
+And result at the time of writing this:
+```log
+ahra-symbol.com:7900                     2516481
+harvest-01.symbol.farm:7900              2516481
+i.symbol-nember.tokyo:7900               2516481
+x.innermedia.net:7900                    2516481
+```
+
+<style class="fallback">body{visibility:hidden}</style><script>markdeepOptions={tocStyle:'long'};</script>
+<!-- Markdeep: --><script src="./markdeep.min.js" charset="utf-8"></script>
