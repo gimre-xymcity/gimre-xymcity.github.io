@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Dev tools - bech32 converter</title>
+		<style type="text/css">
+		label { display: block; }
+		fieldset { border: 0; }
+		label.radio { display: inline-block; }
+		textarea { display: inline-block; background-color: #f3f2f2; }
+		input { background-color: #f3f2f2; }
+		/*
+{
+    name: 'tundra3',
+    colors: [
+      '#87c3ca',
+      '#7b7377',
+      '#b2475d',
+      '#7d3e3e',
+      '#eb7f64',
+      '#d9c67a',
+      '#f3f2f2'
+    ]
+  },
+		*/
+		</style>
+		<script src="https://cdn.jsdelivr.net/npm/json-bigint-parser-browser@1.0.4/json-bigint-browser.min.js"></script>
+	</head>
+	<body style='background-color: #f3efe6'>
+		<h2>public and private key converter, use at your own risk</h2>
+		<p>everything happens browser-side, enjoy</p>
+		<p>The goal of this page is to transform account keys into keys suitable for use with <a href="https://github.com/str4d/rage">age</a> encryption tool.
+		For details see this post: 
+		</p>
+		<form>
+			<div class='section'>
+				<h2>ed25519 public key to AGE bech32-encoded x25519 public key</h2>
+				<div style='display: inline-block; vertical-align: top;'>
+					<label for="pubkey-hex">Public key in hex (in hex):</label>
+					<input name="pubkey-hex" id="pubkey-hex" size="80" value="23AC0770A1060241604A8E60A47166E3E5B4034D4EE321DBE19B342E85B21544"/>
+
+					<label for="pubkey-hrp-prefix">Bech32 hrp prefix:</label>
+					<input name="pubkey-hrp-prefix" id="pubkey-hrp-prefix" size="16" value="age"/>
+				</div>
+				<div style='display: inline-block; border: 1px solid black; width: 50%; word-wrap: break-word;'>
+					<table>
+						<tr><td>testnet</td><td><tt id="pubkey-bech32-testnet">&nbsp;</tt></td></tr>
+						<tr><td>mainnet</td><td><tt id="pubkey-bech32-mainnet">&nbsp;</tt></td></tr>
+						<tr><td>x25519 public key</td><td><tt id="pubkey-bech32-x25519">&nbsp;</tt></td></tr>
+						<tr><td>bech32 encoded public key</td><td><b><tt id="pubkey-bech32">&nbsp;</tt></b></td></tr>
+					</table>
+				</div>
+				<div style="clear:both"></div>
+			</div>
+
+			<div class='section'>
+				<h2>ed25519 private key to AGE bech32-encoded x25519 private key</h2>
+				<div style='display: inline-block; vertical-align: top;'>
+					<label for="privkey-hex">Private key in hex (in hex):</label>
+					<input name="privkey-hex" id="privkey-hex" size="80" value="9900aabbccddeeff11223344556677889900aabbccddeeff1122334455667788"/>
+
+					<label for="privkey-hrp-prefix">Bech32 hrp prefix:</label>
+					<input name="privkey-hrp-prefix" id="privkey-hrp-prefix" size="16" value="age-secret-key-"/>
+				</div>
+				<div style='display: inline-block; border: 1px solid black; width: 50%; word-wrap: break-word;'>
+					<table>
+						<tr><td style='vertical-align: top; border-top: 1px solid #444; padding: 2px;'>ed25519 public key</td>
+							<td style='vertical-align: top; border-top: 1px solid #444; padding: 2px;'><tt id="privkey-pubkey-ed25519">&nbsp;</tt></td></tr>
+						<tr><td style='vertical-align: top; border-top: 1px solid #444; padding: 2px;'>x25519 PRIVATE key (keep secret)</td>
+							<td style='vertical-align: top; border-top: 1px solid #444; padding: 2px;'><tt id="privkey-privkey-x25519">&nbsp;</tt></td></tr>
+						<tr><td style='vertical-align: top; border-top: 1px solid #444; padding: 2px;'>bech32 encoded private key</td>
+							<td style='vertical-align: top; border-top: 1px solid #444; padding: 2px;'><b><tt id="privkey-bech32">&nbsp;</tt></b></td></tr>
+						<tr><td style='vertical-align: top; border-top: 1px solid #444; padding: 2px;'>bech32 encoded public key</td>
+							<td style='vertical-align: top; border-top: 1px solid #444; padding: 2px;'>identity file:<pre id="privkey-bech32-file" style='border: 1px dotted gray; width: 100%;'>T.B.D</pre></td></tr>
+					</table>
+				</div>
+				<div style="clear:both"></div>
+			</div>
+		</form>
+		<!-- <script>const exports={};</script>
+		<script src="/bech32/bech32.js"></script> -->
+		<script type="module">
+			import symbolSdk from './devtools-bundle/bundle.web.js';
+			import bech32 from './bech32/bech32.js';
+
+			const factory = symbolSdk.symbol.TransactionFactory;
+			const domPubkeyHex = document.getElementById('pubkey-hex');
+			const domPubkeyPrefix = document.getElementById('pubkey-hrp-prefix');
+
+			const domPrivkeyHex = document.getElementById('privkey-hex');
+			const domPrivkeyPrefix = document.getElementById('privkey-hrp-prefix');
+
+			const domSetText = (domElem, textContent) => {
+				domElem.replaceChild(document.createTextNode(textContent), domElem.childNodes[0]);
+			}
+
+			function publicKeyToBigInt(input) {
+				const inputCopy = new Uint8Array(32);
+				inputCopy.set(input.bytes.slice())
+				inputCopy.reverse();
+
+				const publicKeyReversed = new symbolSdk.PublicKey(inputCopy);
+				return BigInt('0x' + publicKeyReversed.toString());
+			}
+
+			function bigIntToPublicKey(input) {
+				const input_str = input.toString(16);
+				const publicKey = new symbolSdk.PublicKey(input_str);
+				publicKey.bytes.reverse();
+
+				return publicKey;
+			}
+
+			const q = (1n << 255n) - 19n;
+
+			function modulo(x, d) {
+				return ((x % d) + d) % d;
+			}
+			//
+			// """== pow(x, 2**p, q)"""
+			function pow2(x, p) {
+				while (p > 0) {
+					x = modulo(x * x, q);
+					p -= 1;
+				}
+				return x;
+			}
+
+			// returns  z^{-1} % q, for z != 0
+			function inv(z) {
+				// Adapted from curve25519_athlon.c in djb's Curve25519.
+				const z2 = modulo(z * z, q);  // 2
+				const z9 = modulo(pow2(z2, 2) * z, q);  // 9
+				const z11 = modulo(z9 * z2, q);  // 11
+				const z2_5_0 = modulo(modulo(z11 * z11, q) * z9, q);  // 31 == 2^5 - 2^0
+				const z2_10_0 = modulo(pow2(z2_5_0, 5) * z2_5_0, q);  // 2^10 - 2^0
+				const z2_20_0 = modulo(pow2(z2_10_0, 10) * z2_10_0, q);  // ...
+				const z2_40_0 = modulo(pow2(z2_20_0, 20) * z2_20_0, q);
+				const z2_50_0 = modulo(pow2(z2_40_0, 10) * z2_10_0, q);
+				const z2_100_0 = modulo(pow2(z2_50_0, 50) * z2_50_0, q);
+				const z2_200_0 = modulo(pow2(z2_100_0, 100) * z2_100_0, q);
+				const z2_250_0 = modulo(pow2(z2_200_0, 50) * z2_50_0, q);  // 2^250 - 2^0
+				return modulo(pow2(z2_250_0, 5) * z11, q); // 2^255 - 2^5 + 11 = q - 2
+
+			}
+
+			function mapYtoU(y) {
+				const lhs = modulo(1n + y, q);
+				const rhs = inv( modulo(1n - y, q) );
+
+				return modulo(lhs * rhs, q);
+			}
+
+			function ed25519publicKeyTox25519(publicKey) {
+				const y = publicKeyToBigInt(publicKey);
+				// WARNING: normaly, this should do checks if public key is valid (and if resulting point is on curve)
+				// skipping that for simplicity, as there's only y coordinate that's needed
+
+				const u = mapYtoU(y);
+				return bigIntToPublicKey(u);
+			}
+
+			const updatePubKeyOutput = () => {
+				const data = domPubkeyHex.value.replaceAll(/\s/g, '');
+				const publicKey = new symbolSdk.PublicKey(data);
+				const mainnet = new symbolSdk.facade.SymbolFacade('mainnet');
+				const testnet = new symbolSdk.facade.SymbolFacade('testnet');
+
+				const mainnetAddress = mainnet.network.publicKeyToAddress(publicKey);
+				const testnetAddress = testnet.network.publicKeyToAddress(publicKey);
+
+				const x25519publicKey = ed25519publicKeyTox25519(publicKey);
+				const hrp = domPubkeyPrefix.value.replaceAll(/\s/g, '');
+				const bech32encodedPublicKey = bech32.encode(hrp, bech32.toWords(x25519publicKey.bytes));
+
+				domSetText(document.getElementById('pubkey-bech32-testnet'), testnetAddress);
+				domSetText(document.getElementById('pubkey-bech32-mainnet'), mainnetAddress);
+				domSetText(document.getElementById('pubkey-bech32-x25519'), x25519publicKey);
+				domSetText(document.getElementById('pubkey-bech32'), bech32encodedPublicKey);
+
+			};
+			domPubkeyHex.addEventListener('input', updatePubKeyOutput, false);
+			domPubkeyPrefix.addEventListener('input', updatePubKeyOutput, false);
+
+			// fire up on load
+			domPubkeyHex.dispatchEvent(new Event('input', {bublles:true}));
+
+			// ====
+
+			const updatePrivKeyOutput = () => {
+				const data = domPrivkeyHex.value.replaceAll(/\s/g, '');
+				const privateKey = new symbolSdk.PrivateKey(data);
+				const keyPair = new symbolSdk.facade.SymbolFacade.KeyPair(privateKey);
+
+				domSetText(document.getElementById('privkey-pubkey-ed25519'), keyPair.publicKey);
+				domSetText(document.getElementById('privkey-privkey-x25519'), '⌛');
+
+				crypto.subtle.digest("SHA-512", keyPair.privateKey.bytes).then(data => {
+					const privkeyData = new Uint8Array(data, 0, 32);
+					const privateKeyX25519 = new symbolSdk.PrivateKey(privkeyData);
+
+					const hrp = domPrivkeyPrefix.value.replaceAll(/\s/g, '');
+					const bech32encodedPrivkey = bech32.encode(hrp, bech32.toWords(privkeyData));
+
+					const x25519publicKey = ed25519publicKeyTox25519(keyPair.publicKey);
+					const bech32encodedPublicKey = bech32.encode('age', bech32.toWords(x25519publicKey.bytes));
+					const currentDate = (new Date()).toISOString();
+
+					domSetText(document.getElementById('privkey-privkey-x25519'), privateKeyX25519.toString());
+					domSetText(document.getElementById('privkey-bech32'), bech32encodedPrivkey.toString().toUpperCase());
+
+					const file =
+						`# created: ${currentDate}\n` +
+						`# public key: ${bech32encodedPublicKey}\n` +
+						`${bech32encodedPrivkey.toString().toUpperCase()}\n`;
+
+					domSetText(document.getElementById('privkey-bech32-file'), file);
+				});
+			};
+
+			domPrivkeyHex.addEventListener('input', updatePrivKeyOutput);
+			domPrivkeyPrefix.addEventListener('input', updatePrivKeyOutput);
+			domPrivkeyHex.dispatchEvent(new Event('input', {bublles:true}));
+
+		</script>
+	</body>
+</html>
+
