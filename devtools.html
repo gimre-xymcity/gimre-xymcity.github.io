@@ -31,10 +31,14 @@
 		<p>everything happens browser-side, enjoy</p>
 		<form>
 			<div class='section'>
-				<h2>privkey to pubkey</h2>
+				<h2>Secret (private) key to public key</h2>
 				<div style='display: inline-block; vertical-align: top;'>
 					<label for="privkey-hex">Private key in hex (in hex):</label>
 					<input name="privkey-hex" id="privkey-hex" size="100" value="1A9FBB379403527C5AF09823D208224F3EF047C0D33575E58A7265E31844EFB2"/>
+
+					<br>
+					<input name="privkey-pubkey-propagate" id="privkey-pubkey-propagate" type="checkbox" checked="checked"/>
+					<label for="privkey-pubkey-propagate" style='display: inline-block'>Propagate to public-key field</label>
 				</div>
 				<div style='display: inline-block; border: 1px solid black; width: 50%; word-wrap: break-word;'>
 					<pre id="privkey-to-pubkey-output" style="width:100%; word-wrap: break-word;">&nbsp;</pre>
@@ -43,7 +47,7 @@
 			</div>
 
 			<div class='section'>
-				<h2>pubkey to address</h2>
+				<h2>Public key to address</h2>
 				<div style='display: inline-block; vertical-align: top;'>
 					<label for="pubkey-hex">Public key in hex (in hex):</label>
 					<input name="pubkey-hex" id="pubkey-hex" size="100" value="E6833171B35BCBF1EBF8236F0BEE5E639C3721BC11096CEF13BACF5070EB48F4"/>
@@ -172,10 +176,11 @@ F82302A23F91ED6B8065140600000000</pre>
 
 			const factory = symbolSdk.symbol.TransactionFactory;
 			const domPrivkeyHex = document.getElementById('privkey-hex');
+			const domPrivkeyPropagate = document.getElementById('privkey-pubkey-propagate');
 			const domPubkeyHex = document.getElementById('pubkey-hex');
 			const domAddressHex = document.getElementById('address-hex');
 			const domTransactionDescriptorNetwork = document.getElementById('transaction-descriptor-network');
-			
+
 			const domTransactionDescriptor = document.getElementById('transaction-descriptor');
 			const domTransactionHex = document.getElementById('transaction-hex');
 			const domTransactionPrivkeyHex = document.getElementById('transaction-privkey-hex');
@@ -188,35 +193,52 @@ F82302A23F91ED6B8065140600000000</pre>
 				domElem.replaceChild(document.createTextNode(textContent), domElem.childNodes[0]);
 			}
 
+			const getOrError = (input, converter, domOutput, action) => {
+				try {
+					action(converter(input));
+				} catch (error) {
+					domSetText(domOutput, `Error: ${error.message}`);
+				}
+			}
+
 			domPrivkeyHex.addEventListener('input', () => {
 				const data = domPrivkeyHex.value.replaceAll(/\s/g, '');
-				const privateKey = new symbolSdk.PrivateKey(data);
-				const keyPair = new symbolSdk.facade.SymbolFacade.KeyPair(privateKey);
+				const domOutput = document.getElementById('privkey-to-pubkey-output');
+				getOrError(data, elem => new symbolSdk.PrivateKey(elem), domOutput, privateKey => {
+					const keyPair = new symbolSdk.facade.SymbolFacade.KeyPair(privateKey);
 
-				domSetText(document.getElementById('privkey-to-pubkey-output'), keyPair.publicKey);
+					domSetText(domOutput, keyPair.publicKey);
+					if (domPrivkeyPropagate.checked) {
+						domPubkeyHex.value = keyPair.publicKey;
+					}
+				});
 			});
 			domPrivkeyHex.dispatchEvent(new Event('input', {bublles:true}));
 
 			domPubkeyHex.addEventListener('input', () => {
 				const data = domPubkeyHex.value.replaceAll(/\s/g, '');
-				const publicKey = new symbolSdk.PublicKey(data);
-				const mainnet = new symbolSdk.facade.SymbolFacade('mainnet');
-				const testnet = new symbolSdk.facade.SymbolFacade('testnet');
+				const domOutput = document.getElementById('pubkey-to-address-output');
+				getOrError(data, elem => new symbolSdk.PublicKey(elem), domOutput, publicKey => {
+					const mainnet = new symbolSdk.facade.SymbolFacade('mainnet');
+					const testnet = new symbolSdk.facade.SymbolFacade('testnet');
 
-				const mainnetAddress = mainnet.network.publicKeyToAddress(publicKey);
-				const testnetAddress = testnet.network.publicKeyToAddress(publicKey);
+					const mainnetAddress = mainnet.network.publicKeyToAddress(publicKey);
+					const testnetAddress = testnet.network.publicKeyToAddress(publicKey);
 
-				const addresses = `mainnet: ${mainnetAddress}\ntestnet: ${testnetAddress}`;
-				domSetText(document.getElementById('pubkey-to-address-output'), addresses);
+					const addresses = `mainnet: ${mainnetAddress}\ntestnet: ${testnetAddress}`;
+					domSetText(domOutput, addresses);
+				});
 			}, false);
 			domPubkeyHex.dispatchEvent(new Event('input', {bublles:true}));
 
 			domAddressHex.addEventListener('input', () => {
 				const addressInHex = domAddressHex.value.replaceAll(/\s/g, '');
-				const addressAsBytes = symbolSdk.utils.hexToUint8(addressInHex);
-				const address = new symbolSdk.facade.SymbolFacade.Address(addressAsBytes);
-				const addresses = `${address}`;
-				domSetText(document.getElementById('address-hex-to-address-output'), address);
+				const domOutput = document.getElementById('address-hex-to-address-output');
+				getOrError(addressInHex, symbolSdk.utils.hexToUint8, domOutput, addressAsBytes => {
+					const address = new symbolSdk.facade.SymbolFacade.Address(addressAsBytes);
+					const addresses = `${address}`;
+					domSetText(domOutput, address);
+				});
 			}, false);
 			domAddressHex.dispatchEvent(new Event('input', {bublles:true}));
 
@@ -360,8 +382,8 @@ F82302A23F91ED6B8065140600000000</pre>
 
 			domTransactionHex.addEventListener('input', () => {
 				const data = domTransactionHex.value.replaceAll(/\s/g, '');
-				const transaction_hex = symbolSdk.utils.hexToUint8(data);
 				try {
+					const transaction_hex = symbolSdk.utils.hexToUint8(data);
 					const transaction = factory.deserialize(transaction_hex);
 
 					const res = reformat(transaction.toString());
