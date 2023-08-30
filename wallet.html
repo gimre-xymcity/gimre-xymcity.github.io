@@ -20,9 +20,9 @@
 	</head>
 
 	<script type="text/template" id="mainTemplate">
-<h2> ${page.description} </h2>
+<h2> ${inp.description} </h2>
 <form>
-	<p>${page.networkSelection}</p>
+	<p>${inp.networkSelection}</p>
 	<fieldset>
 		<input type="radio" name="network-selection" id="network-mainnet" value="mainnet" checked>
 		<label class="inl" for="lang-mainnet">mainnet</label>
@@ -31,7 +31,7 @@
 		<label class="inl" for="network-testnet">SAI testnet</label>
 	</fieldset>
 	<div>
-		<label for="node-selection">${page.nodePicker}</label>
+		<label for="node-selection">${inp.nodePicker}</label>
 		<select id="node-selection" name="node-selection">
 		</select>
 	</div>
@@ -39,36 +39,36 @@
 	<hr>
 
 	<div>
-		<label for="privkey-hex">${page.privateKeyDescription}</label>
+		<label for="privkey-hex">${inp.privateKeyDescription}</label>
 		<input name="privkey-hex" id="privkey-hex" size="180" value="absurd amount doctor acoustic avoid letter advice cage absurd amount doctor acoustic avoid letter advice cage absurd amount doctor acoustic avoid letter advice comic"/>
 	</div>
 
-	<div id="privkey-hex-status-hex">${page.privateKeyInfoStatusHex}</div>
+	<div id="privkey-hex-status-hex">${inp.privateKeyInfoStatusHex}</div>
 	<div id="privkey-hex-status-bip">
 		<div>
-			<div>${page.privateKeyInfoStatusBip}</div>
+			<div>${inp.privateKeyInfoStatusBip}</div>
 			<div id="privkey-hex-error" class="error-box">&nbsp;</div>
 		</div>
 
 		<div>
-			<label for="privkey-selection">${page.privateKeyPicker}</label>
+			<label for="privkey-selection">${inp.privateKeyPicker}</label>
 			<select id="privkey-selection" name="privkey-selection">
 			</select>
 		</div>
 	</div>
 	<table>
 		<tr>
-			<td>${page.privKeyInfoPublicKey}</td> <td><tt id="privkey-pubkey">&nbsp;</tt></td>
+			<td>${inp.privKeyInfoPublicKey}</td> <td><tt id="privkey-pubkey">&nbsp;</tt></td>
 		</tr>
 		<tr>
-			<td>${page.privKeyInfoAddress}</td> <td><tt id="privkey-address">&nbsp;</tt></td>
+			<td>${inp.privKeyInfoAddress}</td> <td><tt id="privkey-address">&nbsp;</tt></td>
 		</tr>
 	</table>
 
 	<hr>
 
 	<div>
-		<label for="transaction-selection">${page.transactionPicker}</label>
+		<label for="transaction-selection">${inp.transactionPicker}</label>
 		<select id="transaction-selection" name="transaction-selection">
 			<option value="transfer-transaction-v1">Transfer</option>
 		</select>
@@ -82,17 +82,17 @@
 
 	<script type="text/template" id="transferTemplate">
 <table>
-	<tr><td>signerPublicKey</td><td><tt>${page.signerPublicKey}</tt></td>
+	<tr><td>signerPublicKey</td><td><tt>${inp.signerPublicKey}</tt></td>
 		<td rowspan="7">Preview: <div><pre id="transaction-preview">&nbsp;</pre></div></td>
 	</tr>
 	<tr><td>(max) fee</td><td>
 		<strong id="fee-formula">&nbsp;</strong>
-		<input name="fee-multiplier" id="fee-multiplier" size="18" value="${page.feeMultiplier}"/>
+		<input name="fee-multiplier" id="fee-multiplier" size="18" value="${inp.feeMultiplier}"/>
 	</td></tr>
 	<tr><td>deadline</td><td>
 		<select id="transaction-deadline-selection" name="transaction-deadline-selection">
-			<%for (const ts of page.timestamps) {%>
-			<option value="${ts.timestamp}" ${page.deadline === ts.timestamp.toString() ? 'selected' : ''}>${ts.timestamp} (+ ${ts.hours} hour(s), ~${ts.readable})</option>
+			<%for (const ts of inp.timestamps) {%>
+			<option value="${ts.timestamp}" ${inp.deadline === ts.timestamp.toString() ? 'selected' : ''}>${ts.timestamp} (+ ${ts.hours} hour(s), ~${ts.readable})</option>
 			<%}%>
 		</select>
 
@@ -102,19 +102,19 @@
 		<td>recipientAddress</td>
 		<td>
 			<label for="recipient-address">TODO (description)</label>
-			<input name="recipient-address" id="recipient-address" size="60" value="${page.recipient}"/>
+			<input name="recipient-address" id="recipient-address" size="60" value="${inp.recipient}"/>
 		</td>
 	</tr>
 	<tr>
 		<td>mosaics</td>
-		<td><ul><%for (const mosaic of page.mosaics) {%>
+		<td><ul><%for (const mosaic of inp.mosaics) {%>
 			<li>
 				${mosaic.mosaicId} - ${mosaic.amount}
 				<input name="mosaic-remove" id="mosaic-remove-${mosaic.mosaicId}" size="18" value="&times;" type="button"/>
 			</li>
 			<%}%>
 			<label class="inl" for="mosaic-id">mosaic id</label>
-			<input name="mosaic-id" id="mosaic-id" size="18" value="${page.currencyId}"/>
+			<input name="mosaic-id" id="mosaic-id" size="18" value="${inp.currencyId}"/>
 
 			<label class="inl" for="mosaic-amount">mosaic amount</label>
 			<input name="mosaic-amount" id="mosaic-amount" size="18" value="1'000'000"/>
@@ -124,7 +124,7 @@
 	</tr>
 	<tr><td>message</td><td>
 
-		<div><textarea id="message" rows=10, cols=80>${page.message ? page.message : ''}</textarea></div>
+		<div><textarea id="message" rows=10, cols=80>${inp.message ? inp.message : ''}</textarea></div>
 
 		<input name="message-legacy-prefix" id="message-legacy-prefix" type="checkbox"/>
 		<label class="inl" for="message-legacy-prefix">use legacy prefix byte</label>
@@ -137,7 +137,7 @@
 
 	</td></tr>
 	<tr><td>signature:</td><td>
-		<tt id="transaction-signature">${page.signature}</tt>
+		<tt id="transaction-signature">${inp.signature}</tt>
 	</td></tr>
 </table>
 	</script>
@@ -149,7 +149,7 @@
 				<input type="radio" name="lang-selection" id="lang-en" value="en" checked>
 				<label class="inl" for="lang-en">en (🇬🇧🇺🇸)</label>
 
-				<input type="radio" name="lang-selection" id="lang-jp" value="jp">
+				<input type="radio" name="lang-selection" id="lang-jp" value="jp" disabled>
 				<label class="inl" for="lang-jp">jp (🇯🇵)</label>
 			</fieldset>
 		</form>
@@ -273,7 +273,7 @@
 		// ----- ----- ----- renderer
 
 		const Templater = (templateText) => {
-			return eval('page => { let output=' +
+			return eval('inp => { let output=' +
 				`\`${templateText}\``
 				.replace(/<%(.+?)%>/g, '`;$1\noutput+=`')
 				+ '; return output; }');
@@ -464,7 +464,7 @@
 			})
 		};
 
-		const constructTransaction = data => {
+		const constructTransferTransaction = data => {
 			const descriptorData = {
 				type: 'transfer_transaction_v1',
 				signerPublicKey: data.signerPublicKey,
@@ -496,9 +496,11 @@
 			return transaction;
 		};
 
+		// ----- ----- ----- ----- generic preview + signing handling
+
 		const updateFields = data => {
 			try {
-				const transaction = constructTransaction(data);
+				const transaction = constructTransferTransaction(data);
 
 				// update signature
 				const signature = facade.signTransaction(selectedAccount.keyPair, transaction);
@@ -520,6 +522,8 @@
 			$('fee-formula').innerHTML = feeFormula;
 			domSetText($('transaction-signature'), data.signature);
 		};
+
+		// ----- ----- ----- ----- handle transfer rendering
 
 		let announceCallback = null
 		$('button-announce').addEventListener('click', () => { if (announceCallback) { return announceCallback(); } }, false);
@@ -555,6 +559,11 @@
 			}));
 
 			// elements that do not require full re-rendering
+
+			$('recipient-address').addEventListener('input', () => {
+				data.recipient = $('recipient-address').value;
+				renderPreviewAndChangable(data, updateFields(data));
+			})
 
 			$('fee-multiplier').addEventListener('input', () => {
 				data.feeMultiplier = parseInt($('fee-multiplier').value);
@@ -597,6 +606,8 @@
 			$('button-announce').disabled = false;
 		};
 
+		// ----- ----- ----- ----- account and network handling
+
 		const selectAccount = async account => {
 			selectedAccount = account;
 
@@ -613,7 +624,7 @@
 				readable: facade.network.datetimeConverter.toDatetime(nodeTimestamp.addHours(2**i))
 			}));
 
-			//
+			// TODO: move somewhere else
 
 			const data = {
 				signerPublicKey: selectedAccount.keyPair.publicKey.toString(),
