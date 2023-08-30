@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Dev tools</title>
+		<style type="text/css">
+		label { display: block; }
+		fieldset { border: 0; }
+		label.inl { display: inline-block; }
+		textarea { display: inline-block; background-color: #f3f2f2; }
+		input { background-color: #f3f2f2; }
+
+		table { border: 1px solid #456; border-collapse: collapse;}
+		table tr { vertical-align: top; }
+		table td { border: 1px solid #456; padding: 3px; }
+
+		.error-box { color: #c44; }
+		</style>
+		<script src="https://cdn.jsdelivr.net/npm/json-bigint-parser-browser@1.0.4/json-bigint-browser.min.js"></script>
+	</head>
+
+	<script type="text/template" id="mainTemplate">
+<h2> ${page.description} </h2>
+<form>
+	<p>${page.networkSelection}</p>
+	<fieldset>
+		<input type="radio" name="network-selection" id="network-mainnet" value="mainnet" checked>
+		<label class="inl" for="lang-mainnet">mainnet</label>
+
+		<input type="radio" name="network-selection" id="network-testnet" value="testnet">
+		<label class="inl" for="network-testnet">SAI testnet</label>
+	</fieldset>
+	<div>
+		<label for="node-selection">${page.nodePicker}</label>
+		<select id="node-selection" name="node-selection">
+		</select>
+	</div>
+
+	<hr>
+
+	<div>
+		<label for="privkey-hex">${page.privateKeyDescription}</label>
+		<input name="privkey-hex" id="privkey-hex" size="180" value="absurd amount doctor acoustic avoid letter advice cage absurd amount doctor acoustic avoid letter advice cage absurd amount doctor acoustic avoid letter advice comic"/>
+	</div>
+
+	<div id="privkey-hex-status-hex">${page.privateKeyInfoStatusHex}</div>
+	<div id="privkey-hex-status-bip">
+		<div>
+			<div>${page.privateKeyInfoStatusBip}</div>
+			<div id="privkey-hex-error" class="error-box">&nbsp;</div>
+		</div>
+
+		<div>
+			<label for="privkey-selection">${page.privateKeyPicker}</label>
+			<select id="privkey-selection" name="privkey-selection">
+			</select>
+		</div>
+	</div>
+	<table>
+		<tr>
+			<td>${page.privKeyInfoPublicKey}</td> <td><tt id="privkey-pubkey">&nbsp;</tt></td>
+		</tr>
+		<tr>
+			<td>${page.privKeyInfoAddress}</td> <td><tt id="privkey-address">&nbsp;</tt></td>
+		</tr>
+	</table>
+
+	<hr>
+
+	<div>
+		<label for="transaction-selection">${page.transactionPicker}</label>
+		<select id="transaction-selection" name="transaction-selection">
+			<option value="transfer-transaction-v1">Transfer</option>
+		</select>
+	</div>
+
+	<div>
+
+	</div>
+</form>
+	</script>
+
+	<script type="text/template" id="transferTemplate">
+<table>
+	<tr><td>signerPublicKey</td><td><tt>${page.signerPublicKey}</tt></td>
+		<td rowspan="7">Preview: <div><pre id="transaction-preview">&nbsp;</pre></div></td>
+	</tr>
+	<tr><td>(max) fee</td><td>
+		<strong id="fee-formula">&nbsp;</strong>
+		<input name="fee-multiplier" id="fee-multiplier" size="18" value="${page.feeMultiplier}"/>
+	</td></tr>
+	<tr><td>deadline</td><td>
+		<select id="transaction-deadline-selection" name="transaction-deadline-selection">
+			<%for (const ts of page.timestamps) {%>
+			<option value="${ts.timestamp}" ${page.deadline === ts.timestamp.toString() ? 'selected' : ''}>${ts.timestamp} (+ ${ts.hours} hour(s), ~${ts.readable})</option>
+			<%}%>
+		</select>
+
+	</td></tr>
+
+	<tr>
+		<td>recipientAddress</td>
+		<td>
+			<label for="recipient-address">TODO (description)</label>
+			<input name="recipient-address" id="recipient-address" size="60" value="${page.recipient}"/>
+		</td>
+	</tr>
+	<tr>
+		<td>mosaics</td>
+		<td><ul><%for (const mosaic of page.mosaics) {%>
+			<li>
+				${mosaic.mosaicId} - ${mosaic.amount}
+				<input name="mosaic-remove" id="mosaic-remove-${mosaic.mosaicId}" size="18" value="&times;" type="button"/>
+			</li>
+			<%}%>
+			<label class="inl" for="mosaic-id">mosaic id</label>
+			<input name="mosaic-id" id="mosaic-id" size="18" value="${page.currencyId}"/>
+
+			<label class="inl" for="mosaic-amount">mosaic amount</label>
+			<input name="mosaic-amount" id="mosaic-amount" size="18" value="1'000'000"/>
+
+			<input type="button" name="mosaic-append" id="mosaic-append" value="Add">
+		<ul></td>
+	</tr>
+	<tr><td>message</td><td>
+
+		<div><textarea id="message" rows=10, cols=80>${page.message ? page.message : ''}</textarea></div>
+
+		<input name="message-legacy-prefix" id="message-legacy-prefix" type="checkbox"/>
+		<label class="inl" for="message-legacy-prefix">use legacy prefix byte</label>
+
+		<input name="message-hex" id="message-hex" type="checkbox"/>
+		<label class="inl" for="message-hex">treat input as hex</label>
+
+		<input name="message-encrypt" id="message-encrypt" type="checkbox" disabled/>
+		<label class="inl" for="message-encrypt">encrypt message</label>
+
+	</td></tr>
+	<tr><td>signature:</td><td>
+		<tt id="transaction-signature">${page.signature}</tt>
+	</td></tr>
+</table>
+	</script>
+
+	<body style='background-color: #f3efe6'>
+		<p>Language selection:</p>
+		<form>
+			<fieldset>
+				<input type="radio" name="lang-selection" id="lang-en" value="en" checked>
+				<label class="inl" for="lang-en">en (🇬🇧🇺🇸)</label>
+
+				<input type="radio" name="lang-selection" id="lang-jp" value="jp">
+				<label class="inl" for="lang-jp">jp (🇯🇵)</label>
+			</fieldset>
+		</form>
+		<div id="content"></div>
+		<div id="transaction">⌛ obtaining network data</div>
+		<div id="transaction-error" class="error-box">&nbsp;</div>
+		<div id="announce">
+			<form>
+				<input type="button" value="Announce transaction" id="button-announce" disabled>
+			</form>
+			<div id="transaction-hash">&nbsp;</div>
+			<pre id="transaction-log"></pre>
+		</div>
+	</body>
+
+	<script type="module">
+		import symbolSdk from './devtools-bundle/bundle.web.js';
+		const $ = name => document.getElementById(name);
+
+		const domSetText = (domElem, textContent) => {
+			domElem.replaceChild(document.createTextNode(textContent), domElem.childNodes[0]);
+		}
+		const domAppendText = (domElem, textContent) => {
+			domElem.appendChild(document.createTextNode(textContent));
+		};
+
+		const createOption = (value, text) => {
+			const opt = document.createElement("option");
+			opt.value = value;
+			opt.innerHTML = text;
+			return opt
+		}
+
+		const createOptionFromUri = uri => createOption(uri, uri);
+
+		const reformat = (buf, a_start, a_level) => {
+			let formatted='';
+			const start = a_start || 0;
+			const level = a_level || 0;
+			// mode 1 = parse obj, mode 2 = parse array
+			const mode = 1;
+
+			if (level > 10)
+				return;
+
+			let i=start;
+			while (i < buf.length) {
+				if (buf[i]==')') {
+					break;
+				}
+
+				if (buf[i]==']' && level>1) {
+					break;
+				}
+
+				if (buf[i]=='(') {
+					formatted += ' '.repeat(2*level);
+					formatted += '(\n'
+					const res = reformat(buf, i+1, level+1);
+					formatted += res.formatted;
+					i += res.skip;
+
+					if (buf[i] !== ')') {
+						console.log('(reformat) ERROR, expected closing brace');
+						i = buf.length;
+						break;
+					}
+					formatted += ' '.repeat(2*level);
+					formatted += ')\n'
+					i += 1;
+
+					break;
+				}
+
+				const identifier = buf.slice(i).match(/([^:]+): /);
+				formatted += ' '.repeat(2*level);
+				formatted += identifier[0];
+				i += identifier[0].length;
+
+				if (buf[i]=='[') {
+					formatted += '[\n';
+					while (i < buf.length) {
+						const res = reformat(buf, i+1, level+1);
+						formatted += res.formatted;
+						i += res.skip;
+
+						if (buf[i] !== ',' && buf[i] !== ']') {
+							console.log('(reformat) ERROR, expected coma, got', buf[i]);
+							i = buf.length;
+							break;
+						}
+						if (buf[i] === ']') {
+							formatted += ' '.repeat(2*level);
+							formatted += ']\n'
+							i += 1;
+
+							break;
+						}
+
+						console.log('(reformat) got comma, will try to parse NEXT element');
+					}
+
+					if (buf[i] !== ',' || buf[i+1] !== ' ') {
+						console.log('(reformat) ERROR, expected coma followed by space, got', buf[i]);
+						i = buf.length;
+						break;
+					}
+					i += 2;
+
+					continue;
+				} else {
+					const value = buf.slice(i).match(/([^,]+,) /)
+					formatted += value[1] + '\n';
+					i += value[0].length;
+
+				}
+			}
+			return { formatted, skip: i - start + 1 };
+		};
+
+		// ----- ----- ----- renderer
+
+		const Templater = (templateText) => {
+			return eval('page => { let output=' +
+				`\`${templateText}\``
+				.replace(/<%(.+?)%>/g, '`;$1\noutput+=`')
+				+ '; return output; }');
+		};
+		const mainRenderer = Templater($('mainTemplate').textContent);
+		const transferRenderer = Templater($('transferTemplate').textContent);
+
+		const descriptions = {
+			en: {
+				description: "Devs crude *cough* wallet *cough*",
+				networkSelection: 'Network selection:',
+				privateKeyDescription: 'Private key in hex or Bip-39 mnemonic',
+				privateKeyInfoStatusBip: 'Treating as BIP-39 mnemonic phrase.',
+				privateKeyInfoStatusHex: 'Treating as hex private key.',
+				nodePicker: 'Change endpoint node',
+				privateKeyPicker: 'Pick an account:',
+				privKeyInfoPublicKey: 'Account\'s public key:',
+				privKeyInfoAddress: 'Account\'s address:',
+				transactionPicker: 'Select transaction type:'
+			},
+			jp: {
+				description: '',
+				networkSelection: '',
+				privateKeyDescription: '',
+				privateKeyInfoStatusBip: '',
+				privateKeyInfoStatusHex: '',
+				nodePicker: '',
+				privateKeyPicker: '',
+				privKeyInfoPublicKey: '',
+				privKeyInfoAddress: '',
+			}
+		}
+
+		const render = () => {
+			document.getElementById('content').innerHTML = mainRenderer(descriptions.en);
+		};
+
+		document.getElementsByName('lang-selection').forEach(x => x.addEventListener('click', render));
+		$('lang-en').dispatchEvent(new Event('click', {bublles:true}));
+
+		// ----- ----- ----- fetch some initial data
+
+		let facade = null;
+		let nodeList = null;
+		let networkPropertiesPromise = null;
+		let nodeTimestampPromise = null;
+
+		const wait = delay => new Promise(resolve => setTimeout(resolve, delay));
+
+		const fetchRetry = (url, delay, tries, fetchOptions = {}) =>
+			fetch(url, fetchOptions)
+			.then(response => {
+				if (!response.ok) {
+					domAppendText($('transaction-log'), '.');
+
+					console.log('fetch http error', response.status);
+					if (!--tries) {
+						return new Promise((resolve, reject) => reject('exceeded max tries'));
+					}
+
+					return wait(delay).then(() => fetchRetry(url, delay, tries, fetchOptions));
+				} else {
+					return response;
+				}
+			});
+
+		const updateNodeList = response => {
+			const uris = response.map(v => v.apiStatus.restGatewayUrl);
+			const newOptions = uris.map(createOptionFromUri);
+
+			$('node-selection').replaceChildren(...newOptions);
+
+			return uris;
+		};
+
+		const nodesUri = 'symbol.services/nodes?filter=suggested&limit=10&ssl=true'
+		const getNodes = networkName => fetch(`https://${networkName === 'testnet' ? 'testnet.' : ''}${nodesUri}`)
+			.then(response => response.json())
+			.then(updateNodeList);
+
+		const getProperties = async () => {
+			const uris = await nodeList;
+			return fetch(`${uris[0]}/network/properties`)
+				.then(response => response.json());
+		};
+
+		const getTimestamp = async () => {
+			const uris = await nodeList;
+			return fetch(`${uris[0]}/node/time`)
+				.then(response => response.json())
+				.then(response => new symbolSdk.symbol.NetworkTimestamp(response.communicationTimestamps.receiveTimestamp));
+		};
+
+		const putTransaction = async transaction => {
+			const uris = await nodeList;
+
+			const data = {
+				payload: symbolSdk.utils.uint8ToHex(transaction.serialize())
+			}
+			return fetch(`${uris[0]}/transactions`,
+				{
+					method: "PUT",
+					mode: "cors",
+					cache: "no-cache",
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify(data)
+				})
+				.then(response => response.json())
+		};
+
+		const checkStatus = async (transaction, hash) => {
+			const uris = await nodeList;
+			return fetchRetry(`${uris[0]}/transactionStatus/${hash}`, 250, 7)
+				.then(response => response.json())
+		};
+
+		const waitForConfirmation = async (transaction, hash) => {
+			const uris = await nodeList;
+			return fetchRetry(`${uris[0]}/transactions/confirmed/${hash}`, 1000, 30)
+				.then(response => response.json())
+		};
+
+		const fetchData = networkName => {
+			facade = new symbolSdk.facade.SymbolFacade(networkName)
+			nodeList = getNodes(networkName);
+			networkPropertiesPromise = getProperties();
+			nodeTimestampPromise = getTimestamp();
+		}
+
+		fetchData('mainnet');
+
+		// ----- ----- ----- handle fields
+
+		let selectedAccount = null;
+
+		const domPrivkeyHex = $('privkey-hex');
+		const domPrivkeySelect = $('privkey-selection');
+
+		class Account {
+			constructor(keyPair, path = undefined) {
+				this.keyPair = keyPair;
+				this.path = path;
+			}
+
+			get address() {
+				return facade.network.publicKeyToAddress(this.keyPair.publicKey);
+			}
+		};
+
+		const getAccount = (rootNode, index) => {
+			const path = facade.bip32Path(index);
+			const bipNode = rootNode.derivePath(path);
+			const keyPair = new symbolSdk.facade.SymbolFacade.KeyPair(bipNode.privateKey);
+
+			return new Account(keyPair, path);
+		};
+
+		const niceStringToAmount = amountString => BigInt(amountString.replaceAll("'", ''));
+
+		const announceTransaction = async transactionBuilder => {
+			$('button-announce').disabled = true;
+
+			const transaction = transactionBuilder();
+			const hash = facade.hashTransaction(transaction);
+			domSetText($('transaction-hash'), `Will announce transaction: ${hash}`);
+
+			putTransaction(transaction)
+			.then(response => {
+				domAppendText($('transaction-log'), `got response: ${response.message}\n`)
+				return checkStatus(transaction, hash);
+			}).then(response => {
+				$('button-announce').disabled = false;
+
+				domAppendText($('transaction-log'), `got status response: ${response.group}\n`)
+
+				if (response.group === 'failed')
+					throw response;
+
+				domAppendText($('transaction-log'), 'waiting for confirmation\n');
+				return waitForConfirmation(transaction, hash);
+			}).then(response => {
+				domAppendText($('transaction-log'), `confirmed in block ${response.meta.height} (${response.meta.hash}) at `);
+				const timestamp = new symbolSdk.symbol.NetworkTimestamp(response.meta.timestamp);
+				const readableTime = facade.network.datetimeConverter.toDatetime(timestamp);
+				domAppendText($('transaction-log'), `${readableTime}\n`);
+			})
+		};
+
+		const constructTransaction = data => {
+			const descriptorData = {
+				type: 'transfer_transaction_v1',
+				signerPublicKey: data.signerPublicKey,
+				fee: BigInt(data.feeMultiplier),
+				deadline: BigInt(data.deadline),
+				recipientAddress: data.recipient,
+				mosaics: data.mosaics.map(e => ({mosaicId: BigInt(e.mosaicId), amount: niceStringToAmount(e.amount)})),
+			};
+			if (data.message) {
+				if (data.messageHex) {
+					const buffer = symbolSdk.utils.hexToUint8(data.message);
+
+					if (data.messageLegacyPrefix) {
+						descriptorData.message = new Uint8Array(buffer.length + 1);
+						descriptorData.message.set([0xFE], 0);
+						descriptorData.message.set(buffer, 1);
+					} else {
+						descriptorData.message = buffer;
+					}
+				} else {
+					descriptorData.message = data.message;
+
+					if (data.messageLegacyPrefix)
+						descriptorData.message = '\0' + descriptorData.message;
+				}
+			}
+			const transaction = facade.transactionFactory.create(descriptorData);
+			transaction.fee.value = BigInt(transaction.size * data.feeMultiplier);
+			return transaction;
+		};
+
+		const updateFields = data => {
+			try {
+				const transaction = constructTransaction(data);
+
+				// update signature
+				const signature = facade.signTransaction(selectedAccount.keyPair, transaction);
+				data.signature = symbolSdk.utils.uint8ToHex(signature.bytes);
+				symbolSdk.symbol.SymbolTransactionFactory.attachSignature(transaction, signature);
+				return transaction;
+			} catch (error) {
+				domSetText($('transaction-error'), `Error: ${error.message}`);
+				console.log(error);
+				return null;
+			}
+		};
+
+		const renderPreviewAndChangable = (data, transaction) => {
+			const res = reformat(transaction.toString());
+			domSetText($('transaction-preview'), res.formatted);
+
+			const feeFormula = `${transaction.size * data.feeMultiplier} = size &times; multiplier =  ${transaction.size} &times;`;
+			$('fee-formula').innerHTML = feeFormula;
+			domSetText($('transaction-signature'), data.signature);
+		};
+
+		let announceCallback = null
+		$('button-announce').addEventListener('click', () => { if (announceCallback) { return announceCallback(); } }, false);
+
+		const rerenderTransfer = data => {
+			// update transactionSize, might be needed for rendered view
+			const transaction = updateFields(data);
+			$('transaction').innerHTML = transferRenderer(data);
+			renderPreviewAndChangable(data, transaction);
+
+			$('mosaic-append').addEventListener('click', () => {
+				// handle same
+				const found = data.mosaics.find(row => row.mosaicId === $('mosaic-id').value)
+				if (!found) {
+					data.mosaics.push(
+						{ mosaicId: $('mosaic-id').value, amount: $('mosaic-amount').value }
+					);
+				} else {
+					const currentAmount = niceStringToAmount(found.amount);
+					const additionalAmmount = niceStringToAmount($('mosaic-amount').value);
+					found.amount = (currentAmount + additionalAmmount).toString();
+				}
+
+				// need to re-render whole to nicely show mosaics
+				rerenderTransfer(data);
+			});
+
+			document.getElementsByName('mosaic-remove').forEach(x => x.addEventListener('click', event => {
+				data.mosaics = data.mosaics.filter(row => row.mosaicId !== event.srcElement.id.replace('mosaic-remove-', ''));
+
+				// need to re-render whole to nicely show mosaics
+				rerenderTransfer(data);
+			}));
+
+			// elements that do not require full re-rendering
+
+			$('fee-multiplier').addEventListener('input', () => {
+				data.feeMultiplier = parseInt($('fee-multiplier').value);
+				renderPreviewAndChangable(data, updateFields(data));
+			});
+
+			$('transaction-deadline-selection').addEventListener('input', () => {
+				data.deadline = $('transaction-deadline-selection').value;
+				renderPreviewAndChangable(data, updateFields(data));
+			});
+
+			$('message').addEventListener('input', () => {
+				data.message = $('message').value;
+				renderPreviewAndChangable(data, updateFields(data));
+			}, false);
+
+			$('message-legacy-prefix').addEventListener('click', () => {
+				data.messageLegacyPrefix = $('message-legacy-prefix').checked;
+				renderPreviewAndChangable(data, updateFields(data));
+			});
+
+			$('message-hex').addEventListener('click', () => {
+				data.messageHex = $('message-hex').checked;
+
+				// convert message to hex
+				if (data.messageHex) {
+					const enc = new TextEncoder();
+					data.message = symbolSdk.utils.uint8ToHex(enc.encode(data.message));
+				} else {
+					const dec = new TextDecoder();
+					data.message = dec.decode(symbolSdk.utils.hexToUint8(data.message));
+				}
+				$('message').value = data.message;
+
+				renderPreviewAndChangable(data, updateFields(data));
+			});
+
+
+			announceCallback = () => announceTransaction(() => updateFields(data));
+			$('button-announce').disabled = false;
+		};
+
+		const selectAccount = async account => {
+			selectedAccount = account;
+
+			domSetText($('privkey-pubkey'), selectedAccount.keyPair.publicKey.toString());
+			domSetText($('privkey-address'), selectedAccount.address);
+
+			const networkProperties = await networkPropertiesPromise;
+			const currencyId = networkProperties.chain.currencyMosaicId.replaceAll("'", '');
+
+			const nodeTimestamp = await nodeTimestampPromise;
+			const timestamps = Array.from({length: 5}, (_, i) => ({
+				timestamp: nodeTimestamp.addHours(2**i),
+				hours: 2**i,
+				readable: facade.network.datetimeConverter.toDatetime(nodeTimestamp.addHours(2**i))
+			}));
+
+			//
+
+			const data = {
+				signerPublicKey: selectedAccount.keyPair.publicKey.toString(),
+				recipient: facade.network.publicKeyToAddress(new symbolSdk.PublicKey(networkProperties.network.nemesisSignerPublicKey)),
+
+				feeMultiplier: 100,
+
+				deadline: timestamps[0].timestamp.toString(),
+				timestamps,
+				mosaics: [
+				],
+				message: null,
+				messageLegacyPrefix: false,
+				messageHex: false,
+				signature: '&nbsp;',
+
+				currencyId
+			};
+
+			rerenderTransfer(data);
+		}
+
+		const updateBip39Selection = () => {
+			const bip = new symbolSdk.Bip32();
+			const rootNode = bip.fromMnemonic(domPrivkeyHex.value);
+
+			for (let i = 0; i < 10; ++i) {
+				const account = getAccount(rootNode, i);
+				if (account.address.toString().toUpperCase() == domPrivkeySelect.value) {
+					selectAccount(account);
+					break;
+				}
+			}
+		};
+
+		const domHide = name => { $(name).style.display = 'none'; }
+		const domShow = name => { $(name).style.display = 'initial'; }
+
+		const updatePrivate = () => {
+			const data = domPrivkeyHex.value.replaceAll(/\s/g, '');
+
+			domHide('privkey-hex-status-bip');
+			domHide('privkey-hex-status-hex');
+			domHide('privkey-hex-error');
+
+			const guessedId = data.match(/^[0-9a-fA-F]{64}$/) ? 'hex' : 'bip';
+			domShow(`privkey-hex-status-${guessedId}`);
+
+			if ('hex' === guessedId) {
+				const keyPair = new symbolSdk.facade.SymbolFacade.KeyPair(new symbolSdk.PrivateKey(data));
+				selectAccount(new Account(keyPair));
+
+			// treat it like bip-39 mnemonics
+			} else {
+				const newOptions = [];
+				try {
+					const bip = new symbolSdk.Bip32();
+					const rootNode = bip.fromMnemonic(domPrivkeyHex.value);
+
+					for (let i = 0; i < 10; ++i) {
+						const account = getAccount(rootNode, i);
+						const addressStr = account.address.toString().toUpperCase();
+						newOptions.push(createOption(addressStr, `(${account.path}) | ${addressStr} (balance: ..)`));
+					}
+
+					domPrivkeySelect.replaceChildren(...newOptions);
+					domPrivkeySelect.dispatchEvent(new Event('input', {bublles:true}));
+
+				} catch (err) {
+					domSetText($('privkey-hex-error'), `Error: ${err.message}`)
+					domShow('privkey-hex-error');
+
+					domPrivkeySelect.replaceChildren(...newOptions);
+				}
+			}
+		};
+
+		const changeNetwork = () => {
+			const networkName = document.querySelector('input[name="network-selection"]:checked').value;
+			// set block-scoped facade
+			fetchData(networkName);
+
+			domPrivkeyHex.dispatchEvent(new Event('input', {bublles:true}));
+		};
+
+		// setup listeners, note the order matters
+		domPrivkeySelect.addEventListener('input',updateBip39Selection);
+		domPrivkeyHex.addEventListener('input', updatePrivate);
+		document.getElementsByName('network-selection').forEach(x => x.addEventListener('click', changeNetwork));
+
+		$('network-mainnet').dispatchEvent(new Event('click', {bubbles:true}));
+
+	</script>
+</html>
